@@ -2,118 +2,149 @@
 <html lang="en">
 <head>
   <!-- Firebase Scripts -->
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 
-<script>
-  // Your Firebase config (REPLACE THIS with yours from Firebase settings)
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
+  <script>
+    // Your Firebase config (replace with your actual config)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-</script>
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+  </script>
 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sign Up - Abandoned Tweaks</title>
   <style>
     body {
-      background-color: #111;
-      color: #f2f2f2;
+      background: #111;
+      margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      color: #f2f2f2;
     }
-    .signup-container {
-      background: #1a1a1a;
+
+    .signup-panel {
+      background: #222;
+      border-radius: 8px;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,255,255,0.4);
-      width: 90%;
-      max-width: 400px;
-    }
-    h2 {
+      box-shadow: 0 0 15px rgba(0,255,255,0.2);
+      width: 350px;
       text-align: center;
-      color: #0ff;
     }
-    input {
+
+    .signup-panel h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s linear infinite;
+      margin-bottom: 1.5rem;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
+      margin: 0.8rem 0;
       border: none;
       border-radius: 5px;
       background: #333;
-      color: white;
+      color: #f2f2f2;
+      font-size: 1rem;
+      box-sizing: border-box;
     }
+
     button {
       width: 100%;
-      padding: 10px;
-      border: none;
-      background-color: #0ff;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .switch-link {
-      text-align: center;
+      padding: 12px;
       margin-top: 1rem;
+      background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
+      background-size: 400% 400%;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      animation: greenGradient 5s ease infinite;
+      box-shadow: 0 0 8px #00d12e;
+      transition: box-shadow 0.3s;
+    }
+    button:hover {
+      box-shadow: 0 0 15px #00ff44;
+    }
+
+    @keyframes greenGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .switch-link {
+      margin-top: 1rem;
+      font-size: 0.9rem;
     }
     .switch-link a {
       color: #0ff;
       text-decoration: none;
     }
+    .switch-link a:hover {
+      text-decoration: underline;
+    }
+
+    .back-button {
+      margin-top: 2rem;
+      background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
+      background-size: 400% 400%;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 0;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+      animation: blueGradient 5s ease infinite;
+      box-shadow: 0 0 8px #009cde;
+      transition: box-shadow 0.3s;
+    }
+    .back-button:hover {
+      box-shadow: 0 0 15px #00b0ff;
+    }
+    @keyframes blueGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
   </style>
 </head>
 <body>
-  <div class="signup-container">
-    <h2>Sign Up</h2>
-    <form id="signup-form">
-  <input type="text" id="signup-username" placeholder="Username" required />
-  <input type="email" id="signup-email" placeholder="Email" required />
-  <input type="password" id="signup-password" placeholder="Password" required />
-  <button type="submit">Sign Up</button>
-</form>
-<div class="switch-link">
-  Already have an account? <a href="login.html">Login</a>
-</div>
-
-<script>
-  const form = document.getElementById('signup-form');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        alert('Signup successful!');
-        window.location.href = 'login.html';
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  });
-</script>
-
-      <input type="text" placeholder="Username" required />
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Password" required />
+  <div class="signup-panel">
+    <h2>Create Account</h2>
+    <form id="signup-form" autocomplete="off">
+      <input type="email" id="signup-email" placeholder="Email" required />
+      <input type="password" id="signup-password" placeholder="Password" required minlength="6" />
       <button type="submit">Sign Up</button>
     </form>
     <div class="switch-link">
-      Already have an account? <a href="login.html">Login</a>
-    </div>
-  </div>
-</body>
-</html>
+      Already have an account?
