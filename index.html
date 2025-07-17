@@ -120,15 +120,51 @@
     gap: 0.5rem;
     margin-top: 0.5rem;
   }
-  .purchase-button {
+  /* PayPal button styles with animated blue gradient */
+  .purchase-button.paypal {
     display: inline-block;
-    background: #444;
+    background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
+    background-size: 400% 400%;
     color: #fff;
     text-decoration: none;
     padding: 0.5rem 0.8rem;
     border-radius: 4px;
     font-size: 0.9rem;
     cursor: pointer;
+    animation: blueGradient 5s ease infinite;
+    box-shadow: 0 0 8px #009cde;
+    transition: box-shadow 0.3s;
+  }
+  .purchase-button.paypal:hover {
+    box-shadow: 0 0 15px #00b0ff;
+  }
+  /* CashApp button styles with animated green gradient */
+  .purchase-button.cashapp {
+    display: inline-block;
+    background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
+    background-size: 400% 400%;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    animation: greenGradient 5s ease infinite;
+    box-shadow: 0 0 8px #00d12e;
+    transition: box-shadow 0.3s;
+  }
+  .purchase-button.cashapp:hover {
+    box-shadow: 0 0 15px #00ff44;
+  }
+  @keyframes blueGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes greenGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   footer {
     text-align: center;
@@ -150,7 +186,7 @@
 <div class="container">
   <div class="products">
 
-<!-- Repeat this block for each product -->
+<!-- Product Cards -->
 <div class="product-card">
   <h3 class="rainbow-text">Variety Pack</h3>
   <div class="price">$49.99</div>
@@ -159,8 +195,8 @@
     <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/49.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/49.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/49.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/49.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -172,8 +208,8 @@
     <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/19.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/19.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -185,8 +221,8 @@
     <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -198,8 +234,8 @@
     <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/14.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/14.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/14.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/14.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -211,8 +247,8 @@
     <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -224,8 +260,8 @@
     <iframe src="https://www.youtube.com/embed/1CLf6Jy4kOc" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/9.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/9.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/9.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/9.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -237,8 +273,8 @@
     <iframe src="https://www.youtube.com/embed/3jTz40kOvEI" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/3.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/3.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/3.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/3.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -250,8 +286,8 @@
     <iframe src="https://www.youtube.com/embed/G2igjYONmzw" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -263,8 +299,8 @@
     <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -276,8 +312,8 @@
     <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -289,8 +325,8 @@
     <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
@@ -302,8 +338,8 @@
     <iframe src="https://www.youtube.com/watch?v=_hreqczxS_k" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button">PayPal</a>
-    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button">CashApp</a>
+    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
 
