@@ -13,62 +13,18 @@
       padding: 0;
     }
     header {
-      background: #111; /* Changed from white to match page background */
+      background: #111; /* match body background */
       text-align: center;
       padding: 1rem;
+      border-bottom: 2px solid black; /* black line under header */
     }
     header h1.title {
       font-weight: bold;
       font-size: 2.5rem;
       margin: 0;
       font-family: Arial, sans-serif;
-
-      /* Rainbow gradient text */
-      background: linear-gradient(90deg, 
-        red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s linear infinite;
-      text-shadow: 0 0 3px black;
-      border-bottom: 3px solid black;
+      color: #566573; /* grey/black style */
     }
-
-    @keyframes rainbow {
-      0% {
-        background-position: 0% 50%;
-      }
-      100% {
-        background-position: 400% 50%;
-      }
-    }
-
-    /* Neon Pulse Animation for Taste Tester */
-    @keyframes neonPulse {
-      0%, 100% {
-        text-shadow:
-          0 0 5px #6a0dad,
-          0 0 10px #6a0dad,
-          0 0 20px #6a0dad,
-          0 0 40px #8a2be2;
-        color: #d8bfff;
-      }
-      50% {
-        text-shadow:
-          0 0 20px #8a2be2,
-          0 0 40px #8a2be2,
-          0 0 60px #7b68ee,
-          0 0 80px #7b68ee;
-        color: #fff;
-      }
-    }
-    .taste-title {
-      animation: neonPulse 2s ease-in-out infinite;
-      color: #d8bfff;
-      font-size: 1.2rem;
-      margin: 0.5rem 0;
-    }
-
     .container {
       max-width: 1200px;
       margin: auto;
@@ -78,6 +34,37 @@
       text-align: center;
       font-size: 2rem;
       margin-bottom: 2rem;
+      font-weight: normal;
+      color: #f2f2f2;
+    }
+    /* Rainbow animation for Variety Pack */
+    .rainbow-text {
+      background: linear-gradient(90deg, 
+        red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s linear infinite;
+      font-weight: normal;
+    }
+    /* Different animation for Taste Tester */
+    .taste-tester-text {
+      background: linear-gradient(270deg, 
+        #FF69B4, #FF1493, #DB7093, #C71585);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pinkwave 6s ease-in-out infinite;
+      font-weight: normal;
+    }
+    @keyframes rainbow {
+      0% {background-position: 0% 50%;}
+      100% {background-position: 400% 50%;}
+    }
+    @keyframes pinkwave {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
     .products {
       display: grid;
@@ -140,14 +127,17 @@
     <div class="products">
 
       <div class="product-card">
-        <h3>Variety Pack</h3>
+        <h3 class="rainbow-text">Variety Pack</h3>
         <div class="price">$49.99</div>
         <div class="description">All of the packs — even ones unreleased.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" title="Variety Pack Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
         <button class="view-button">View Details</button>
       </div>
 
       <div class="product-card">
-        <h3 class="taste-title">Taste Tester</h3>
+        <h3 class="taste-tester-text">Taste Tester</h3>
         <div class="price">$19.99</div>
         <div class="description">Massively improves aim, builds, and performance.</div>
         <div class="product-video">
@@ -156,7 +146,86 @@
         <button class="view-button">View Details</button>
       </div>
 
-      <!-- Other product cards here -->
+      <div class="product-card">
+        <h3>Shotgun Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" title="Shotgun Pack V1 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Shotgun Pack V2</h3>
+        <div class="price">$14.99 <span class="old-price">was $20 (25% off)</span></div>
+        <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" title="Shotgun Pack V2 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Bloom Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" title="Bloom Pack V1 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Bloom Pack V2</h3>
+        <div class="price">$9.99</div>
+        <div class="description">Heavily Reduce Bloom, Win Bloom Battles Constantly, AR Like a Laser Beam, Hit More Shots!</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/1CLf6Jy4kOc" title="Bloom Pack V2 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>SMG Bloom Reducer</h3>
+        <div class="price">$3.99</div>
+        <div class="description">Significantly reduce SMG bloom, hipfire spread, and ADS recoil for better aim and accuracy.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/3jTz40kOvEI" title="SMG Bloom Reducer Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>0 Delay</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/G2igjYONmzw" title="0 Delay Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Max FPS</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Skyrocket your frames to 600+ with this FPS booster — smoother gameplay, faster builds, and cleaner visuals guaranteed.</div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Mouse Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="description">Makes you click faster and helps improve your timing – great for boosting CPS and smoother edits. DIAMOND PACK</div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Keyboard Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="description">Makes your key presses 0 delay and adds rapid trigger for faster edits and movement. DIAMOND PACK</div>
+        <button class="view-button">View Details</button>
+      </div>
 
     </div>
   </div>
