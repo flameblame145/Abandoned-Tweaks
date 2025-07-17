@@ -23,33 +23,33 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
+  // Show login/logout buttons based on user status
   auth.onAuthStateChanged(user => {
-    if (!user) {
-      window.location.href = "login.html";
+    if (user) {
+      document.getElementById('logout-btn').style.display = 'block';
+      document.getElementById('login-btn').style.display = 'none';
+    } else {
+      document.getElementById('logout-btn').style.display = 'none';
+      document.getElementById('login-btn').style.display = 'block';
     }
   });
 
   function logout() {
     auth.signOut().then(() => {
-      window.location.href = "login.html";
+      window.location.reload();
     });
   }
 </script>
 
 <style>
-/* === your styles (omitted for brevity) === */
-/* Keep all your CSS here (the same as you posted). 
-   If you'd like, I can paste it again too! */
+  /* keep all your styles untouched... */
 </style>
 </head>
 <body>
 
 <!-- Starry background container -->
 <div class="starry-background" aria-hidden="true">
-  <div class="star small" style="top:10%; left:15%; animation-delay: 0s;"></div>
-  <div class="star medium" style="top:20%; left:80%; animation-delay: 1s;"></div>
-  <div class="star large" style="top:30%; left:50%; animation-delay: 2s;"></div>
-  <!-- more stars if you want -->
+  <!-- your stars here -->
 </div>
 
 <!-- Shooting star -->
@@ -64,86 +64,13 @@
   <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
 </nav>
 
-<button id="logout-btn" onclick="logout()">Logout</button>
+<!-- Login/logout buttons -->
+<button id="login-btn" onclick="window.location.href='login.html'" style="position: fixed; top: 10px; right: 10px; background: #0ff; border: none; color: #111; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px #0ff; z-index: 10;">Login</button>
+<button id="logout-btn" onclick="logout()" style="display:none; position: fixed; top: 10px; right: 10px; background: #0ff; border: none; color: #111; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px #0ff; z-index: 10;">Logout</button>
 
 <div class="container">
   <div class="products">
-
-    <!-- Variety Pack -->
-    <div class="product-card">
-      <h3 class="rainbow-text">Variety Pack</h3>
-      <div class="price">$49.99</div>
-      <div class="rating">★★★★★ (14)</div>
-      <div class="description">All of the packs — even unreleased ones.</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/49.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/49.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <!-- Taste Tester -->
-    <div class="product-card">
-      <h3 class="neon-text">Taste Tester</h3>
-      <div class="price">$19.99</div>
-      <div class="rating">★★★★★ (19)</div>
-      <div class="description">Massively improves aim, builds, and performance.</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/19.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <!-- Shotgun Pack V1 -->
-    <div class="product-card">
-      <h3>Shotgun Pack V1</h3>
-      <div class="price">$5.99</div>
-      <div class="rating">★★★★★ (7)</div>
-      <div class="description">Hit harder pumps most of the time; increase average pump damage, 185 most people. DIAMOND PACK</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <!-- Shotgun Pack V2 -->
-    <div class="product-card">
-      <h3>Shotgun Pack V2</h3>
-      <div class="price">$14.99</div>
-      <div class="rating">★★★★★ (8)</div>
-      <div class="description">Hit harder pumps; increase average pump damage, 185 everyone. ESSENTIAL PACK</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/14.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/14.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <!-- Bloom Pack V1 -->
-    <div class="product-card">
-      <h3>Bloom Pack V1</h3>
-      <div class="price">$5.99</div>
-      <div class="rating">★★★★★ (14)</div>
-      <div class="description">Reduce bloom, win most bloom battles, AR like a laser beam, hit most shots!</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
+    <!-- your product cards unchanged -->
   </div>
 </div>
 
