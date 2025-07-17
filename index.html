@@ -5,17 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abandoned Tweaks</title>
 <style>
+  /* Existing styles */
   body {
     font-family: Arial, sans-serif;
     background: #111;
     color: #f2f2f2;
     margin: 0;
     padding: 0;
+    position: relative;
+    z-index: 1;
   }
   header {
     background: #111;
     text-align: center;
     padding: 1rem;
+    position: relative;
+    z-index: 2;
   }
   header h1.title {
     font-weight: bold;
@@ -58,6 +63,8 @@
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
+    position: relative;
+    z-index: 2;
   }
   nav a {
     color: #f2f2f2;
@@ -77,6 +84,8 @@
     max-width: 1200px;
     margin: auto;
     padding: 2rem;
+    position: relative;
+    z-index: 2;
   }
   .products {
     display: grid;
@@ -171,10 +180,77 @@
     padding: 1rem;
     font-size: 0.9rem;
     color: #aaa;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Star background styles */
+  #star-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    background: black;
+  }
+  #star-background::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px; height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow:
+      20px 30px white,
+      50px 80px white,
+      120px 150px white,
+      200px 90px white,
+      250px 200px white,
+      300px 120px white,
+      350px 170px white,
+      400px 50px white,
+      450px 210px white,
+      500px 180px white,
+      550px 100px white,
+      600px 220px white,
+      650px 140px white,
+      700px 60px white,
+      750px 190px white,
+      800px 80px white,
+      850px 130px white;
+    animation: twinkle 3s infinite alternate;
+  }
+  @keyframes twinkle {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+      filter: drop-shadow(0 0 2px white);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 6px white);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      filter: drop-shadow(0 0 2px white);
+    }
   }
 </style>
 </head>
 <body>
+
+<!-- Star background div -->
+<div id="star-background"></div>
+
+<audio autoplay loop hidden>
+  <source src="Lil Peep - Nuts (Lyrics).mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
 </header>
@@ -319,34 +395,4 @@
 
 <div class="product-card">
   <h3>Keyboard Tweaks</h3>
-  <div class="price">$1.99</div>
-  <div class="description">Makes your key presses 0 delay and adds rapid trigger for faster edits and movement. DIAMOND PACK</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
-    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-  </div>
-</div>
-
-<div class="product-card">
-  <h3>Wifi Tweaks</h3>
-  <div class="price">$5.99</div>
-  <div class="description">10+ optimizations to get 0 ping consistently.</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-  </div>
-</div>
-
-  </div>
-</div>
-<footer>
-  &copy; 2025 Abandoned Tweaks
-</footer>
-</body>
-</html>
+  <
