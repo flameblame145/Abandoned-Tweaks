@@ -1,31 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Firebase Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-
-  <script>
-    // Your Firebase config (replace with your actual config)
-    const firebaseConfig = {
-      apiKey: "AIzaSyD-xxxxxxx-xxxxxx",
-      authDomain: "your-project-id.firebaseapp.com",
-      projectId: "your-project-id",
-      storageBucket: "your-project-id.appspot.com",
-      messagingSenderId: "1234567890",
-      appId: "1:1234567890:web:abcdef123456"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-  </script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login - Abandoned Tweaks</title>
   <style>
-    /* Page styles to center the panel */
     body {
       background: #111;
       margin: 0;
@@ -36,8 +15,6 @@
       min-height: 100vh;
       color: #f2f2f2;
     }
-
-    /* Panel styled like product cards */
     .login-panel {
       background: #222;
       border-radius: 8px;
@@ -46,7 +23,6 @@
       width: 350px;
       text-align: center;
     }
-
     .login-panel h2 {
       margin-top: 0;
       font-size: 1.8rem;
@@ -62,7 +38,6 @@
       0% { background-position: 0% 50%; }
       100% { background-position: 400% 50%; }
     }
-
     input[type="email"],
     input[type="password"] {
       width: 100%;
@@ -75,7 +50,6 @@
       font-size: 1rem;
       box-sizing: border-box;
     }
-
     button {
       width: 100%;
       padding: 12px;
@@ -95,13 +69,11 @@
     button:hover {
       box-shadow: 0 0 15px #00ff44;
     }
-
     @keyframes greenGradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .switch-link {
       margin-top: 1rem;
       font-size: 0.9rem;
@@ -113,8 +85,6 @@
     .switch-link a:hover {
       text-decoration: underline;
     }
-
-    /* Back button styling */
     .back-button {
       margin-top: 2rem;
       background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
@@ -139,6 +109,42 @@
       100% { background-position: 0% 50%; }
     }
   </style>
+
+  <!-- Firebase Modular SDK imports -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
+      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
+      projectId: "abandonedtweaks-b47a2",
+      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
+      messagingSenderId: "26177710755",
+      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
+      measurementId: "G-6H06DVYMCV"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('login-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = e.target['login-email'].value.trim();
+        const password = e.target['login-password'].value.trim();
+
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          alert('Login successful!');
+          window.location.href = 'index.html';
+        } catch (error) {
+          alert(error.message);
+        }
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="login-panel">
@@ -153,23 +159,5 @@
     </div>
     <button class="back-button" onclick="window.location.href='index.html'">Back</button>
   </div>
-
-  <script>
-    const form = document.getElementById('login-form');
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          alert('Login successful!');
-          window.location.href = 'index.html'; // Redirect to main site
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    });
-  </script>
 </body>
 </html>
