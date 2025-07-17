@@ -32,4 +32,68 @@
     }
     .products {
       display: grid;
-      grid-template-columns: repeat(
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: #222;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .product-card h3 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+    .price {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #888;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      color: #bbb;
+      margin-bottom: 1rem;
+    }
+    .product-video iframe {
+      width: 100%;
+      border-radius: 4px;
+    }
+    .view-button {
+      background: #444;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="f79c0dce-d96e-4095-965a-b4a1d3b2bfb0.png" alt="Abandoned Tweaks Logo" class="logo">
+  </header>
+  <div class="container">
+    <h2 class="section-title">Products</h2>
+    <div class="products">
+      <!-- all your product cards go here, same as before -->
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Abandoned Tweaks
+  </footer>
+</body>
+</html>
