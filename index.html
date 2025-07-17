@@ -16,6 +16,7 @@
       background: #fff;
       text-align: center;
       padding: 1rem;
+      border-bottom: 3px solid black; /* black line between white header and black body */
     }
     header h1.title {
       font-weight: bold;
@@ -30,12 +31,13 @@
       -webkit-text-fill-color: transparent;
       animation: rainbow 8s linear infinite;
 
-      /* Add black border line just below the title */
-      display: inline-block;  /* so the border only matches the text width */
-      border-bottom: 1px solid black;
-      padding-bottom: 5px; /* optional: add space between text and border */
+      /* Black text outline */
+      text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
     }
-
     @keyframes rainbow {
       0% {
         background-position: 0% 50%;
@@ -53,6 +55,20 @@
       text-align: center;
       font-size: 2rem;
       margin-bottom: 2rem;
+
+      /* Rainbow gradient text */
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s linear infinite;
+
+      /* Black text outline */
+      text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
     }
     .products {
       display: grid;
@@ -156,4 +172,66 @@
         <div class="price">$5.99</div>
         <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
         <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" titl
+          <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" title="Bloom Pack V1 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Bloom Pack V2</h3>
+        <div class="price">$9.99</div>
+        <div class="description">Heavily Reduce Bloom, Win Bloom Battles Constantly, AR Like a Laser Beam, Hit More Shots!</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/1CLf6Jy4kOc" title="Bloom Pack V2 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>SMG Bloom Reducer</h3>
+        <div class="price">$3.99</div>
+        <div class="description">Significantly reduce SMG bloom, hipfire spread, and ADS recoil for better aim and accuracy.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/3jTz40kOvEI" title="SMG Bloom Reducer Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>0 Delay</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/G2igjYONmzw" title="0 Delay Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Max FPS</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Skyrocket your frames to 600+ with this FPS booster — smoother gameplay, faster builds, and cleaner visuals guaranteed.</div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Mouse Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="description">Makes you click faster and helps improve your timing – great for boosting CPS and smoother edits. DIAMOND PACK</div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Keyboard Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="description">Makes your key presses 0 delay and adds rapid trigger for faster edits and movement. DIAMOND PACK</div>
+        <button class="view-button">View Details</button>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Abandoned Tweaks
+  </footer>
+</body>
+</html>
