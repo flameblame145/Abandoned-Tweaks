@@ -23,33 +23,52 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
-  // Show login/logout buttons based on user status
   auth.onAuthStateChanged(user => {
-    if (user) {
-      document.getElementById('logout-btn').style.display = 'block';
-      document.getElementById('login-btn').style.display = 'none';
-    } else {
-      document.getElementById('logout-btn').style.display = 'none';
-      document.getElementById('login-btn').style.display = 'block';
+    if (!user) {
+      window.location.href = "login.html";
     }
   });
 
   function logout() {
     auth.signOut().then(() => {
-      window.location.reload();
+      window.location.href = "login.html";
     });
   }
 </script>
 
 <style>
-  /* keep all your styles untouched... */
+  /* Your entire CSS exactly as you provided, unchanged for brevity */
+  /* [PASTE the big <style> block you gave, unchanged] */
 </style>
 </head>
 <body>
 
-<!-- Starry background container -->
+<!-- Logout Button -->
+<button id="logout-btn" onclick="logout()">Logout</button>
+
+<!-- Starry background -->
 <div class="starry-background" aria-hidden="true">
-  <!-- your stars here -->
+  <!-- your 20+ stars, unchanged -->
+  <div class="star small" style="top:10%; left:15%; animation-delay: 0s;"></div>
+  <div class="star medium" style="top:20%; left:80%; animation-delay: 1s;"></div>
+  <div class="star large" style="top:30%; left:50%; animation-delay: 2s;"></div>
+  <div class="star small" style="top:40%; left:70%; animation-delay: 3s;"></div>
+  <div class="star medium" style="top:60%; left:10%; animation-delay: 4s;"></div>
+  <div class="star large" style="top:75%; left:30%; animation-delay: 5s;"></div>
+  <div class="star small" style="top:80%; left:60%; animation-delay: 6s;"></div>
+  <div class="star medium" style="top:85%; left:90%; animation-delay: 7s;"></div>
+  <div class="star large" style="top:5%; left:40%; animation-delay: 8s;"></div>
+  <div class="star small" style="top:50%; left:25%; animation-delay: 9s;"></div>
+  <div class="star medium" style="top:12%; left:35%; animation-delay: 1.5s;"></div>
+  <div class="star small" style="top:70%; left:45%; animation-delay: 2.5s;"></div>
+  <div class="star large" style="top:55%; left:75%; animation-delay: 3.5s;"></div>
+  <div class="star small" style="top:35%; left:15%; animation-delay: 4.5s;"></div>
+  <div class="star medium" style="top:25%; left:55%; animation-delay: 5.5s;"></div>
+  <div class="star large" style="top:65%; left:85%; animation-delay: 6.5s;"></div>
+  <div class="star small" style="top:90%; left:20%; animation-delay: 7.5s;"></div>
+  <div class="star medium" style="top:45%; left:95%; animation-delay: 8.5s;"></div>
+  <div class="star large" style="top:15%; left:65%; animation-delay: 9.5s;"></div>
+  <div class="star small" style="top:75%; left:5%; animation-delay: 10s;"></div>
 </div>
 
 <!-- Shooting star -->
@@ -58,19 +77,87 @@
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
 </header>
+
 <nav>
   <a href="https://discord.gg/qyZEhex3HJ" target="_blank">Discord</a>
   <a href="#">Purchase</a>
   <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
 </nav>
 
-<!-- Login/logout buttons -->
-<button id="login-btn" onclick="window.location.href='login.html'" style="position: fixed; top: 10px; right: 10px; background: #0ff; border: none; color: #111; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px #0ff; z-index: 10;">Login</button>
-<button id="logout-btn" onclick="logout()" style="display:none; position: fixed; top: 10px; right: 10px; background: #0ff; border: none; color: #111; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px #0ff; z-index: 10;">Logout</button>
-
 <div class="container">
   <div class="products">
-    <!-- your product cards unchanged -->
+    <!-- Your product cards exactly as you gave them -->
+    <div class="product-card">
+      <h3 class="rainbow-text">Variety Pack</h3>
+      <div class="price">$49.99</div>
+      <div class="rating">★★★★★ (14)</div>
+      <div class="description">All of the packs — even ones unreleased.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/49.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/49.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3 class="neon-text">Taste Tester</h3>
+      <div class="price">$19.99</div>
+      <div class="rating">★★★★★ (19)</div>
+      <div class="description">Massively improves aim, builds, and performance.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/19.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3>Shotgun Pack V1</h3>
+      <div class="price">$5.99</div>
+      <div class="rating">★★★★★ (7)</div>
+      <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3>Shotgun Pack V2</h3>
+      <div class="price">$14.99</div>
+      <div class="rating">★★★★★ (8)</div>
+      <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/14.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/14.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3>Bloom Pack V1</h3>
+      <div class="price">$5.99</div>
+      <div class="rating">★★★★★ (14)</div>
+      <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <!-- add more cards if needed -->
   </div>
 </div>
 
