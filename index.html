@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abandoned Tweaks</title>
 <style>
-  /* Your existing styles here (same as your original) */
   body {
     font-family: Arial, sans-serif;
     background: #111;
@@ -60,7 +59,7 @@
     gap: 1rem;
     padding: 1rem;
   }
-  nav a, nav button {
+  nav a {
     color: #f2f2f2;
     text-decoration: none;
     font-weight: bold;
@@ -69,10 +68,9 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(255,255,255,0.2);
     transition: background 0.3s, box-shadow 0.3s;
-    border: none;
     cursor: pointer;
   }
-  nav a:hover, nav button:hover {
+  nav a:hover {
     background: #333;
     box-shadow: 0 0 15px rgba(255,255,255,0.4);
   }
@@ -175,40 +173,53 @@
     font-size: 0.9rem;
     color: #aaa;
   }
-  /* login/signup container styling */
-  #auth-container {
+
+  /* Login panel styles, same as product-card */
+  #loginPanel {
     background: #222;
     border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 2rem;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,255,255,0.4);
     max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    display: none;
+    margin: 3rem auto;
+    display: none; /* Hidden by default */
   }
-  #auth-container input {
-    width: 100%;
-    padding: 0.6rem;
-    margin: 0.5rem 0;
-    border-radius: 4px;
-    border: none;
-  }
-  #auth-container button {
-    width: 100%;
-    padding: 0.7rem;
-    margin-top: 0.5rem;
-    background: #0ff;
-    border: none;
-    border-radius: 4px;
+  #loginPanel h2 {
     font-weight: bold;
+    margin-bottom: 1rem;
+    color: #0ff;
+  }
+  #loginPanel input[type="email"],
+  #loginPanel input[type="password"] {
+    width: 90%;
+    padding: 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+  }
+  #loginPanel button {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: bold;
+  }
+  #loginPanel button#loginBtn {
+    background: #0ff;
     color: #111;
   }
-  #auth-error {
-    color: #f66;
-    margin-top: 0.5rem;
-    font-weight: bold;
-    min-height: 1.2em;
+  #loginPanel button#signupBtn {
+    background: #08f;
+    color: #fff;
+  }
+  #loginPanel button#backBtn {
+    background: #555;
+    color: #eee;
+    margin-top: 1.5rem;
+    width: 95%;
   }
 </style>
 </head>
@@ -217,27 +228,17 @@
   <h1 class="title">Abandoned Tweaks</h1>
 </header>
 <nav>
-  <a href="https://discord.gg/qyZEhex3HJ">Discord</a>
+  <a href="https://discord.gg/qyZEhex3HJ" target="_blank">Discord</a>
   <a href="#">Purchase</a>
-  <a href="https://www.tiktok.com/@abandonedtweaks">TikTok</a>
-  <a href="#" id="login-link">Login / Sign Up</a>
-  <button id="logout-button" style="display:none;">Logout</button>
+  <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
+  <a id="loginLink">Login / Sign Up</a>
 </nav>
-
 <div class="container">
-  <!-- LOGIN/SIGNUP FORM CONTAINER -->
-  <div id="auth-container">
-    <h2>Login or Sign Up</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="login-btn">Login</button>
-    <button id="signup-btn">Sign Up</button>
-    <div id="auth-error"></div>
-  </div>
 
-  <div class="products">
+  <!-- Products grid -->
+  <div class="products" id="productsGrid">
 
-    <!-- All your product cards unchanged -->
+    <!-- Product Cards -->
     <div class="product-card">
       <h3 class="rainbow-text">Variety Pack</h3>
       <div class="price">$49.99</div>
@@ -395,86 +396,42 @@
     </div>
 
   </div>
+
+  <!-- Login/Signup panel -->
+  <div id="loginPanel">
+    <h2>Login / Sign Up</h2>
+    <input type="email" id="email" placeholder="Email" required /><br/>
+    <input type="password" id="password" placeholder="Password" required /><br/>
+    <button id="loginBtn">Login</button>
+    <button id="signupBtn">Sign Up</button>
+    <button id="backBtn">Back</button>
+  </div>
 </div>
 
 <footer>
   &copy; 2025 Abandoned Tweaks
 </footer>
 
-<!-- Firebase and auth scripts -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script>
-  // TODO: Replace with your Firebase project config:
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    // ... rest of your config
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
+  const loginLink = document.getElementById('loginLink');
+  const productsGrid = document.getElementById('productsGrid');
+  const loginPanel = document.getElementById('loginPanel');
+  const backBtn = document.getElementById('backBtn');
 
-  // Elements
-  const authContainer = document.getElementById('auth-container');
-  const loginLink = document.getElementById('login-link');
-  const logoutButton = document.getElementById('logout-button');
-  const loginBtn = document.getElementById('login-btn');
-  const signupBtn = document.getElementById('signup-btn');
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('password');
-  const authError = document.getElementById('auth-error');
-
-  // Show login form when login link clicked
-  loginLink.addEventListener('click', e => {
-    e.preventDefault();
-    authContainer.style.display = authContainer.style.display === 'block' ? 'none' : 'block';
+  // Show login panel and hide products
+  loginLink.addEventListener('click', () => {
+    productsGrid.style.display = 'none';
+    loginPanel.style.display = 'block';
   });
 
-  // Login
-  loginBtn.addEventListener('click', () => {
-    const email = emailInput.value;
-    const password = passwordInput.value;
-    authError.textContent = '';
-    auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        authContainer.style.display = 'none';
-      })
-      .catch(e => {
-        authError.textContent = e.message;
-      });
+  // Back button returns to products view
+  backBtn.addEventListener('click', () => {
+    loginPanel.style.display = 'none';
+    productsGrid.style.display = 'grid';
   });
 
-  // Sign Up
-  signupBtn.addEventListener('click', () => {
-    const email = emailInput.value;
-    const password = passwordInput.value;
-    authError.textContent = '';
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        authContainer.style.display = 'none';
-      })
-      .catch(e => {
-        authError.textContent = e.message;
-      });
-  });
-
-  // Logout
-  logoutButton.addEventListener('click', () => {
-    auth.signOut();
-  });
-
-  // Listen for auth state changes
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      loginLink.style.display = 'none';
-      logoutButton.style.display = 'inline-block';
-      authContainer.style.display = 'none';
-    } else {
-      loginLink.style.display = 'inline-block';
-      logoutButton.style.display = 'none';
-    }
-  });
+  // Optional: You can add your Firebase auth code here or other login/signup logic
+  // For example, loginBtn and signupBtn click listeners for Firebase auth
 </script>
-
 </body>
 </html>
