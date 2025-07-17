@@ -4,6 +4,40 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abandoned Tweaks</title>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
+    authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
+    projectId: "abandonedtweaks-b47a2",
+    storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
+    messagingSenderId: "26177710755",
+    appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
+    measurementId: "G-6H06DVYMCV"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // Check user auth state on load
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      // Not logged in? Send to login page
+      window.location.href = "login.html";
+    }
+  });
+
+  function logout() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    });
+  }
+</script>
+
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -68,7 +102,6 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(255,255,255,0.2);
     transition: background 0.3s, box-shadow 0.3s;
-    cursor: pointer;
   }
   nav a:hover {
     background: #333;
@@ -121,7 +154,6 @@
     gap: 0.5rem;
     margin-top: 0.5rem;
   }
-  /* PayPal button styles with animated blue gradient */
   .purchase-button.paypal {
     display: inline-block;
     background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
@@ -139,7 +171,6 @@
   .purchase-button.paypal:hover {
     box-shadow: 0 0 15px #00b0ff;
   }
-  /* CashApp button styles with animated green gradient */
   .purchase-button.cashapp {
     display: inline-block;
     background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
@@ -173,53 +204,23 @@
     font-size: 0.9rem;
     color: #aaa;
   }
-
-  /* Login panel styles, same as product-card */
-  #loginPanel {
-    background: #222;
-    border-radius: 8px;
-    padding: 2rem 1.5rem 1.5rem 1.5rem;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(0,255,255,0.4);
-    max-width: 400px;
-    margin: 3rem auto;
-    display: none; /* Hidden by default */
-  }
-  #loginPanel h2 {
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #0ff;
-  }
-  #loginPanel input[type="email"],
-  #loginPanel input[type="password"] {
-    width: 90%;
-    padding: 0.5rem;
-    margin: 0.5rem 0 1rem 0;
-    border-radius: 6px;
-    border: none;
-    font-size: 1rem;
-  }
-  #loginPanel button {
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  #loginPanel button#loginBtn {
+  /* Logout button style */
+  #logout-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
     background: #0ff;
+    border: none;
     color: #111;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 10px #0ff;
+    transition: box-shadow 0.3s;
   }
-  #loginPanel button#signupBtn {
-    background: #08f;
-    color: #fff;
-  }
-  #loginPanel button#backBtn {
-    background: #555;
-    color: #eee;
-    margin-top: 1.5rem;
-    width: 95%;
+  #logout-btn:hover {
+    box-shadow: 0 0 20px #00ffff;
   }
 </style>
 </head>
@@ -231,14 +232,11 @@
   <a href="https://discord.gg/qyZEhex3HJ" target="_blank">Discord</a>
   <a href="#">Purchase</a>
   <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
-  <a id="loginLink">Login / Sign Up</a>
 </nav>
 <div class="container">
+  <div class="products">
 
-  <!-- Products grid -->
-  <div class="products" id="productsGrid">
-
-    <!-- Product Cards -->
+    <!-- Your product cards (like Shotgun Pack V1, Mouse Tweaks, etc.) -->
     <div class="product-card">
       <h3 class="rainbow-text">Variety Pack</h3>
       <div class="price">$49.99</div>
@@ -372,9 +370,9 @@
     <div class="product-card">
       <h3>Keyboard Tweaks</h3>
       <div class="price">$1.99</div>
-      <div class="description">Makes your key presses 0 delay and adds rapid trigger for faster edits and movement. DIAMOND PACK</div>
+      <div class="description">Speed up your keystrokes with this pack – perfect for faster building and better key press response. ESSENTIAL PACK</div>
       <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/8oV8AOK4brM" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="purchase-buttons">
         <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
@@ -382,56 +380,13 @@
       </div>
     </div>
 
-    <div class="product-card">
-      <h3>Wifi Tweaks</h3>
-      <div class="price">$5.99</div>
-      <div class="description">10+ optimizations to get 0 ping consistently.</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Login/Signup panel -->
-  <div id="loginPanel">
-    <h2>Login / Sign Up</h2>
-    <input type="email" id="email" placeholder="Email" required /><br/>
-    <input type="password" id="password" placeholder="Password" required /><br/>
-    <button id="loginBtn">Login</button>
-    <button id="signupBtn">Sign Up</button>
-    <button id="backBtn">Back</button>
   </div>
 </div>
 
+<button id="logout-btn" onclick="logout()">Logout</button>
+
 <footer>
-  &copy; 2025 Abandoned Tweaks
+  &copy; 2023 Abandoned Tweaks. All rights reserved.
 </footer>
-
-<script>
-  const loginLink = document.getElementById('loginLink');
-  const productsGrid = document.getElementById('productsGrid');
-  const loginPanel = document.getElementById('loginPanel');
-  const backBtn = document.getElementById('backBtn');
-
-  // Show login panel and hide products
-  loginLink.addEventListener('click', () => {
-    productsGrid.style.display = 'none';
-    loginPanel.style.display = 'block';
-  });
-
-  // Back button returns to products view
-  backBtn.addEventListener('click', () => {
-    loginPanel.style.display = 'none';
-    productsGrid.style.display = 'grid';
-  });
-
-  // Optional: You can add your Firebase auth code here or other login/signup logic
-  // For example, loginBtn and signupBtn click listeners for Firebase auth
-</script>
 </body>
 </html>
