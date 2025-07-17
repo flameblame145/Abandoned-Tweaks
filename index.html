@@ -49,42 +49,45 @@
     z-index: -1; /* behind everything */
     background: transparent;
   }
-  #stars::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 2px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    box-shadow:
-      10px 20px white,
-      50px 40px white,
-      90px 80px white,
-      130px 100px white,
-      180px 150px white,
-      230px 90px white,
-      280px 60px white,
-      320px 110px white,
-      370px 130px white,
-      420px 180px white,
-      470px 140px white,
-      510px 70px white,
-      560px 90px white,
-      600px 150px white,
-      650px 110px white,
-      700px 130px white,
-      740px 60px white,
-      780px 170px white,
-      830px 120px white,
-      880px 90px white;
-    animation: twinkle 3s infinite alternate;
+#stars::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    10px 20px white,
+    50px 40px white,
+    90px 80px white,
+    130px 100px white,
+    180px 150px white,
+    230px 90px white,
+    280px 60px white,
+    320px 110px white,
+    370px 130px white,
+    420px 180px white,
+    470px 140px white,
+    510px 70px white,
+    560px 90px white,
+    600px 150px white,
+    650px 110px white,
+    700px 130px white,
+    740px 60px white,
+    780px 170px white,
+    830px 120px white,
+    880px 90px white;
+  animation: drift 40s linear infinite;
+}
+@keyframes drift {
+  0% {
+    transform: translateX(0);
   }
-  @keyframes twinkle {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; }
+  100% {
+    transform: translateX(-100px);
   }
-
+}
   /* Existing styles */
 
   body {
