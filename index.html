@@ -69,17 +69,30 @@
     font-weight: bold;
   }
   .taste-tester {
-    background: linear-gradient(90deg, #ff0000, #ff9900, #33cc33, #3399ff, #9900cc, #ff0000);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: neon-rainbow 4s linear infinite;
+    color: #39ff14;
+    text-shadow:
+      0 0 5px #39ff14,
+      0 0 10px #39ff14,
+      0 0 20px #39ff14,
+      0 0 40px #39ff14;
+    animation: neon-pulse 1.5s infinite alternate;
     font-weight: bold;
   }
-  @keyframes neon-rainbow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  @keyframes neon-pulse {
+    from {
+      text-shadow:
+        0 0 5px #39ff14,
+        0 0 10px #39ff14,
+        0 0 20px #39ff14,
+        0 0 40px #39ff14;
+    }
+    to {
+      text-shadow:
+        0 0 10px #39ff14,
+        0 0 20px #39ff14,
+        0 0 30px #39ff14,
+        0 0 50px #39ff14;
+    }
   }
   .price {
     font-size: 1rem;
