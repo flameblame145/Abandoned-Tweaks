@@ -14,8 +14,8 @@
     padding: 0;
     overflow-x: hidden;
   }
-  /* Container for stars */
-  #stars, #stars2, #stars3 {
+  /* Star layers */
+  #stars, #stars2, #stars3, #stars4, #stars5 {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     width: 100%;
@@ -23,25 +23,39 @@
     display: block;
     z-index: 0;
     pointer-events: none;
+    background-repeat: repeat;
   }
   #stars {
     background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/star.png') repeat;
-    background-size: 20px 20px;
+    background-size: 15px 15px;
     animation: moveStars 50s linear infinite;
-    opacity: 0.6;
+    opacity: 0.7;
   }
   #stars2 {
     background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/star.png') repeat;
-    background-size: 30px 30px;
+    background-size: 25px 25px;
     animation: moveStars 100s linear infinite;
-    opacity: 0.4;
+    opacity: 0.5;
   }
   #stars3 {
     background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/star.png') repeat;
-    background-size: 50px 50px;
+    background-size: 40px 40px;
     animation: moveStars 150s linear infinite;
-    opacity: 0.2;
+    opacity: 0.3;
   }
+  #stars4 {
+    background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/star.png') repeat;
+    background-size: 8px 8px;
+    animation: moveStars 75s linear infinite;
+    opacity: 0.8;
+  }
+  #stars5 {
+    background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/star.png') repeat;
+    background-size: 60px 60px;
+    animation: moveStars 200s linear infinite;
+    opacity: 0.15;
+  }
+
   @keyframes moveStars {
     from {background-position: 0 0;}
     to {background-position: -10000px 5000px;}
@@ -220,8 +234,10 @@
 <body>
 <!-- Star layers -->
 <div id="stars"></div>
+<div id="stars4"></div>
 <div id="stars2"></div>
 <div id="stars3"></div>
+<div id="stars5"></div>
 
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
@@ -374,4 +390,27 @@
   </div>
   <div class="purchase-buttons">
     <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
-    <
+    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Wifi Tweaks</h3>
+  <div class="price">$5.99</div>
+  <div class="description">10+ optimizations to get 0 ping consistently.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+  </div>
+</div>
+<footer>
+  &copy; 2025 Abandoned Tweaks
+</footer>
+</body>
+</html>
