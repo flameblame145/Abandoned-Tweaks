@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abandoned Tweaks</title>
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background: linear-gradient(135deg, #1a1a1a, #333); 
-      color: #f2f2f2; 
-      margin: 0; padding: 0;
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f2f2f2;
+      margin: 0;
+      padding: 0;
     }
     header {
       background: #000;
@@ -21,28 +22,58 @@
       font-size: 2rem;
     }
     .container {
-      max-width: 800px;
+      max-width: 1200px;
       margin: auto;
       padding: 2rem;
     }
-    .product {
-      background: #222;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 8px;
-    }
-    .product h2 {
-      margin-top: 0;
-    }
-    .product-video {
-      margin-top: 1rem;
+    h2.section-title {
       text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: #222;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .product-card h3 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+    .price {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
     }
     .old-price {
       text-decoration: line-through;
-      color: #aaa;
+      color: #888;
       font-size: 0.9rem;
       margin-left: 0.5rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      color: #bbb;
+      margin-bottom: 1rem;
+    }
+    .product-video iframe {
+      width: 100%;
+      border-radius: 4px;
+    }
+    .view-button {
+      background: #444;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
     }
     footer {
       text-align: center;
@@ -57,89 +88,107 @@
     <h1>Abandoned Tweaks</h1>
   </header>
   <div class="container">
-    <p>Welcome to Abandoned Tweaks! Boost your gaming performance with our custom optimizations.</p>
+    <h2 class="section-title">Products</h2>
+    <div class="products">
 
-    <div class="product">
-      <h2>Variety Pack | $49.99</h2>
-      <p>All of the packs — even ones unreleased.</p>
-    </div>
-
-    <div class="product">
-      <h2>Taste Tester | $19.99</h2>
-      <p>Massively improves aim, builds, and performance.</p>
-      <div class="product-video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/1LcI4dj9k4w" 
-          title="Taste Tester Example" frameborder="0" allowfullscreen></iframe>
+      <div class="product-card">
+        <h3>Variety Pack</h3>
+        <div class="price">$49.99</div>
+        <div class="description">All of the packs — even ones unreleased.</div>
+        <button class="view-button">View Details</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>Shotgun Pack V1 | $5.99</h2>
-      <p>Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</p>
-      <div class="product-video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/gD5y8SvbVTA" 
-          title="Shotgun Pack V1 Demo" frameborder="0" allowfullscreen></iframe>
+      <div class="product-card">
+        <h3>Taste Tester</h3>
+        <div class="price">$19.99</div>
+        <div class="description">Massively improves aim, builds, and performance.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" title="Taste Tester Example" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>Shotgun Pack V2 | $14.99 <span class="old-price">was $20 (25% off)</span></h2>
-      <p>Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</p>
-      <div class="product-video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/7eDtKVOwSyE" 
-          title="Shotgun Pack V2 Demo" frameborder="0" allowfullscreen></iframe>
+      <div class="product-card">
+        <h3>Shotgun Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" title="Shotgun Pack V1 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>Bloom Pack V1 | $5.99</h2>
-      <p>Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</p>
-      <div class="product-video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/9dpDf0SKI0I" 
-          title="Bloom Pack V1 Demo" frameborder="0" allowfullscreen></iframe>
+      <div class="product-card">
+        <h3>Shotgun Pack V2</h3>
+        <div class="price">$14.99 <span class="old-price">was $20 (25% off)</span></div>
+        <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" title="Shotgun Pack V2 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>Bloom Pack V2 | $9.99</h2>
-      <p>Heavily Reduce Bloom, Win Bloom Battles Constantly, AR Like a Laser Beam, Hit More Shots!</p>
-      <div class="product-video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/1CLf6Jy4kOc" 
-          title="Bloom Pack V2 Demo" frameborder="0" allowfullscreen></iframe>
+      <div class="product-card">
+        <h3>Bloom Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" title="Bloom Pack V1 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>SMG Bloom Reducer | $3.99</h2>
-      <p>Significantly reduce SMG bloom, hipfire spread, and ADS recoil for better aim and accuracy.</p>
-      <div class="product-video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/3jTz40kOvEI" 
-          title="SMG Bloom Reducer Demo" frameborder="0" allowfullscreen></iframe>
+      <div class="product-card">
+        <h3>Bloom Pack V2</h3>
+        <div class="price">$9.99</div>
+        <div class="description">Heavily Reduce Bloom, Win Bloom Battles Constantly, AR Like a Laser Beam, Hit More Shots!</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/1CLf6Jy4kOc" title="Bloom Pack V2 Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>0 Delay | $4.99</h2>
-      <p>Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</p>
-      <div class="product-video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/G2igjYONmzw" 
-          title="0 Delay Demo" frameborder="0" allowfullscreen></iframe>
+      <div class="product-card">
+        <h3>SMG Bloom Reducer</h3>
+        <div class="price">$3.99</div>
+        <div class="description">Significantly reduce SMG bloom, hipfire spread, and ADS recoil for better aim and accuracy.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/3jTz40kOvEI" title="SMG Bloom Reducer Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
       </div>
-    </div>
 
-    <div class="product">
-      <h2>Max FPS | $4.99</h2>
-      <p>Skyrocket your frames to 600+ with this FPS booster — smoother gameplay, faster builds, and cleaner visuals guaranteed.</p>
-    </div>
+      <div class="product-card">
+        <h3>0 Delay</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/G2igjYONmzw" title="0 Delay Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <button class="view-button">View Details</button>
+      </div>
 
-    <div class="product">
-      <h2>Mouse Tweaks | $1.99</h2>
-      <p>Makes you click faster and helps improve your timing – great for boosting CPS and smoother edits. DIAMOND PACK</p>
-    </div>
+      <div class="product-card">
+        <h3>Max FPS</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Skyrocket your frames to 600+ with this FPS booster — smoother gameplay, faster builds, and cleaner visuals guaranteed.</div>
+        <button class="view-button">View Details</button>
+      </div>
 
-    <div class="product">
-      <h2>Keyboard Tweaks | $1.99</h2>
-      <p>Makes your key presses 0 delay and adds rapid trigger for faster edits and movement. DIAMOND PACK</p>
+      <div class="product-card">
+        <h3>Mouse Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="description">Makes you click faster and helps improve your timing – great for boosting CPS and smoother edits. DIAMOND PACK</div>
+        <button class="view-button">View Details</button>
+      </div>
+
+      <div class="product-card">
+        <h3>Keyboard Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="description">Makes your key presses 0 delay and adds rapid trigger for faster edits and movement. DIAMOND PACK</div>
+        <button class="view-button">View Details</button>
+      </div>
+
     </div>
   </div>
   <footer>
