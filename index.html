@@ -23,14 +23,6 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
-  // Check user auth state on load
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      // Not logged in? Send to login page
-      window.location.href = "login.html";
-    }
-  });
-
   function logout() {
     auth.signOut().then(() => {
       window.location.href = "login.html";
@@ -39,20 +31,19 @@
 </script>
 
 <style>
-  /* === Your existing styles === */
   body {
     font-family: Arial, sans-serif;
     background: #111;
     color: #f2f2f2;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* prevent horizontal scroll */
+    overflow-x: hidden;
   }
   header {
     background: #111;
     text-align: center;
     padding: 1rem;
-    position: relative; /* ensure stacking context */
+    position: relative;
     z-index: 10;
   }
   header h1.title {
@@ -70,32 +61,6 @@
   @keyframes rainbow {
     0% { background-position: 0% 50%; }
     100% { background-position: 400% 50%; }
-  }
-  .rainbow-text {
-    font-weight: bold;
-    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-    background-size: 400% 400%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rainbow 8s linear infinite;
-    position: relative;
-    z-index: 10;
-  }
-  .neon-text {
-    font-weight: bold;
-    color: #0ff;
-    text-shadow:
-      0 0 5px #0ff,
-      0 0 10px #0ff,
-      0 0 20px #0ff,
-      0 0 40px #0ff;
-    animation: neonGlow 1.5s ease-in-out infinite alternate;
-    position: relative;
-    z-index: 10;
-  }
-  @keyframes neonGlow {
-    from { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff; }
-    to   { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff, 0 0 50px #0ff; }
   }
   nav {
     display: flex;
@@ -171,7 +136,6 @@
     margin-top: 0.5rem;
   }
   .purchase-button.paypal {
-    display: inline-block;
     background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
     background-size: 400% 400%;
     color: #fff;
@@ -188,7 +152,6 @@
     box-shadow: 0 0 15px #00b0ff;
   }
   .purchase-button.cashapp {
-    display: inline-block;
     background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
     background-size: 400% 400%;
     color: #fff;
@@ -214,15 +177,6 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  footer {
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #aaa;
-    position: relative;
-    z-index: 10;
-  }
-  /* Logout button style */
   #logout-btn {
     position: fixed;
     top: 10px;
@@ -241,116 +195,11 @@
   #logout-btn:hover {
     box-shadow: 0 0 20px #00ffff;
   }
-
-  /* === Starry background styles === */
-
-  /* Container for the stars behind content */
-  .starry-background {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none; /* so clicks pass through */
-    overflow: hidden;
-    z-index: 0;
-    background: #111;
-  }
-
-  /* Single star style */
-  .star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 2px white);
-    animation: twinkle 3s infinite ease-in-out;
-  }
-
-  /* Different star sizes and twinkle timings */
-  .star.small {
-    width: 1.5px;
-    height: 1.5px;
-    animation-duration: 3s;
-  }
-  .star.medium {
-    width: 2.5px;
-    height: 2.5px;
-    animation-duration: 4s;
-  }
-  .star.large {
-    width: 3.5px;
-    height: 3.5px;
-    animation-duration: 5s;
-  }
-
-  /* Twinkle animation */
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 0.2; }
-  }
-
-  /* Shooting star style */
-  .shooting-star {
-    position: fixed;
-    top: -10px;
-    left: -100px;
-    width: 100px;
-    height: 2px;
-    background: linear-gradient(45deg, white, rgba(255,255,255,0));
-    filter: drop-shadow(0 0 6px white);
-    border-radius: 100%;
-    transform: rotate(45deg);
-    animation: shootingStar 5s linear infinite;
-    z-index: 1;
-  }
-
-  /* Shooting star animation */
-  @keyframes shootingStar {
-    0% {
-      transform: translateX(0) translateY(0) rotate(45deg);
-      opacity: 1;
-    }
-    70% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(120vw) translateY(120vh) rotate(45deg);
-      opacity: 0;
-    }
-  }
 </style>
 </head>
 <body>
 
-<!-- Starry background container -->
-<div class="starry-background" aria-hidden="true">
-  <!-- We'll add 50 stars randomly positioned -->
-  <div class="star small" style="top:10%; left:15%; animation-delay: 0s;"></div>
-  <div class="star medium" style="top:20%; left:80%; animation-delay: 1s;"></div>
-  <div class="star large" style="top:30%; left:50%; animation-delay: 2s;"></div>
-  <div class="star small" style="top:40%; left:70%; animation-delay: 3s;"></div>
-  <div class="star medium" style="top:60%; left:10%; animation-delay: 4s;"></div>
-  <div class="star large" style="top:75%; left:30%; animation-delay: 5s;"></div>
-  <div class="star small" style="top:80%; left:60%; animation-delay: 6s;"></div>
-  <div class="star medium" style="top:85%; left:90%; animation-delay: 7s;"></div>
-  <div class="star large" style="top:5%; left:40%; animation-delay: 8s;"></div>
-  <div class="star small" style="top:50%; left:25%; animation-delay: 9s;"></div>
-  <!-- add more stars as needed -->
-  <!-- (I included 10 here, but you can add more by duplicating with different positions and delays) -->
-  <div class="star medium" style="top:12%; left:35%; animation-delay: 1.5s;"></div>
-  <div class="star small" style="top:70%; left:45%; animation-delay: 2.5s;"></div>
-  <div class="star large" style="top:55%; left:75%; animation-delay: 3.5s;"></div>
-  <div class="star small" style="top:35%; left:15%; animation-delay: 4.5s;"></div>
-  <div class="star medium" style="top:25%; left:55%; animation-delay: 5.5s;"></div>
-  <div class="star large" style="top:65%; left:85%; animation-delay: 6.5s;"></div>
-  <div class="star small" style="top:90%; left:20%; animation-delay: 7.5s;"></div>
-  <div class="star medium" style="top:45%; left:95%; animation-delay: 8.5s;"></div>
-  <div class="star large" style="top:15%; left:65%; animation-delay: 9.5s;"></div>
-  <div class="star small" style="top:75%; left:5%; animation-delay: 10s;"></div>
-</div>
-
-<!-- Shooting star -->
-<div class="shooting-star" aria-hidden="true"></div>
+<button id="logout-btn" onclick="window.location.href='login.html'">Login</button>
 
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
@@ -363,11 +212,10 @@
 <div class="container">
   <div class="products">
 
-    <!-- Your product cards (like Shotgun Pack V1, Mouse Tweaks, etc.) -->
+    <!-- Variety Pack -->
     <div class="product-card">
       <h3 class="rainbow-text">Variety Pack</h3>
       <div class="price">$49.99</div>
-      <div class="rating">★★★★★ (14)</div>
       <div class="description">All of the packs — even ones unreleased.</div>
       <div class="product-video">
         <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" frameborder="0" allowfullscreen></iframe>
@@ -378,13 +226,13 @@
       </div>
     </div>
 
+    <!-- Shotgun Pack V1 -->
     <div class="product-card">
-      <h3 class="neon-text">Taste Tester</h3>
+      <h3>Shotgun Pack V1</h3>
       <div class="price">$19.99</div>
-      <div class="rating">★★★★★ (19)</div>
-      <div class="description">Massively improves aim, builds, and performance.</div>
+      <div class="description">A powerful set of shotgun tweaks for your game.</div>
       <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="purchase-buttons">
         <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button paypal">PayPal</a>
@@ -392,149 +240,21 @@
       </div>
     </div>
 
+    <!-- Assault Rifle Pack V2 -->
     <div class="product-card">
-      <h3>Shotgun Pack V1</h3>
-      <div class="price">$5.99</div>
-      <div class="rating">★★★★★ (7)</div>
-      <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+      <h3>Assault Rifle Pack V2</h3>
+      <div class="price">$24.99</div>
+      <div class="description">Enhanced rifle tweaks with new animations and effects.</div>
       <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/oHg5SJYRHA0" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+        <a href="https://paypal.me/paymepaypalplease/24.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/24.99" target="_blank" class="purchase-button cashapp">CashApp</a>
       </div>
     </div>
 
-    <div class="product-card">
-      <h3>Shotgun Pack V2</h3>
-      <div class="price">$14.99</div>
-      <div class="rating">★★★★★ (8)</div>
-      <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/14.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/14.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <h3>Bloom Pack V1</h3>
-      <div class="price">$5.99</div>
-      <div class="rating">★★★★★ (14)</div>
-      <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <h3>Bloom Pack V2</h3>
-      <div class="price">$9.99</div>
-      <div class="rating">★★★★★ (9)</div>
-      <div class="description">Heavily Reduce Bloom, Win Bloom Battles Constantly, AR Like a Laser Beam, Hit More Shots!</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/1CLf6Jy4kOc" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/9.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/9.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <h3>SMG Bloom Reducer</h3>
-      <div class="price">$3.99</div>
-      <div class="rating">★★★★★ (6)</div>
-      <div class="description">Significantly reduce SMG bloom, hipfire spread, and ADS recoil for better aim and accuracy.</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/3jTz40kOvEI" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/3.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/3.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <h3>0 Delay</h3>
-      <div class="price">$4.99</div>
-      <div class="rating">★★★★★ (9)</div>
-      <div class="description">Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/G2igjYONmzw" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <h3>Max FPS</h3>
-      <div class="price">$4.99</div>
-      <div class="rating">★★★★★ (5)</div>
-      <div class="description">Skyrocket your frames to 600+ with this FPS booster — smoother gameplay, faster builds, and cleaner visuals guaranteed.</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <h3>Mouse Tweaks</h3>
-      <div class="price">$1.99</div>
-      <div class="rating">★★★★★ (23)</div>
-      <div class="description">Makes you click faster and helps improve your timing – great for boosting CPS and smoother edits. DIAMOND PACK</div>
-      <div class="product-video">
-        <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div class="purchase-buttons">
-        <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
-        <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-      </div>
-    </div>
-
-    <div class="product-card">
-  <h3>Keyboard Tweaks</h3>
-  <div class="price">$1.99</div>
-      <div class="rating">★★★★★ (19)</div>
-  <div class="description">Speed up your keystrokes with this pack – perfect for faster building and better key press response. ESSENTIAL PACK</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/VOxXStoaLx8" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
-    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
   </div>
 </div>
-    <div class="product-card">
-  <h3>Wifi Tweaks</h3>
-  <div class="price">$5.99</div>
-      <div class="rating">★★★★★ (4)</div>
-  <div class="description">10+ optimizations to get 0 ping consistently.</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-  </div>
-</div>
-
-<button id="logout-btn" onclick="logout()">Logout</button>
-
-<footer>
-  &copy; 2023 Abandoned Tweaks. All rights reserved.
-</footer>
 </body>
 </html>
