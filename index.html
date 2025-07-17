@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abandoned Tweaks</title>
   <style>
-    /* STAR BACKGROUND */
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: black;
+      background: #111;
       color: #f2f2f2;
+      margin: 0;
+      padding: 0;
       overflow-x: hidden;
     }
 
+    /* STAR BACKGROUND */
     #stars, #stars2, #stars3 {
       position: fixed;
       top: 0;
@@ -32,34 +33,9 @@
       height: 1px;
       background: white;
       box-shadow:
-        20px 30px white,
-        50px 80px white,
-        120px 150px white,
-        200px 90px white,
-        250px 200px white,
-        300px 120px white,
-        350px 170px white,
-        400px 50px white,
-        450px 210px white,
-        500px 180px white,
-        550px 100px white,
-        600px 220px white,
-        650px 140px white,
-        700px 60px white,
-        750px 190px white,
-        800px 80px white,
-        850px 130px white,
-        200px 300px white,
-        240px 350px white,
-        280px 400px white,
-        320px 450px white,
-        360px 500px white,
-        400px 550px white,
-        440px 600px white,
-        480px 650px white,
-        520px 700px white,
-        560px 750px white,
-        600px 800px white,
+        20px 30px white, 50px 80px white, 120px 150px white, 200px 90px white,
+        250px 200px white, 300px 120px white, 350px 170px white, 400px 50px white,
+        450px 210px white, 500px 180px white, 550px 100px white, 600px 220px white,
         640px 850px white;
       animation: twinkle 3s infinite ease-in-out;
     }
@@ -81,15 +57,13 @@
       50% { opacity: 0.3; }
     }
 
-    header, nav, .container, footer {
-      position: relative;
-      z-index: 1;
-    }
-
+    /* Keep your original layout and styles here */
     header {
       background: transparent;
       text-align: center;
       padding: 1rem;
+      position: relative;
+      z-index: 1;
     }
 
     nav {
@@ -98,6 +72,8 @@
       justify-content: center;
       gap: 2rem;
       padding: 1rem;
+      position: relative;
+      z-index: 1;
     }
 
     nav a {
@@ -110,6 +86,8 @@
       max-width: 900px;
       margin: 2rem auto;
       padding: 1rem;
+      position: relative;
+      z-index: 1;
     }
 
     .product-card {
@@ -159,12 +137,14 @@
       text-align: center;
       padding: 1rem;
       background: transparent;
+      position: relative;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- STAR BACKGROUND LAYERS -->
+  <!-- STAR BACKGROUND -->
   <div id="stars"></div>
   <div id="stars2"></div>
   <div id="stars3"></div>
@@ -217,5 +197,6 @@
   <footer>
     &copy; 2025 Abandoned Tweaks
   </footer>
+
 </body>
 </html>
