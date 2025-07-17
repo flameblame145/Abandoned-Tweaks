@@ -264,7 +264,6 @@
     opacity: 0.8;
     filter: drop-shadow(0 0 2px white);
     animation: twinkle 3s infinite ease-in-out;
-    transition: transform 0.2s ease;
   }
 
   /* Different star sizes and twinkle timings */
@@ -324,8 +323,28 @@
 <body>
 
 <!-- Starry background container -->
-<div class="starry-background" aria-hidden="true" id="starry-background">
-  <!-- Stars will be dynamically added here by JS -->
+<div class="starry-background" aria-hidden="true">
+  <!-- We'll add 50 stars randomly positioned -->
+  <div class="star small" style="top:10%; left:15%; animation-delay: 0s;"></div>
+  <div class="star medium" style="top:20%; left:80%; animation-delay: 1s;"></div>
+  <div class="star large" style="top:30%; left:50%; animation-delay: 2s;"></div>
+  <div class="star small" style="top:40%; left:70%; animation-delay: 3s;"></div>
+  <div class="star medium" style="top:60%; left:10%; animation-delay: 4s;"></div>
+  <div class="star large" style="top:75%; left:30%; animation-delay: 5s;"></div>
+  <div class="star small" style="top:80%; left:60%; animation-delay: 6s;"></div>
+  <div class="star medium" style="top:85%; left:90%; animation-delay: 7s;"></div>
+  <div class="star large" style="top:5%; left:40%; animation-delay: 8s;"></div>
+  <div class="star small" style="top:50%; left:25%; animation-delay: 9s;"></div>
+  <div class="star medium" style="top:12%; left:35%; animation-delay: 1.5s;"></div>
+  <div class="star small" style="top:70%; left:45%; animation-delay: 2.5s;"></div>
+  <div class="star large" style="top:55%; left:75%; animation-delay: 3.5s;"></div>
+  <div class="star small" style="top:35%; left:15%; animation-delay: 4.5s;"></div>
+  <div class="star medium" style="top:25%; left:55%; animation-delay: 5.5s;"></div>
+  <div class="star large" style="top:65%; left:85%; animation-delay: 6.5s;"></div>
+  <div class="star small" style="top:90%; left:20%; animation-delay: 7.5s;"></div>
+  <div class="star medium" style="top:45%; left:95%; animation-delay: 8.5s;"></div>
+  <div class="star large" style="top:15%; left:65%; animation-delay: 9.5s;"></div>
+  <div class="star small" style="top:75%; left:5%; animation-delay: 10s;"></div>
 </div>
 
 <!-- Shooting star -->
@@ -342,7 +361,7 @@
 <div class="container">
   <div class="products">
 
-    <!-- Your product cards here (unchanged) -->
+    <!-- All Product Cards -->
 
     <div class="product-card">
       <h3 class="rainbow-text">Variety Pack</h3>
@@ -358,7 +377,103 @@
       </div>
     </div>
 
-    <!-- ... other product cards ... -->
+    <div class="product-card">
+      <h3 class="neon-text">Taste Tester</h3>
+      <div class="price">$19.99</div>
+      <div class="rating">★★★★★ (19)</div>
+      <div class="description">Massively improves aim, builds, and performance.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/19.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3>Shotgun Pack V1</h3>
+      <div class="price">$5.99</div>
+      <div class="rating">★★★★★ (7)</div>
+      <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3>Shotgun Pack V2</h3>
+      <div class="price">$14.99</div>
+      <div class="rating">★★★★★ (8)</div>
+      <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/14.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/14.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3>Shotgun Pack V3</h3>
+      <div class="price">$24.99</div>
+      <div class="rating">★★★★★ (11)</div>
+      <div class="description">Hit Harder Pumps More, Increase Average Pump Damage, 185 everyone. ELITE PACK</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/1B_9grzBq8k" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/24.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/24.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3 class="rainbow-text">Mouse Tweaks</h3>
+      <div class="price">$9.99</div>
+      <div class="rating">★★★★★ (4)</div>
+      <div class="description">Much better than the mouse sensitivity and acceleration. It fixes your aim and builds. Most people will be better instantly.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/wBkyZTi7duI" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/9.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/9.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3 class="neon-text">Keyboard Tweaks</h3>
+      <div class="price">$9.99</div>
+      <div class="rating">★★★★★ (5)</div>
+      <div class="description">Keyboard tweaks make it easier to build and move faster in-game.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/VOxXStoaLx8" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/9.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/9.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <h3 class="rainbow-text">Wifi Tweaks</h3>
+      <div class="price">$19.99</div>
+      <div class="rating">★★★★★ (3)</div>
+      <div class="description">Wifi tweaks reduce input lag to help you win more fights and build faster.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/AaoTllQYN1c" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button paypal">PayPal</a>
+        <a href="https://cash.app/$trazeymax/19.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -370,86 +485,8 @@
 </footer>
 
 <script>
-  const starContainer = document.getElementById('starry-background');
-  const starCount = 100;
-  const stars = [];
-
-  // Helper: random number in range
-  function randomRange(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  // Create stars dynamically
-  for (let i = 0; i < starCount; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    // Random size class
-    const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)];
-    star.classList.add(sizeClass);
-
-    // Random initial position (percentage)
-    star.style.top = `${randomRange(0, 100)}%`;
-    star.style.left = `${randomRange(0, 100)}%`;
-
-    // Random animation delay for twinkle
-    star.style.animationDelay = `${randomRange(0, 5)}s`;
-
-    // Save initial positions as pixels for movement calculations
-    star.dataset.initialLeftPercent = parseFloat(star.style.left);
-    star.dataset.initialTopPercent = parseFloat(star.style.top);
-
-    starContainer.appendChild(star);
-    stars.push(star);
-  }
-
-  // Mouse move event - move stars away from cursor smoothly
-  document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-
-    stars.forEach(star => {
-      // Convert star position % to pixels
-      const starX = (parseFloat(star.dataset.initialLeftPercent) / 100) * windowWidth;
-      const starY = (parseFloat(star.dataset.initialTopPercent) / 100) * windowHeight;
-
-      // Calculate vector from cursor to star
-      let dx = starX - mouseX;
-      let dy = starY - mouseY;
-      let dist = Math.sqrt(dx * dx + dy * dy);
-
-      // Set max radius for repulsion effect
-      const maxDist = 150;
-      if (dist < maxDist) {
-        // Normalize vector
-        dx /= dist;
-        dy /= dist;
-        // Calculate push distance proportional to proximity
-        const push = (maxDist - dist) * 0.15; // adjust multiplier for push intensity
-
-        // Calculate new position (clamped within window)
-        let newX = starX + dx * push;
-        let newY = starY + dy * push;
-
-        // Convert back to %
-        newX = Math.min(Math.max(newX / windowWidth * 100, 0), 100);
-        newY = Math.min(Math.max(newY / windowHeight * 100, 0), 100);
-
-        star.style.transform = `translate(${(newX - star.dataset.initialLeftPercent)}%, ${(newY - star.dataset.initialTopPercent)}%)`;
-      } else {
-        // Reset transform if outside maxDist
-        star.style.transform = 'translate(0, 0)';
-      }
-    });
-  });
-
-  // Optional: On mouse leave reset stars
-  document.addEventListener('mouseleave', () => {
-    stars.forEach(star => {
-      star.style.transform = 'translate(0, 0)';
-    });
-  });
+  // Starry background JS (optional)
+  // ... (you can add the dynamic star movement script here if you want)
 </script>
 
 </body>
