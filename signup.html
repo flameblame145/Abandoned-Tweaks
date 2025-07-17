@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Firebase Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-
-  <script>
-    // Your Firebase config (replace with your real config below)
-    const firebaseConfig = {
-      apiKey: "AIzaSyD-xxxxxxx-xxxxxx",
-      authDomain: "your-project-id.firebaseapp.com",
-      projectId: "your-project-id",
-      storageBucket: "your-project-id.appspot.com",
-      messagingSenderId: "1234567890",
-      appId: "1:1234567890:web:abcdef123456"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-  </script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sign Up - Abandoned Tweaks</title>
@@ -129,13 +109,49 @@
       100% { background-position: 0% 50%; }
     }
   </style>
+
+  <!-- Firebase Modular SDK imports -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
+      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
+      projectId: "abandonedtweaks-b47a2",
+      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
+      messagingSenderId: "26177710755",
+      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
+      measurementId: "G-6H06DVYMCV"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('signup-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = e.target['signup-email'].value.trim();
+        const password = e.target['signup-password'].value.trim();
+
+        try {
+          await createUserWithEmailAndPassword(auth, email, password);
+          alert('Account created successfully!');
+          window.location.href = 'index.html';
+        } catch (error) {
+          alert(error.message);
+        }
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="signup-panel">
-    <h2>Create Your Account</h2>
+    <h2>Create an Account</h2>
     <form id="signup-form" autocomplete="off">
       <input type="email" id="signup-email" placeholder="Email" required />
-      <input type="password" id="signup-password" placeholder="Password (min 6 chars)" required minlength="6" />
+      <input type="password" id="signup-password" placeholder="Password" required />
       <button type="submit">Sign Up</button>
     </form>
     <div class="switch-link">
@@ -143,26 +159,5 @@
     </div>
     <button class="back-button" onclick="window.location.href='index.html'">Back</button>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const signupForm = document.getElementById('signup-form');
-      signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const email = document.getElementById('signup-email').value.trim();
-        const password = document.getElementById('signup-password').value.trim();
-
-        auth.createUserWithEmailAndPassword(email, password)
-          .then((userCredential) => {
-            alert('Account created successfully!');
-            window.location.href = 'index.html'; // Redirect to home page after signup
-          })
-          .catch((error) => {
-            alert('Error: ' + error.message);
-          });
-      });
-    });
-  </script>
 </body>
 </html>
