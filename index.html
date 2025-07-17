@@ -5,30 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abandoned Tweaks</title>
 <style>
-  /* Make sure canvas covers entire page */
-  body, html {
+  body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #f2f2f2;
     margin: 0;
     padding: 0;
-    height: 100%;
-    overflow-x: hidden;
-    font-family: Arial, sans-serif;
-    color: #f2f2f2;
-    background: #111; /* fallback if canvas not supported */
-    position: relative;
   }
-  /* Canvas goes behind everything */
-  #starfield {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* behind everything */
-    background: #111;
-    display: block;
-  }
-
   header {
-    background: transparent; /* make header transparent so stars show through */
+    background: #111;
     text-align: center;
     padding: 1rem;
   }
@@ -73,7 +58,6 @@
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
-    background: transparent; /* transparent nav so stars show */
   }
   nav a {
     color: #f2f2f2;
@@ -93,9 +77,6 @@
     max-width: 1200px;
     margin: auto;
     padding: 2rem;
-    position: relative; /* above canvas */
-    background: rgba(0, 0, 0, 0.6); /* slight transparent black background for readability */
-    border-radius: 8px;
   }
   .products {
     display: grid;
@@ -190,14 +171,10 @@
     padding: 1rem;
     font-size: 0.9rem;
     color: #aaa;
-    position: relative; /* above canvas */
   }
 </style>
 </head>
 <body>
-<!-- Canvas for starry background -->
-<canvas id="starfield"></canvas>
-
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
 </header>
@@ -223,80 +200,153 @@
   </div>
 </div>
 
-<!-- ... other product cards here ... -->
+<div class="product-card">
+  <h3 class="neon-text">Taste Tester</h3>
+  <div class="price">$19.99</div>
+  <div class="description">Massively improves aim, builds, and performance.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/19.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/19.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Shotgun Pack V1</h3>
+  <div class="price">$5.99</div>
+  <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Shotgun Pack V2</h3>
+  <div class="price">$14.99</div>
+  <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/14.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/14.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Bloom Pack V1</h3>
+  <div class="price">$5.99</div>
+  <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Bloom Pack V2</h3>
+  <div class="price">$9.99</div>
+  <div class="description">Heavily Reduce Bloom, Win Bloom Battles Constantly, AR Like a Laser Beam, Hit More Shots!</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/1CLf6Jy4kOc" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/9.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/9.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>SMG Bloom Reducer</h3>
+  <div class="price">$3.99</div>
+  <div class="description">Significantly reduce SMG bloom, hipfire spread, and ADS recoil for better aim and accuracy.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/3jTz40kOvEI" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/3.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/3.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>0 Delay</h3>
+  <div class="price">$4.99</div>
+  <div class="description">Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/G2igjYONmzw" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Max FPS</h3>
+  <div class="price">$4.99</div>
+  <div class="description">Skyrocket your frames to 600+ with this FPS booster — smoother gameplay, faster builds, and cleaner visuals guaranteed.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/4.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/4.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Mouse Tweaks</h3>
+  <div class="price">$1.99</div>
+  <div class="description">Makes you click faster and helps improve your timing – great for boosting CPS and smoother edits. DIAMOND PACK</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Keyboard Tweaks</h3>
+  <div class="price">$1.99</div>
+  <div class="description">Makes your key presses 0 delay and adds rapid trigger for faster edits and movement. DIAMOND PACK</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/1.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/1.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
+
+<div class="product-card">
+  <h3>Wifi Tweaks</h3>
+  <div class="price">$5.99</div>
+  <div class="description">10+ optimizations to get 0 ping consistently.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
+    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
+  </div>
+</div>
 
   </div>
 </div>
 <footer>
   &copy; 2025 Abandoned Tweaks
 </footer>
-
-<script>
-  const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
-
-  let width, height;
-  let stars = [];
-
-  // Star constructor
-  function Star(x, y, radius, speed) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.speed = speed;
-  }
-
-  Star.prototype.update = function() {
-    this.x -= this.speed;
-    if(this.x < 0) {
-      this.x = width;
-      this.y = Math.random() * height;
-      this.radius = Math.random() * 1.5 + 0.5;
-      this.speed = Math.random() * 0.5 + 0.1;
-    }
-  }
-
-  Star.prototype.draw = function() {
-    ctx.beginPath();
-    ctx.fillStyle = 'white';
-    ctx.shadowColor = 'white';
-    ctx.shadowBlur = 10;
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  function createStars(count) {
-    stars = [];
-    for(let i = 0; i < count; i++) {
-      stars.push(new Star(
-        Math.random() * width,
-        Math.random() * height,
-        Math.random() * 1.5 + 0.5,
-        Math.random() * 0.5 + 0.1
-      ));
-    }
-  }
-
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    createStars(200); // Number of stars
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    stars.forEach(star => {
-      star.update();
-      star.draw();
-    });
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-  animate();
-</script>
 </body>
 </html>
