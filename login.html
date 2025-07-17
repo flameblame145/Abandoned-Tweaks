@@ -2,116 +2,174 @@
 <html lang="en">
 <head>
   <!-- Firebase Scripts -->
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 
-<script>
-  // Your Firebase config (REPLACE THIS with yours from Firebase settings)
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
+  <script>
+    // Your Firebase config (replace with your actual config)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-</script>
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+  </script>
 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login - Abandoned Tweaks</title>
   <style>
+    /* Page styles to center the panel */
     body {
-      background-color: #111;
-      color: #f2f2f2;
+      background: #111;
+      margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      color: #f2f2f2;
     }
-    .login-container {
-      background: #1a1a1a;
+
+    /* Panel styled like product cards */
+    .login-panel {
+      background: #222;
+      border-radius: 8px;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,255,255,0.4);
-      width: 90%;
-      max-width: 400px;
-    }
-    h2 {
+      box-shadow: 0 0 15px rgba(0,255,255,0.2);
+      width: 350px;
       text-align: center;
-      color: #0ff;
     }
-    input {
+
+    .login-panel h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s linear infinite;
+      margin-bottom: 1.5rem;
+    }
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
+      margin: 0.8rem 0;
       border: none;
       border-radius: 5px;
       background: #333;
-      color: white;
+      color: #f2f2f2;
+      font-size: 1rem;
+      box-sizing: border-box;
     }
+
     button {
       width: 100%;
-      padding: 10px;
-      border: none;
-      background-color: #0ff;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .switch-link {
-      text-align: center;
+      padding: 12px;
       margin-top: 1rem;
+      background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
+      background-size: 400% 400%;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      animation: greenGradient 5s ease infinite;
+      box-shadow: 0 0 8px #00d12e;
+      transition: box-shadow 0.3s;
+    }
+    button:hover {
+      box-shadow: 0 0 15px #00ff44;
+    }
+
+    @keyframes greenGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .switch-link {
+      margin-top: 1rem;
+      font-size: 0.9rem;
     }
     .switch-link a {
       color: #0ff;
       text-decoration: none;
     }
+    .switch-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Back button styling */
+    .back-button {
+      margin-top: 2rem;
+      background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
+      background-size: 400% 400%;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 0;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+      animation: blueGradient 5s ease infinite;
+      box-shadow: 0 0 8px #009cde;
+      transition: box-shadow 0.3s;
+    }
+    .back-button:hover {
+      box-shadow: 0 0 15px #00b0ff;
+    }
+    @keyframes blueGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form id="login-form">
-  <input type="email" id="login-email" placeholder="Email" required />
-  <input type="password" id="login-password" placeholder="Password" required />
-  <button type="submit">Login</button>
-</form>
-<div class="switch-link">
-  Don't have an account? <a href="signup.html">Sign up</a>
-</div>
-
-<script>
-  const form = document.getElementById('login-form');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        alert('Login successful!');
-        window.location.href = 'index.html'; // Redirect to main site
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  });
-</script>
-
-      <input type="text" placeholder="Username" required />
-      <input type="password" placeholder="Password" required />
+  <div class="login-panel">
+    <h2>Login to Abandoned Tweaks</h2>
+    <form id="login-form" autocomplete="off">
+      <input type="email" id="login-email" placeholder="Email" required />
+      <input type="password" id="login-password" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
     <div class="switch-link">
       Don't have an account? <a href="signup.html">Sign up</a>
     </div>
+    <button class="back-button" onclick="window.location.href='index.html'">Back</button>
   </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          alert('Login successful!');
+          window.location.href = 'index.html'; // Redirect to main site
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    });
+  </script>
 </body>
 </html>
