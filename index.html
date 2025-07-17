@@ -16,7 +16,6 @@
       background: #fff;
       text-align: center;
       padding: 1rem;
-      border-bottom: 3px solid black; /* black line between white header and black body */
     }
     header h1.title {
       font-weight: bold;
@@ -25,19 +24,14 @@
       font-family: Arial, sans-serif;
 
       /* Rainbow gradient text */
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background: linear-gradient(90deg, 
+        red, orange, yellow, green, blue, indigo, violet);
       background-size: 400% 400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: rainbow 8s linear infinite;
-
-      /* Black text outline */
-      text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
     }
+
     @keyframes rainbow {
       0% {
         background-position: 0% 50%;
@@ -55,20 +49,6 @@
       text-align: center;
       font-size: 2rem;
       margin-bottom: 2rem;
-
-      /* Rainbow gradient text */
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s linear infinite;
-
-      /* Black text outline */
-      text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
     }
     .products {
       display: grid;
