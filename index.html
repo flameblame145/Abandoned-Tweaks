@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -39,92 +39,17 @@
 </script>
 
 <style>
-  /* Starry background styles */
-  body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+  body {
+    font-family: Arial, sans-serif;
     background: #111;
     color: #f2f2f2;
-    font-family: Arial, sans-serif;
-    position: relative;
-    z-index: 0;
+    margin: 0;
+    padding: 0;
   }
-
-  /* Container for stars */
-  #stars, #stars2, #stars3 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    z-index: -1;
-    pointer-events: none;
-  }
-
-  /* Different layers for parallax star effect */
-  #stars {
-    background: transparent;
-    box-shadow:
-      50px 100px 1px white,
-      150px 200px 1.5px white,
-      300px 400px 1px white,
-      500px 800px 1.2px white,
-      700px 50px 1px white,
-      900px 300px 1.4px white,
-      1100px 600px 1.3px white,
-      1300px 900px 1px white,
-      1500px 400px 1.1px white;
-    animation: animStar 50s linear infinite;
-  }
-
-  #stars2 {
-    background: transparent;
-    box-shadow:
-      100px 200px 1.2px white,
-      250px 350px 1px white,
-      450px 700px 1.5px white,
-      650px 100px 1.1px white,
-      850px 400px 1px white,
-      1050px 800px 1.2px white,
-      1250px 350px 1.3px white,
-      1450px 650px 1px white,
-      1650px 900px 1.4px white;
-    animation: animStar 100s linear infinite;
-  }
-
-  #stars3 {
-    background: transparent;
-    box-shadow:
-      200px 400px 1.4px white,
-      400px 800px 1.2px white,
-      600px 200px 1px white,
-      800px 500px 1.3px white,
-      1000px 900px 1.1px white,
-      1200px 300px 1.4px white,
-      1400px 700px 1px white,
-      1600px 100px 1.5px white,
-      1800px 600px 1.2px white;
-    animation: animStar 150s linear infinite;
-  }
-
-  @keyframes animStar {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(-1000px);
-    }
-  }
-
   header {
     background: #111;
     text-align: center;
     padding: 1rem;
-    position: relative;
-    z-index: 1;
   }
   header h1.title {
     font-weight: bold;
@@ -135,8 +60,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: rainbow 8s linear infinite;
-    position: relative;
-    z-index: 1;
   }
   @keyframes rainbow {
     0% { background-position: 0% 50%; }
@@ -169,8 +92,6 @@
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
-    position: relative;
-    z-index: 1;
   }
   nav a {
     color: #f2f2f2;
@@ -190,8 +111,6 @@
     max-width: 1200px;
     margin: auto;
     padding: 2rem;
-    position: relative;
-    z-index: 1;
   }
   .products {
     display: grid;
@@ -205,8 +124,6 @@
     text-align: center;
     box-shadow: 0 0 15px rgba(0,255,255,0.2);
     transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    z-index: 1;
   }
   .product-card:hover {
     transform: translateY(-5px);
@@ -286,8 +203,6 @@
     padding: 1rem;
     font-size: 0.9rem;
     color: #aaa;
-    position: relative;
-    z-index: 1;
   }
   /* Logout button style */
   #logout-btn {
@@ -303,7 +218,6 @@
     cursor: pointer;
     box-shadow: 0 0 10px #0ff;
     transition: box-shadow 0.3s;
-    z-index: 10;
   }
   #logout-btn:hover {
     box-shadow: 0 0 20px #00ffff;
@@ -311,12 +225,6 @@
 </style>
 </head>
 <body>
-
-<!-- Star layers for background -->
-<div id="stars"></div>
-<div id="stars2"></div>
-<div id="stars3"></div>
-
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
 </header>
