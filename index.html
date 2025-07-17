@@ -5,25 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abandoned Tweaks</title>
 <style>
-  /* Starry background canvas */
-  #stars {
+  /* Make sure canvas covers entire page */
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    color: #f2f2f2;
+    background: #111; /* fallback if canvas not supported */
+    position: relative;
+  }
+  /* Canvas goes behind everything */
+  #starfield {
     position: fixed;
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-    display: block;
+    z-index: -1; /* behind everything */
+    background: #111;
   }
 
-  body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-  }
   header {
-    background: transparent;
+    background: transparent; /* make header transparent so stars show through */
     text-align: center;
     padding: 1rem;
   }
@@ -68,6 +72,7 @@
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
+    background: transparent; /* transparent nav so stars show */
   }
   nav a {
     color: #f2f2f2;
@@ -87,6 +92,9 @@
     max-width: 1200px;
     margin: auto;
     padding: 2rem;
+    position: relative; /* above canvas */
+    background: rgba(0, 0, 0, 0.6); /* slight transparent black background to help readability */
+    border-radius: 8px;
   }
   .products {
     display: grid;
@@ -181,13 +189,13 @@
     padding: 1rem;
     font-size: 0.9rem;
     color: #aaa;
+    position: relative; /* above canvas */
   }
 </style>
 </head>
 <body>
-
-<!-- Starry background canvas -->
-<canvas id="stars"></canvas>
+<!-- Canvas for starry background -->
+<canvas id="starfield"></canvas>
 
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
@@ -353,30 +361,4 @@
   </div>
   <div class="purchase-buttons">
     <a href="https://paypal.me/paymepaypalplease/5.99" target="_blank" class="purchase-button paypal">PayPal</a>
-    <a href="https://cash.app/$trazeymax/5.99" target="_blank" class="purchase-button cashapp">CashApp</a>
-  </div>
-</div>
-
-  </div>
-</div>
-<footer>
-  &copy; 2025 Abandoned Tweaks
-</footer>
-
-<script>
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-
-  let width, height;
-  let stars = [];
-
-  function init() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    stars = [];
-    for (let i = 0; i < 200; i++) {  // Number of stars
-      stars.push({
-        x: Math
+    <a href="https://cash.app/$trazeymax/5.99"
