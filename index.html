@@ -1,107 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Abandoned Tweaks</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    background: #fff;
-    text-align: center;
-    padding: 1rem;
-    border-bottom: 1px solid black; /* Black line where white and black meet */
-  }
-  header h1.title,
-  h2.section-title {
-    font-weight: bold;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-    background-size: 400% 400%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rainbow 8s linear infinite;
-    text-shadow:
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000;
-    margin: 0;
-  }
-  header h1.title {
-    font-size: 2.5rem;
-  }
-  h2.section-title {
-    font-size: 2rem;
-    margin: 2rem 0 1rem;
-    text-align: center;
-  }
-  @keyframes rainbow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 400% 50%; }
-  }
-  .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 2rem;
-  }
-  .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-  .product-card {
-    background: #222;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-  }
-  .product-card h3 {
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
-  }
-  .price {
-    font-size: 1rem;
-    color: #ccc;
-    margin-bottom: 0.5rem;
-  }
-  .old-price {
-    text-decoration: line-through;
-    color: #888;
-    font-size: 0.9rem;
-    margin-left: 0.5rem;
-  }
-  .description {
-    font-size: 0.9rem;
-    color: #bbb;
-    margin-bottom: 1rem;
-  }
-  .product-video iframe {
-    width: 100%;
-    border-radius: 4px;
-  }
-  .view-button {
-    background: #444;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  footer {
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #aaa;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abandoned Tweaks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+    header h1.title {
+      font-weight: bold;
+      font-size: 2.5rem;
+      margin: 0;
+      font-family: Arial, sans-serif;
+
+      /* Rainbow gradient text */
+      background: linear-gradient(90deg, 
+        red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s linear infinite;
+    }
+
+    @keyframes rainbow {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 400% 50%;
+      }
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h2.section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: #222;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .product-card h3 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+    .price {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #888;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      color: #bbb;
+      margin-bottom: 1rem;
+    }
+    .product-video iframe {
+      width: 100%;
+      border-radius: 4px;
+    }
+    .view-button {
+      background: #444;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
   <header>
