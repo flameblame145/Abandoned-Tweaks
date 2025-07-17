@@ -13,6 +13,7 @@
       padding: 0;
     }
     header {
+      background: #111;
       text-align: center;
       padding: 1rem;
       border-bottom: 3px solid black;
@@ -21,7 +22,6 @@
       font-weight: bold;
       font-size: 2.5rem;
       margin: 0;
-      font-family: Arial, sans-serif;
       background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
       background-size: 400% 400%;
       -webkit-background-clip: text;
@@ -33,24 +33,21 @@
       0% { background-position: 0% 50%; }
       100% { background-position: 400% 50%; }
     }
-    .top-buttons {
+    nav {
       display: flex;
       justify-content: center;
       gap: 1rem;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
+      padding: 1rem;
+      background: none;
     }
-    .top-buttons a {
-      background: #222;
+    nav a {
       color: #f2f2f2;
       text-decoration: none;
+      font-weight: bold;
+      background: #222;
       padding: 0.5rem 1rem;
       border-radius: 8px;
-      transition: background 0.3s;
-      box-shadow: 0 0 10px rgba(255,255,255,0.2);
-    }
-    .top-buttons a:hover {
-      background: #444;
+      box-shadow: 0 0 10px #000;
     }
     .container {
       max-width: 1200px;
@@ -67,11 +64,7 @@
       border-radius: 8px;
       padding: 1rem;
       text-align: center;
-      box-shadow: 0 0 15px rgba(0,255,255,0.3);
-      transition: transform 0.3s;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
     }
     .product-card h3 {
       margin: 0.5rem 0;
@@ -113,42 +106,22 @@
       font-size: 0.9rem;
       color: #aaa;
     }
-    .variety-rainbow {
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s linear infinite;
-      font-weight: bold;
-    }
-    .taste-tester {
-      background: linear-gradient(270deg, cyan, magenta, yellow, lime, orange, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glowPulse 2s infinite alternate;
-      font-weight: bold;
-    }
-    @keyframes glowPulse {
-      0% { text-shadow: 0 0 5px #fff; }
-      100% { text-shadow: 0 0 20px #0ff; }
-    }
   </style>
 </head>
 <body>
   <header>
     <h1 class="title">Abandoned Tweaks</h1>
   </header>
-  <div class="top-buttons">
+  <nav>
     <a href="https://discord.gg/qyZEhex3HJ">Discord</a>
     <a href="#">Purchase</a>
     <a href="https://www.tiktok.com/@abandonedtweaks">TikTok</a>
-  </div>
+  </nav>
   <div class="container">
     <div class="products">
 
       <div class="product-card">
-        <h3 class="variety-rainbow">Variety Pack</h3>
+        <h3>Variety Pack</h3>
         <div class="price">$49.99</div>
         <div class="description">All of the packs — even ones unreleased.</div>
         <div class="product-video">
@@ -158,11 +131,11 @@
       </div>
 
       <div class="product-card">
-        <h3 class="taste-tester">Taste Tester</h3>
+        <h3>Taste Tester</h3>
         <div class="price">$19.99</div>
         <div class="description">Massively improves aim, builds, and performance.</div>
         <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" title="Taste Tester Demo" frameborder="0" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" title="Taste Tester Example" frameborder="0" allowfullscreen></iframe>
         </div>
         <button class="view-button">View Details</button>
       </div>
@@ -231,6 +204,9 @@
         <h3>Max FPS</h3>
         <div class="price">$4.99</div>
         <div class="description">Skyrocket your frames to 600+ with this FPS booster — smoother gameplay, faster builds, and cleaner visuals guaranteed.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" title="Max FPS Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
         <button class="view-button">View Details</button>
       </div>
 
