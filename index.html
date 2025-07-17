@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -23,8 +23,10 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
+  // Check user auth state on load
   auth.onAuthStateChanged(user => {
     if (!user) {
+      // Not logged in? Send to login page
       window.location.href = "login.html";
     }
   });
@@ -37,29 +39,93 @@
 </script>
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: #f2f2f2;
+  /* Starry background styles */
+  body, html {
+    height: 100%;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background: #111;
+    color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    position: relative;
+    z-index: 0;
   }
 
-  canvas#stars {
+  /* Container for stars */
+  #stars, #stars2, #stars3 {
     position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
     z-index: -1;
-    background: #000;
+    pointer-events: none;
+  }
+
+  /* Different layers for parallax star effect */
+  #stars {
+    background: transparent;
+    box-shadow:
+      50px 100px 1px white,
+      150px 200px 1.5px white,
+      300px 400px 1px white,
+      500px 800px 1.2px white,
+      700px 50px 1px white,
+      900px 300px 1.4px white,
+      1100px 600px 1.3px white,
+      1300px 900px 1px white,
+      1500px 400px 1.1px white;
+    animation: animStar 50s linear infinite;
+  }
+
+  #stars2 {
+    background: transparent;
+    box-shadow:
+      100px 200px 1.2px white,
+      250px 350px 1px white,
+      450px 700px 1.5px white,
+      650px 100px 1.1px white,
+      850px 400px 1px white,
+      1050px 800px 1.2px white,
+      1250px 350px 1.3px white,
+      1450px 650px 1px white,
+      1650px 900px 1.4px white;
+    animation: animStar 100s linear infinite;
+  }
+
+  #stars3 {
+    background: transparent;
+    box-shadow:
+      200px 400px 1.4px white,
+      400px 800px 1.2px white,
+      600px 200px 1px white,
+      800px 500px 1.3px white,
+      1000px 900px 1.1px white,
+      1200px 300px 1.4px white,
+      1400px 700px 1px white,
+      1600px 100px 1.5px white,
+      1800px 600px 1.2px white;
+    animation: animStar 150s linear infinite;
+  }
+
+  @keyframes animStar {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-1000px);
+    }
   }
 
   header {
-    background: transparent;
+    background: #111;
     text-align: center;
     padding: 1rem;
+    position: relative;
+    z-index: 1;
   }
-
   header h1.title {
     font-weight: bold;
     font-size: 2.5rem;
@@ -69,13 +135,13 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: rainbow 8s linear infinite;
+    position: relative;
+    z-index: 1;
   }
-
   @keyframes rainbow {
     0% { background-position: 0% 50%; }
     100% { background-position: 400% 50%; }
   }
-
   .rainbow-text {
     font-weight: bold;
     background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
@@ -84,7 +150,6 @@
     -webkit-text-fill-color: transparent;
     animation: rainbow 8s linear infinite;
   }
-
   .neon-text {
     font-weight: bold;
     color: #0ff;
@@ -95,19 +160,18 @@
       0 0 40px #0ff;
     animation: neonGlow 1.5s ease-in-out infinite alternate;
   }
-
   @keyframes neonGlow {
     from { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff; }
     to   { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff, 0 0 50px #0ff; }
   }
-
   nav {
     display: flex;
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
+    position: relative;
+    z-index: 1;
   }
-
   nav a {
     color: #f2f2f2;
     text-decoration: none;
@@ -118,24 +182,22 @@
     box-shadow: 0 0 10px rgba(255,255,255,0.2);
     transition: background 0.3s, box-shadow 0.3s;
   }
-
   nav a:hover {
     background: #333;
     box-shadow: 0 0 15px rgba(255,255,255,0.4);
   }
-
   .container {
     max-width: 1200px;
     margin: auto;
     padding: 2rem;
+    position: relative;
+    z-index: 1;
   }
-
   .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
-
   .product-card {
     background: #222;
     border-radius: 8px;
@@ -143,44 +205,40 @@
     text-align: center;
     box-shadow: 0 0 15px rgba(0,255,255,0.2);
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    z-index: 1;
   }
-
   .product-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 0 25px rgba(0,255,255,0.5);
   }
-
   .product-card h3 {
     margin: 0.5rem 0;
     font-size: 1.2rem;
     font-weight: bold;
   }
-
   .price {
     font-size: 1rem;
     color: #ccc;
     margin-bottom: 0.5rem;
   }
-
   .description {
     font-size: 0.9rem;
     color: #bbb;
     margin-bottom: 1rem;
   }
-
   .product-video iframe {
     width: 100%;
     border-radius: 4px;
   }
-
   .purchase-buttons {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
   }
-
   .purchase-button.paypal {
+    display: inline-block;
     background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
     background-size: 400% 400%;
     color: #fff;
@@ -193,12 +251,11 @@
     box-shadow: 0 0 8px #009cde;
     transition: box-shadow 0.3s;
   }
-
   .purchase-button.paypal:hover {
     box-shadow: 0 0 15px #00b0ff;
   }
-
   .purchase-button.cashapp {
+    display: inline-block;
     background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
     background-size: 400% 400%;
     color: #fff;
@@ -211,30 +268,28 @@
     box-shadow: 0 0 8px #00d12e;
     transition: box-shadow 0.3s;
   }
-
   .purchase-button.cashapp:hover {
     box-shadow: 0 0 15px #00ff44;
   }
-
   @keyframes blueGradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-
   @keyframes greenGradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-
   footer {
     text-align: center;
     padding: 1rem;
     font-size: 0.9rem;
     color: #aaa;
+    position: relative;
+    z-index: 1;
   }
-
+  /* Logout button style */
   #logout-btn {
     position: fixed;
     top: 10px;
@@ -248,30 +303,32 @@
     cursor: pointer;
     box-shadow: 0 0 10px #0ff;
     transition: box-shadow 0.3s;
+    z-index: 10;
   }
-
   #logout-btn:hover {
     box-shadow: 0 0 20px #00ffff;
   }
 </style>
 </head>
-
 <body>
-<canvas id="stars"></canvas>
+
+<!-- Star layers for background -->
+<div id="stars"></div>
+<div id="stars2"></div>
+<div id="stars3"></div>
 
 <header>
   <h1 class="title">Abandoned Tweaks</h1>
 </header>
-
 <nav>
   <a href="https://discord.gg/qyZEhex3HJ" target="_blank">Discord</a>
   <a href="#">Purchase</a>
   <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
 </nav>
-
 <div class="container">
   <div class="products">
 
+    <!-- Your product cards (like Shotgun Pack V1, Mouse Tweaks, etc.) -->
     <div class="product-card">
       <h3 class="rainbow-text">Variety Pack</h3>
       <div class="price">$49.99</div>
