@@ -13,10 +13,10 @@
       padding: 0;
     }
     header {
-      background: #111;  /* dark background */
+      background: #111; /* match body background */
       text-align: center;
       padding: 1rem;
-      border-bottom: 3px solid black;
+      border-bottom: 4px solid black; /* black line where title meets background */
     }
     header h1.title {
       font-weight: bold;
@@ -32,9 +32,13 @@
       -webkit-text-fill-color: transparent;
       animation: rainbow 8s linear infinite;
 
-      /* black outline */
-      -webkit-text-stroke: 1px black;
-      text-stroke: 1px black;
+      /* Black outline */
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+      display: inline-block;
     }
 
     @keyframes rainbow {
@@ -45,6 +49,18 @@
         background-position: 400% 50%;
       }
     }
+    @keyframes rainbow-alt {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
     .container {
       max-width: 1200px;
       margin: auto;
@@ -54,8 +70,6 @@
       text-align: center;
       font-size: 2rem;
       margin-bottom: 2rem;
-      font-weight: normal;
-      color: #f2f2f2;
     }
     .products {
       display: grid;
@@ -71,7 +85,48 @@
     .product-card h3 {
       margin: 0.5rem 0;
       font-size: 1.2rem;
+      font-weight: normal;
+      color: #f2f2f2;
     }
+
+    /* Variety Pack rainbow animation */
+    .variety-rainbow {
+      background: linear-gradient(90deg, 
+        red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s linear infinite;
+      font-weight: normal; /* normal font weight */
+      display: inline-block;
+
+      /* black outline */
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    }
+
+    /* Taste Tester different animation */
+    .taste-tester {
+      background: linear-gradient(270deg, 
+        cyan, magenta, yellow, lime, orange, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow-alt 6s ease-in-out infinite;
+      font-weight: normal;
+      display: inline-block;
+
+      /* black outline */
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    }
+
     .price {
       font-size: 1rem;
       color: #ccc;
@@ -106,42 +161,6 @@
       padding: 1rem;
       font-size: 0.9rem;
       color: #aaa;
-    }
-
-    /* Variety Pack rainbow animation */
-    .variety-rainbow {
-      background: linear-gradient(90deg, 
-        red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s linear infinite;
-      font-weight: normal;
-      display: inline-block;
-    }
-
-    /* Taste Tester different animation */
-    .taste-tester {
-      background: linear-gradient(270deg, 
-        cyan, magenta, yellow, lime, orange, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow-alt 6s ease-in-out infinite;
-      font-weight: normal;
-      display: inline-block;
-    }
-
-    @keyframes rainbow-alt {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
     }
   </style>
 </head>
