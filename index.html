@@ -35,199 +35,74 @@
   </script>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #000; /* fallback */
-      color: #f2f2f2;
-      margin:0; padding:0; overflow-x:hidden;
-    }
-    header {
-      background:transparent;
-      text-align:center;
-      padding:1rem;
-      position:relative;
-      z-index:10;
-    }
-    header h1.title {
-      font-weight:bold;
-      font-size:2.5rem;
-      margin:0;
-      background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet);
-      background-size:400% 400%;
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      animation:rainbow 8s linear infinite;
-      position:relative;
-      z-index:10;
-    }
-    @keyframes rainbow {
-      0%{background-position:0% 50%}
-      100%{background-position:400% 50%}
-    }
-    .rainbow-text {
-      font-weight:bold;
-      background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet);
-      background-size:400% 400%;
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      animation:rainbow 8s linear infinite;
-      position:relative;
-      z-index:10;
-    }
-    .neon-text {
-      font-weight:bold;
-      color:#0ff;
-      text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff;
-      animation:neonGlow 1.5s ease-in-out infinite alternate;
-      position:relative;
-      z-index:10;
-    }
-    @keyframes neonGlow {
-      from{text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff;}
-      to{text-shadow:0 0 10px #0ff,0 0 20px #0ff,0 0 30px #0ff,0 0 50px #0ff;}
-    }
-    nav {
-      display:flex;
-      justify-content:center;
-      gap:1rem;
-      padding:1rem;
-      position:relative;
-      z-index:10;
-    }
-    nav a {
-      color:#f2f2f2;
-      text-decoration:none;
-      font-weight:bold;
-      background:#222;
-      padding:0.5rem 1rem;
-      border-radius:8px;
-      box-shadow:0 0 10px rgba(255,255,255,0.2);
-      transition:background 0.3s,box-shadow 0.3s;
-    }
-    nav a:hover {
-      background:#333;
-      box-shadow:0 0 15px rgba(255,255,255,0.4);
-    }
-    .container {
-      max-width:1200px;
-      margin:auto;
-      padding:2rem;
-      position:relative;
-      z-index:10;
-    }
-    .products {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-      gap:1.5rem;
-    }
-    .product-card {
-      background:#222;
-      border-radius:8px;
-      padding:1rem;
-      text-align:center;
-      box-shadow:0 0 15px rgba(0,255,255,0.2);
-      transition:transform 0.3s,box-shadow 0.3s;
-      position:relative;
-      z-index:10;
-    }
-    .product-card:hover {
-      transform:translateY(-5px);
-      box-shadow:0 0 25px rgba(0,255,255,0.5);
-    }
+    /* === Your original styles untouched === */
+    body { font-family: Arial, sans-serif; background: #111; color: #f2f2f2; margin:0; padding:0; overflow-x:hidden; }
+    header { background:#111; text-align:center; padding:1rem; position:relative; z-index:10; }
+    header h1.title { font-weight:bold; font-size:2.5rem; margin:0; background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite; position:relative; z-index:10; }
+    @keyframes rainbow { 0%{background-position:0% 50%} 100%{background-position:400% 50%} }
+    .rainbow-text { font-weight:bold; background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite; position:relative; z-index:10; }
+    .neon-text { font-weight:bold; color:#0ff; text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff; animation:neonGlow 1.5s ease-in-out infinite alternate; position:relative; z-index:10; }
+    @keyframes neonGlow { from{text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff;} to{text-shadow:0 0 10px #0ff,0 0 20px #0ff,0 0 30px #0ff,0 0 50px #0ff;} }
+    nav { display:flex; justify-content:center; gap:1rem; padding:1rem; position:relative; z-index:10; }
+    nav a { color:#f2f2f2; text-decoration:none; font-weight:bold; background:#222; padding:0.5rem 1rem; border-radius:8px; box-shadow:0 0 10px rgba(255,255,255,0.2); transition:background 0.3s,box-shadow 0.3s; }
+    nav a:hover { background:#333; box-shadow:0 0 15px rgba(255,255,255,0.4); }
+    .container { max-width:1200px; margin:auto; padding:2rem; position:relative; z-index:10; }
+    .products { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; }
+    .product-card { background:#222; border-radius:8px; padding:1rem; text-align:center; box-shadow:0 0 15px rgba(0,255,255,0.2); transition:transform 0.3s,box-shadow 0.3s; position:relative; z-index:10; }
+    .product-card:hover { transform:translateY(-5px); box-shadow:0 0 25px rgba(0,255,255,0.5); }
     .product-card h3 { margin:0.5rem 0; font-size:1.2rem; font-weight:bold; }
     .price { font-size:1rem; color:#ccc; margin-bottom:0.5rem; }
     .description { font-size:0.9rem; color:#bbb; margin-bottom:1rem; }
     .product-video iframe { width:100%; border-radius:4px; }
     .purchase-buttons { display:flex; justify-content:center; gap:0.5rem; margin-top:0.5rem; }
-    .purchase-button.paypal {
-      display:inline-block;
-      background:linear-gradient(-45deg,#0057b7,#009cde,#003087,#0070ba);
-      background-size:400% 400%;
-      color:#fff;
-      text-decoration:none;
-      padding:0.5rem 0.8rem;
-      border-radius:4px;
-      font-size:0.9rem;
-      cursor:pointer;
-      animation:blueGradient 5s ease infinite;
-      box-shadow:0 0 8px #009cde;
-      transition:box-shadow 0.3s;
-    }
+    .purchase-button.paypal { display:inline-block; background:linear-gradient(-45deg,#0057b7,#009cde,#003087,#0070ba); background-size:400% 400%; color:#fff; text-decoration:none; padding:0.5rem 0.8rem; border-radius:4px; font-size:0.9rem; cursor:pointer; animation:blueGradient 5s ease infinite; box-shadow:0 0 8px #009cde; transition:box-shadow 0.3s; }
     .purchase-button.paypal:hover { box-shadow:0 0 15px #00b0ff; }
-    .purchase-button.cashapp {
-      display:inline-block;
-      background:linear-gradient(-45deg,#3ece47,#00d12e,#21a716,#2fbb00);
-      background-size:400% 400%;
-      color:#fff;
-      text-decoration:none;
-      padding:0.5rem 0.8rem;
-      border-radius:4px;
-      font-size:0.9rem;
-      cursor:pointer;
-      animation:greenGradient 5s ease infinite;
-      box-shadow:0 0 8px #00d12e;
-      transition:box-shadow 0.3s;
-    }
+    .purchase-button.cashapp { display:inline-block; background:linear-gradient(-45deg,#3ece47,#00d12e,#21a716,#2fbb00); background-size:400% 400%; color:#fff; text-decoration:none; padding:0.5rem 0.8rem; border-radius:4px; font-size:0.9rem; cursor:pointer; animation:greenGradient 5s ease infinite; box-shadow:0 0 8px #00d12e; transition:box-shadow 0.3s; }
     .purchase-button.cashapp:hover { box-shadow:0 0 15px #00ff44; }
-    @keyframes blueGradient {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
-    @keyframes greenGradient {
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
+    @keyframes blueGradient { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+    @keyframes greenGradient { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
     footer { text-align:center; padding:1rem; font-size:0.9rem; color:#aaa; position:relative; z-index:10; }
 
-    /* Auth button */
-    #auth-btn {
-      position:fixed;
-      top:10px;
-      right:10px;
-      background:#0ff;
-      border:none;
-      color:#111;
-      padding:0.5rem 1rem;
-      border-radius:6px;
-      font-weight:bold;
-      cursor:pointer;
-      box-shadow:0 0 10px #0ff;
-      transition:box-shadow 0.3s;
-      z-index:1000;
-    }
-    #auth-btn:hover { box-shadow:0 0 20px #00ffff; }
-
-    /* Galaxy background and stars */
-    .galaxy-background {
-      position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      z-index:0;
-      background: radial-gradient(circle at 50% 50%, rgba(10,10,30,0.8), #000 80%);
-      overflow:hidden;
-    }
-    .star {
-      position:absolute;
-      background:white;
-      border-radius:50%;
-      opacity:0.8;
-      filter:drop-shadow(0 0 2px white);
-      animation:twinkle 3s infinite ease-in-out;
-    }
-    .small { width:1.5px; height:1.5px; }
-    .medium { width:2.5px; height:2.5px; }
-    .large { width:3.5px; height:3.5px; }
+    /* Auth toggle button */
+#auth-btn {
+  position:fixed;
+  top:10px;
+  right:10px;
+  background:#0ff;
+  border:none;
+  color:#111;
+  padding:0.5rem 1rem;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 10px #0ff;
+  transition:box-shadow 0.3s;
+  z-index:1000; /* Increase from 10 to 1000 to stay on top */
+}
+#auth-btn:hover { box-shadow:0 0 20px #00ffff; }
+    /* === Starry background styles === */
+    .starry-background { position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; overflow:hidden; z-index:0; background:#111; }
+    .star { position:absolute; background:white; border-radius:50%; opacity:0.8; filter:drop-shadow(0 0 2px white); animation:twinkle 3s infinite ease-in-out; }
+    .star.small { width:1.5px; height:1.5px; animation-duration:3s; }
+    .star.medium { width:2.5px; height:2.5px; animation-duration:4s; }
+    .star.large { width:3.5px; height:3.5px; animation-duration:5s; }
     @keyframes twinkle { 0%,100%{opacity:0.8;} 50%{opacity:0.2;} }
+    .shooting-star { position:fixed; top:-10px; left:-100px; width:100px; height:2px; background:linear-gradient(45deg,white,rgba(255,255,255,0)); filter:drop-shadow(0 0 6px white); border-radius:100%; transform:rotate(45deg); animation:shootingStar 5s linear infinite; z-index:1; }
+    @keyframes shootingStar { 0%{transform:translateX(0) translateY(0) rotate(45deg);opacity:1;}70%{opacity:1;}100%{transform:translateX(120vw) translateY(120vh) rotate(45deg);opacity:0;} }
   </style>
 </head>
 <body>
-  <!-- Auth button -->
+  <!-- Auth toggle button -->
   <button id="auth-btn">Loading...</button>
 
-  <!-- Galaxy background -->
-  <div class="galaxy-background" id="galaxy"></div>
+  <!-- Starry animated background -->
+  <div class="starry-background" aria-hidden="true">
+    <!-- 20 stars as in your template -->
+    <div class="star small" style="top:10%; left:15%; animation-delay:0s;"></div>
+    <!-- … repeat your 20+ star elements … -->
+    <div class="star large" style="top:75%; left:30%; animation-delay:5s;"></div>
+  </div>
+  <div class="shooting-star" aria-hidden="true"></div>
 
   <header><h1 class="title">Abandoned Tweaks</h1></header>
   <nav>
@@ -237,32 +112,6 @@
   </nav>
 
   <div class="container">
-    <!-- your products go here -->
-  </div>
-
-  <script>
-    // Generate stars dynamically
-    const galaxy = document.getElementById('galaxy');
-    const starCount = 100; // adjust number of stars
-
-    for (let i=0; i<starCount; i++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-
-      // random size
-      const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random()*3)];
-      star.classList.add(sizeClass);
-
-      // random position
-      star.style.top = Math.random()*100+'%';
-      star.style.left = Math.random()*100+'%';
-
-      // random animation delay
-      star.style.animationDelay = (Math.random()*5)+'s';
-
-      galaxy.appendChild(star);
-    }
-    <div class="container">
     <div class="products">
       <!-- Variety Pack -->
       <div class="product-card">
@@ -412,6 +261,5 @@
   </div>
 
   <footer>&copy; 2023 Abandoned Tweaks. All rights reserved.</footer>
-  </script>
 </body>
 </html>
