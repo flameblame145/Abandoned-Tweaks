@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,6 +9,85 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
+      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
+      projectId: "abandonedtweaks-b47a2",
+      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
+      messagingSenderId: "26177710755",
+      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
+      measurementId: "G-6H06DVYMCV"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Handle auth button
+    auth.onAuthStateChanged(user => {
+      const btn = document.getElementById('auth-btn');
+      if (user) {
+        btn.textContent = 'Logout';
+        btn.onclick = () => auth.signOut().then(() => window.location.reload());
+      } else {
+        btn.textContent = 'Login / Signup';
+        btn.onclick = () => window.location.href = 'login.html'; // Adjust if you have a login page
+      }
+    });
+
+    // Generate random code helper
+    function generateRandomCode(length = 12) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    // Discount code logic
+    async function enterDiscountCode() {
+      const user = auth.currentUser;
+      if (!user) {
+        alert('You must be logged in to enter a discount code.');
+        return;
+      }
+
+      const code = prompt('Enter your discount code:');
+      if (!code) return;
+
+      if (code !== 'TikTok15') {
+        alert('Invalid discount code.');
+        return;
+      }
+
+      // Check if user already used code
+      const usedRef = db.collection('discountCodesUsed').doc(user.uid);
+      const doc = await usedRef.get();
+
+      if (doc.exists) {
+        alert('You have already used this discount code once.');
+        return;
+      }
+
+      // Generate random code and save with timestamp
+      const randomCode = generateRandomCode();
+      const timestamp = new Date();
+
+      await usedRef.set({
+        codeUsed: code,
+        randomCode,
+        usedAt: timestamp.toISOString()
+      });
+
+      alert(`Success! Your unique code is: ${randomCode}\nUsed on: ${timestamp.toLocaleString()}`);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('discountBtn').addEventListener('click', enterDiscountCode);
+    });
+  </script>
 
   <style>
     /* Base styles */
@@ -244,7 +323,8 @@
       animation-duration: 5s;
     }
     @keyframes twinkle {
-      0%, 100% {
+      0%,
+      100% {
         opacity: 0.8;
       }
       50% {
@@ -296,240 +376,235 @@
     #discountBtn:hover {
       box-shadow: 0 0 20px #00ffff;
     }
-
-    /* Discount code panel styles */
-    .discount-panel-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-    .discount-panel {
-      background: #222b2b;
-      border: 2px solid #00ffff;
-      border-radius: 12px;
-      padding: 2rem 2.5rem 2.5rem;
-      width: 320px;
-      max-width: 90vw;
-      color: #e0ffff;
-      position: relative;
-      box-shadow: 0 0 15px #00ffffaa;
-      font-size: 1rem;
-      user-select: none;
-    }
-    .discount-panel h2 {
-      margin-top: 0;
-      font-weight: bold;
-      text-align: center;
-      font-size: 1.4rem;
-    }
-    .discount-panel p {
-      margin: 1rem 0 0;
-      text-align: center;
-      line-height: 1.3;
-    }
-    .discount-close-btn {
-      position: absolute;
-      top: 8px;
-      right: 12px;
-      background: transparent;
-      border: none;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #00ffff;
-      cursor: pointer;
-      transition: color 0.2s ease;
-      line-height: 1;
-      padding: 0;
-    }
-    .discount-close-btn:hover {
-      color: #a0ffff;
-    }
-    .discount-input-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-      color: #00ffff;
-      text-align: center;
-    }
-    .discount-input {
-      width: 100%;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 2px solid #00ffff;
-      background: #111;
-      color: #e0ffff;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    .discount-submit-btn {
-      margin-top: 1rem;
-      width: 100%;
-      padding: 0.6rem;
-      font-weight: bold;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: none;
-      background: #00ffff;
-      color: #111;
-      cursor: pointer;
-      box-shadow: 0 0 10px #00ffff;
-      transition: box-shadow 0.3s;
-    }
-    .discount-submit-btn:hover {
-      box-shadow: 0 0 20px #00ffff;
-    }
   </style>
+</head>
+<body>
+  <button id="auth-btn">Loading...</button>
+  <div class="starry-background" id="stars"></div>
+
+  <header>
+    <h1 class="title">Abandoned Tweaks</h1>
+  </header>
+  <nav>
+    <a href="https://discord.gg/qyZEhex3HJ" target="_blank">Discord</a>
+    <a href="#">Purchase</a>
+    <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
+  </nav>
+
+  <div class="container">
+    <div class="products">
+
+      <!-- Variety Pack -->
+      <div class="product-card">
+        <h3 class="rainbow-text">Variety Pack</h3>
+        <div class="price">$49.99</div>
+        <div class="rating">★★★★★ (14)</div>
+        <div class="description">All of the packs — even ones unreleased.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/49.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/49.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Taste Tester -->
+      <div class="product-card">
+        <h3 class="neon-text">Taste Tester</h3>
+        <div class="price">$19.99</div>
+        <div class="rating">★★★★★ (19)</div>
+        <div class="description">Massively improves aim, builds, and performance.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/19.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/19.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Shotgun Pack V1 -->
+      <div class="product-card">
+        <h3>Shotgun Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="rating">★★★★★ (7)</div>
+        <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Shotgun Pack V2 -->
+      <div class="product-card">
+        <h3>Shotgun Pack V2</h3>
+        <div class="price">$14.99</div>
+        <div class="rating">★★★★★ (8)</div>
+        <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/14.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Bloom Pack V1 -->
+      <div class="product-card">
+        <h3>Bloom Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="rating">★★★★★ (14)</div>
+        <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Bloom Pack V2 -->
+      <div class="product-card">
+        <h3>Bloom Pack V2</h3>
+        <div class="price">$9.99</div>
+        <div class="rating">★★★★★ (10)</div>
+        <div class="description">Max Bloom Reduction, AR & SMG like lasers, Dominate every fight.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/JjFTOm2E7eA" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- WiFi Tweaks -->
+      <div class="product-card">
+        <h3>WiFi Tweaks</h3>
+        <div class="price">$7.99</div>
+        <div class="rating">★★★★★ (20)</div>
+        <div class="description">Improve network latency and reduce ping spikes for smoother gameplay.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/7.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/7.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- SMG Bloom Reducer -->
+      <div class="product-card">
+        <h3>SMG Bloom Reducer</h3>
+        <div class="price">$9.99</div>
+        <div class="description">Reduces bloom specifically for SMGs to improve your accuracy and fire rate.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/08tGTefwgtM" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+        <!-- Keyboard Tweaks -->
+      <div class="product-card">
+        <h3>Keyboard Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="rating">★★★★★ (19)</div>
+        <div class="description">Speed up your keystrokes—perfect for faster building & better response. ESSENTIAL PACK</div>
+        <div class="product-video"><iframe src="https://www.youtube.com/embed/VOxXStoaLx8" frameborder="0" allowfullscreen></iframe></div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/1.99" class="purchase-button paypal" target="_blank">PayPal</a>
+          <a href="https://cash.app/$trazeymax/1.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Mouse Tweaks -->
+      <div class="product-card">
+        <h3>Mouse Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="rating">★★★★★ (23)</div>
+        <div class="description">Makes you click faster & improves timing—great for boosting CPS and smoother edits. DIAMOND PACK</div>
+        <div class="product-video"><iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe></div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/1.99" class="purchase-button paypal" target="_blank">PayPal</a>
+          <a href="https://cash.app/$trazeymax/1.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+  <h3>Spotify Premium Tweak</h3>
+  <div class="price">$14.99</div>
+         <div class="rating">★★★★★ (32)</div>
+  <div class="description">Enjoy unlimited skips, no ads, and high-quality audio with Spotify Premium – all for a one-time price.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+    <a href="https://cash.app/$trazeymax/14.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+  </div>
+</div>
+
+      <div class="product-card">
+  <h3>0 Delay</h3>
+  <div class="price">$4.99</div>
+  <div class="rating">★★★★★ (9)</div>
+  <div class="description">Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/G2igjYONmzw" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/4.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+    <a href="https://cash.app/$trazeymax/4.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+  </div>
+</div>
+
+
+
+    </div>
+  </div>
+
+  <button id="discountBtn">Enter Discount Code</button>
+
+  <footer>
+    &copy; 2025 Abandoned Tweaks. All rights reserved.
+  </footer>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
-      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
-      projectId: "abandonedtweaks-b47a2",
-      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
-      messagingSenderId: "26177710755",
-      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
-      measurementId: "G-6H06DVYMCV"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    // Handle auth button
-    auth.onAuthStateChanged(user => {
-      const btn = document.getElementById('auth-btn');
-      if (user) {
-        btn.textContent = 'Logout';
-        btn.onclick = () => auth.signOut().then(() => window.location.reload());
-      } else {
-        btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html'; // Adjust if you have a login page
-      }
-    });
-
-    // Generate random code helper
-    function generateRandomCode(length = 12) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
+    // Create stars randomly
+    function createStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const sizeClasses = ['small', 'medium', 'large'];
+      star.classList.add(sizeClasses[Math.floor(Math.random() * sizeClasses.length)]);
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDelay = (Math.random() * 3) + 's';
+      star.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.getElementById('stars').appendChild(star);
     }
 
-    // Create discount panel UI elements
-    function createDiscountPanel() {
-      // Create overlay
-      const overlay = document.createElement('div');
-      overlay.className = 'discount-panel-overlay';
+    for(let i=0; i < 80; i++) createStar();
 
-      // Create panel container
-      const panel = document.createElement('div');
-      panel.className = 'discount-panel';
-
-      // Close button
-      const closeBtn = document.createElement('button');
-      closeBtn.className = 'discount-close-btn';
-      closeBtn.innerHTML = '&times;';
-      closeBtn.addEventListener('click', () => {
-        document.body.removeChild(overlay);
-      });
-
-      panel.appendChild(closeBtn);
-
-      // Label and input
-      const label = document.createElement('label');
-      label.className = 'discount-input-label';
-      label.textContent = 'Enter your discount code:';
-      label.htmlFor = 'discountCodeInput';
-
-      const input = document.createElement('input');
-      input.className = 'discount-input';
-      input.id = 'discountCodeInput';
-      input.type = 'text';
-      input.placeholder = 'Discount Code';
-
-      // Submit button
-      const submitBtn = document.createElement('button');
-      submitBtn.className = 'discount-submit-btn';
-      submitBtn.textContent = 'Submit';
-
-      panel.appendChild(label);
-      panel.appendChild(input);
-      panel.appendChild(submitBtn);
-      overlay.appendChild(panel);
-      document.body.appendChild(overlay);
-
-      return {overlay, input, submitBtn};
+    // Shooting star function (diagonal top-left to bottom-right)
+    function createShootingStar() {
+      const shootingStar = document.createElement('div');
+      shootingStar.classList.add('shooting-star');
+      shootingStar.style.top = '0px';
+      shootingStar.style.left = '0px';
+      document.getElementById('stars').appendChild(shootingStar);
+      setTimeout(() => shootingStar.remove(), 2000);
     }
 
-    // Create result panel UI elements (for showing discount order info)
-    function createResultPanel(orderInfo) {
-      const overlay = document.createElement('div');
-      overlay.className = 'discount-panel-overlay';
-
-      const panel = document.createElement('div');
-      panel.className = 'discount-panel';
-
-      const closeBtn = document.createElement('button');
-      closeBtn.className = 'discount-close-btn';
-      closeBtn.innerHTML = '&times;';
-      closeBtn.addEventListener('click', () => {
-        document.body.removeChild(overlay);
-      });
-
-      panel.appendChild(closeBtn);
-
-      const heading = document.createElement('h2');
-      heading.textContent = 'Discount Code Used';
-
-      const codeP = document.createElement('p');
-      codeP.textContent = `Order Number: ${orderInfo.randomCode}`;
-
-      const dateP = document.createElement('p');
-      const usedDate = new Date(orderInfo.usedAt);
-      dateP.textContent = `Used on: ${usedDate.toLocaleString()}`;
-
-      panel.appendChild(heading);
-      panel.appendChild(codeP);
-      panel.appendChild(dateP);
-
-      overlay.appendChild(panel);
-      document.body.appendChild(overlay);
-    }
-
-    async function enterDiscountCode() {
-      const user = auth.currentUser;
-      if (!user) {
-        alert('You must be logged in to enter a discount code.');
-        return;
-      }
-
-      // Create and show the input panel
-      const {overlay, input, submitBtn} = createDiscountPanel();
-
-      // Handler when user submits code
-      submitBtn.onclick = async () => {
-        const code = input.value.trim();
-
-        if (!code) {
-          alert('Please enter a discount code.');
-          return;
-        }
-
-        if (code !== 'TikTok15') {
-          alert('Invalid discount code.');
-          return;
-        }
-
-        const usedRef = db.collection('discountCodesUsed').doc(user.uid);
-        const doc = await usedRef.get();
-
-       
+    setInterval(createShootingStar, 10000);
+  </script>
+</body>
+</html>
