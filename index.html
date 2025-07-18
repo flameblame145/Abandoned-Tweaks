@@ -103,11 +103,6 @@
   opacity: 1;
   transition: opacity 0.8s ease;
 }
-    <!-- Hidden YouTube Player -->
-<div id="youtube-player-container" style="display:none;">
-  <div id="youtube-player"></div>
-</div>
-
 
     header {
       background: #111;
@@ -629,74 +624,6 @@
     setTimeout(() => overlay.remove(), 800);
   }
 </script>
-  <!-- Hidden autoplaying music -->
-<iframe
-  src="https://www.youtube.com/embed/_xRN3dTg9s0?autoplay=1&mute=1&loop=1&playlist=_xRN3dTg9s0"
-  style="display:none;"
-  allow="autoplay"
-  frameborder="0"
-
   
-<!-- Unmute button -->
-<button id="unmute-btn" style="position:fixed; bottom:20px; right:20px; z-index:1000;">
-  Unmute Music
-</button>
-
-<script>
-  const unmuteBtn = document.getElementById('unmute-btn');
-  const iframe = document.getElementById('bg-music');
-
-  unmuteBtn.addEventListener('click', () => {
-    // Change iframe src to remove mute=1 to allow sound
-    iframe.src = "https://www.youtube.com/embed/_xRN3dTg9s0?autoplay=1&loop=1&playlist=_xRN3dTg9s0";
-    // Hide the button after click
-    unmuteBtn.style.display = 'none';
-  });
-  // Load YouTube IFrame API asynchronously
-let tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-document.body.appendChild(tag);
-
-let player;
-
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('youtube-player', {
-    height: '0',
-    width: '0',
-    videoId: '_xRN3dTg9s0',  // your YouTube video ID
-    playerVars: {
-      'autoplay': 0,
-      'controls': 0,
-      'mute': 0,
-      'loop': 1,
-      'playlist': '_xRN3dTg9s0', // to loop video
-      'modestbranding': 1,
-      'iv_load_policy': 3,
-      'disablekb': 1,
-      'rel': 0
-    },
-    events: {
-      'onReady': onPlayerReady
-    }
-  });
-}
-
-function onPlayerReady(event) {
-  // Player is ready but don't autoplay yet
-}
-
-function enterSite() {
-  // Hide overlay
-  document.getElementById('intro-overlay').style.display = 'none';
-  // Show the hidden player container if needed
-  document.getElementById('youtube-player-container').style.display = 'block';
-
-  // Play video (unmuted)
-  if (player && typeof player.playVideo === 'function') {
-    player.playVideo();
-  }
-}
-
-></iframe>
 </body>
 </html>
