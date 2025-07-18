@@ -606,5 +606,47 @@
 
     setInterval(createShootingStar, 10000);
   </script>
+  <script>
+  function generateRandomCode(length = 12) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
+  function showDiscountPanel(randomCode) {
+    const existingPanel = document.getElementById('discountPanel');
+    if (existingPanel) existingPanel.remove();
+
+    const panel = document.createElement('div');
+    panel.id = 'discountPanel';
+    panel.innerHTML = `
+      <button id="closeDiscountPanel" aria-label="Close discount info">&times;</button>
+      <h2>Your Discount Code Number</h2>
+      <div id="codeDisplay">${randomCode}</div>
+      <div id="usedAtDisplay">Enjoy your discount!</div>
+    `;
+    document.body.appendChild(panel);
+
+    document.getElementById('closeDiscountPanel').onclick = () => {
+      panel.remove();
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('discountBtn').addEventListener('click', () => {
+      const code = prompt('Enter your discount code:');
+      if (!code) return;
+      if (code !== 'TikTok15') {
+        alert('Invalid discount code.');
+        return;
+      }
+      const randomCode = generateRandomCode();
+      showDiscountPanel(randomCode);
+    });
+  });
+</script>
 </body>
 </html>
