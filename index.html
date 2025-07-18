@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abandoned Tweaks</title>
 
   <!-- Firebase SDKs -->
@@ -11,7 +11,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
       authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
@@ -21,409 +20,139 @@
       appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
       measurementId: "G-6H06DVYMCV"
     };
-
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Update auth button state
     auth.onAuthStateChanged(user => {
       const btn = document.getElementById('auth-btn');
       if (user) {
         btn.textContent = 'Logout';
-        btn.onclick = () => auth.signOut().then(() => location.reload());
+        btn.onclick = () => auth.signOut().then(() => window.location.reload());
       } else {
         btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html'; // Make sure you have this page or change it
+        btn.onclick = () => window.location.href = 'login.html'; // Your login page
       }
     });
 
     async function handleDiscountCode() {
       const user = auth.currentUser;
-      const resultDiv = document.getElementById('discountResult');
-
       if (!user) {
-        alert("You must be logged in to enter a discount code.");
+        alert("You must be logged in to redeem a discount code.");
         return;
       }
 
-      const enteredCode = prompt("Enter your discount code:");
-      if (enteredCode === null) {
-        resultDiv.textContent = "";
-        return;
-      }
+      const code = prompt("Enter your discount code:");
+      if (!code) return;
 
-      const validCode = "TikTok15";
-
-      if (enteredCode.trim() !== validCode) {
-        resultDiv.textContent = "Invalid discount code. Please try again.";
+      if (code.trim().toUpperCase() !== "TIKTOK15") {
+        alert("Invalid discount code.");
         return;
       }
 
       try {
         const docRef = db.collection('discountRedemptions').doc(user.uid);
-        const docSnap = await docRef.get();
+        const doc = await docRef.get();
 
-        if (docSnap.exists) {
-          const data = docSnap.data();
-          if (data && data.codes && data.codes.includes(validCode)) {
-            resultDiv.textContent = "You have already used this discount code.";
-            return;
-          }
+        if (doc.exists && doc.data().used) {
+          alert("You have already used this discount code.");
+          return;
         }
 
-        // Redeem code
+        // Generate random code
+        const randomCode = Math.random().toString(36).slice(2, 12).toUpperCase();
+        const timestamp = new Date().toLocaleString();
+
         await docRef.set({
-          codes: firebase.firestore.FieldValue.arrayUnion(validCode),
-          redeemedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
+          used: true,
+          discountCodeEntered: code,
+          redemptionCode: randomCode,
+          timestamp: timestamp
+        });
 
-        // Generate a unique code to show user
-        function generateRandomCode(length = 12) {
-          const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-          let code = '';
-          for (let i = 0; i < length; i++) {
-            code += chars.charAt(Math.floor(Math.random() * chars.length));
-          }
-          return code;
-        }
-        const uniqueCode = generateRandomCode();
-        const now = new Date().toLocaleString();
-
-        resultDiv.innerHTML = `<strong>Success!</strong><br>Your unique code: <code>${uniqueCode}</code><br>Date & time: ${now}`;
-      } catch (e) {
-        console.error(e);
-        resultDiv.textContent = "An error occurred. Please try again later.";
+        alert(`Discount code accepted! Your unique code: ${randomCode}\nEntered at: ${timestamp}`);
+      } catch (error) {
+        console.error("Error redeeming discount:", error);
+        alert("An error occurred. Please try again later.");
       }
     }
 
-    window.onload = () => {
-      // Discount code button
-      document.getElementById('discountBtn').addEventListener('click', handleDiscountCode);
-
-      // Add stars for background
-      const starContainer = document.getElementById('stars');
-      for (let i = 0; i < 250; i++) {
-        const star = document.createElement('div');
-        const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)];
-        star.className = `star ${sizeClass}`;
-        star.style.top = Math.random() * 100 + '%';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.animationDelay = (Math.random() * 5) + 's';
-        starContainer.appendChild(star);
-      }
-      for (let i = 0; i < 1; i++) {
-        const shooting = document.createElement('div');
-        shooting.className = 'shooting-star';
-        shooting.style.top = Math.random() * 100 + '%';
-        shooting.style.left = Math.random() * -100 + 'px';
-        shooting.style.animationDelay = (Math.random() * 10) + 's';
-        starContainer.appendChild(shooting);
-      }
-    };
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('discountBtn').onclick = handleDiscountCode;
+    });
   </script>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #f2f2f2;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
+    body { font-family: Arial, sans-serif; background: #111; color: #f2f2f2; margin:0; padding:0; overflow-x:hidden; }
+    header { background:#111; text-align:center; padding:1rem; position:relative; z-index:10; }
+    header h1.title { font-weight:bold; font-size:2.5rem; margin:0; background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite; position:relative; z-index:10; }
+    @keyframes rainbow { 0%{background-position:0% 50%} 100%{background-position:400% 50%} }
+    .rainbow-text { font-weight:bold; background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite; position:relative; z-index:10; }
+    .neon-text { font-weight:bold; color:#0ff; text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff; animation:neonGlow 1.5s ease-in-out infinite alternate; position:relative; z-index:10; }
+    @keyframes neonGlow { from{text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff;} to{text-shadow:0 0 10px #0ff,0 0 20px #0ff,0 0 30px #0ff,0 0 50px #0ff;} }
+    nav { display:flex; justify-content:center; gap:1rem; padding:1rem; position:relative; z-index:10; }
+    nav a { color:#f2f2f2; text-decoration:none; font-weight:bold; background:#222; padding:0.5rem 1rem; border-radius:8px; box-shadow:0 0 10px rgba(255,255,255,0.2); transition:background 0.3s,box-shadow 0.3s; }
+    nav a:hover { background:#333; box-shadow:0 0 15px rgba(255,255,255,0.4); }
+    .container { max-width:1200px; margin:auto; padding:2rem; position:relative; z-index:10; }
+    .products { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; }
+    .product-card { background:#222; border-radius:8px; padding:1rem; text-align:center; box-shadow:0 0 15px rgba(0,255,255,0.2); transition:transform 0.3s,box-shadow 0.3s; position:relative; z-index:10; }
+    .product-card:hover { transform:translateY(-5px); box-shadow:0 0 25px rgba(0,255,255,0.5); }
+    .product-card h3 { margin:0.5rem 0; font-size:1.2rem; font-weight:bold; }
+    .price { font-size:1rem; color:#ccc; margin-bottom:0.5rem; }
+    .description { font-size:0.9rem; color:#bbb; margin-bottom:1rem; }
+    .product-video iframe { width:100%; border-radius:4px; }
+    .purchase-buttons { display:flex; justify-content:center; gap:0.5rem; margin-top:0.5rem; }
+    .purchase-button.paypal, .purchase-button.cashapp {
+      display:inline-block; color:#fff; text-decoration:none; padding:0.5rem 0.8rem;
+      border-radius:4px; font-size:0.9rem; cursor:pointer; background-size:400% 400%;
+      animation:gradientAnim 5s ease infinite; box-shadow:0 0 8px currentColor; transition:box-shadow 0.3s;
     }
-    header {
-      background: #111;
-      text-align: center;
-      padding: 1rem;
-      position: relative;
-      z-index: 10;
-    }
-    header h1.title {
-      font-weight: bold;
-      font-size: 2.5rem;
-      margin: 0;
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s linear infinite;
-      position: relative;
-      z-index: 10;
-    }
-    @keyframes rainbow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 400% 50%; }
-    }
-    .rainbow-text {
-      font-weight: bold;
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s linear infinite;
-      position: relative;
-      z-index: 10;
-    }
-    .neon-text {
-      font-weight: bold;
-      color: #0ff;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-      animation: neonGlow 1.5s ease-in-out infinite alternate;
-      position: relative;
-      z-index: 10;
-    }
-    @keyframes neonGlow {
-      from { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff; }
-      to { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff, 0 0 50px #0ff; }
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
-      position: relative;
-      z-index: 10;
-    }
-    nav a {
-      color: #f2f2f2;
-      text-decoration: none;
-      font-weight: bold;
-      background: #222;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    nav a:hover {
-      background: #333;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-    }
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 2rem;
-      position: relative;
-      z-index: 10;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .product-card {
-      background: #222;
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      z-index: 10;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-    }
-    .product-card h3 {
-      margin: 0.5rem 0;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-    .price {
-      font-size: 1rem;
-      color: #ccc;
-      margin-bottom: 0.5rem;
-    }
-    .rating {
-      font-size: 0.9rem;
-      color: #0ff;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-    }
-    .description {
-      font-size: 0.9rem;
-      color: #bbb;
-      margin-bottom: 1rem;
-    }
-    .product-video iframe {
-      width: 100%;
-      border-radius: 4px;
-      aspect-ratio: 16/9;
-    }
-    .purchase-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    .purchase-button.paypal,
-    .purchase-button.cashapp {
-      display: inline-block;
-      color: #fff;
-      text-decoration: none;
-      padding: 0.5rem 0.8rem;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      background-size: 400% 400%;
-      animation: gradientAnim 5s ease infinite;
-      box-shadow: 0 0 8px currentColor;
-      transition: box-shadow 0.3s;
-    }
-    .purchase-button.paypal {
-      background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
-    }
-    .purchase-button.paypal:hover {
-      box-shadow: 0 0 15px #00b0ff;
-    }
-    .purchase-button.cashapp {
-      background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
-    }
-    .purchase-button.cashapp:hover {
-      box-shadow: 0 0 15px #00ff44;
-    }
-    @keyframes gradientAnim {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #aaa;
-      position: relative;
-      z-index: 10;
-    }
+    .purchase-button.paypal { background:linear-gradient(-45deg,#0057b7,#009cde,#003087,#0070ba); }
+    .purchase-button.paypal:hover { box-shadow:0 0 15px #00b0ff; }
+    .purchase-button.cashapp { background:linear-gradient(-45deg,#3ece47,#00d12e,#21a716,#2fbb00); }
+    .purchase-button.cashapp:hover { box-shadow:0 0 15px #00ff44; }
+    @keyframes gradientAnim { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+    footer { text-align:center; padding:1rem; font-size:0.9rem; color:#aaa; position:relative; z-index:10; }
     #auth-btn {
-      position: fixed;
-      top: 10px;
-      right: 10px;
+      position:fixed; top:10px; right:10px; background:#0ff; border:none; color:#111;
+      padding:0.5rem 1rem; border-radius:6px; font-weight:bold; cursor:pointer;
+      box-shadow:0 0 10px #0ff; transition:box-shadow 0.3s; z-index:1000;
+    }
+    #auth-btn:hover { box-shadow:0 0 20px #00ffff; }
+    #discountBtn {
+      margin: 2rem auto 1rem auto;
+      display: block;
+      padding: 0.75rem 1.5rem;
       background: #0ff;
-      border: none;
       color: #111;
-      padding: 0.5rem 1rem;
+      border: none;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 10px #0ff;
+      box-shadow: 0 0 15px #0ff;
       transition: box-shadow 0.3s;
-      z-index: 1000;
-    }
-    #auth-btn:hover {
-      box-shadow: 0 0 20px #00ffff;
-    }
-    .starry-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-      background: #111;
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      filter: drop-shadow(0 0 2px white);
-      animation: twinkle 3s infinite ease-in-out;
-    }
-    .star.small {
-      width: 1.5px;
-      height: 1.5px;
-      animation-duration: 3s;
-    }
-    .star.medium {
-      width: 2.5px;
-      height: 2.5px;
-      animation-duration: 4s;
-    }
-    .star.large {
-      width: 3.5px;
-      height: 3.5px;
-      animation-duration: 5s;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 0.2; }
-    }
-    .shooting-star {
-      position: fixed;
-      top: -10px;
-      left: -100px;
-      width: 100px;
-      height: 2px;
-      background: linear-gradient(45deg, white, rgba(255,255,255,0));
-      filter: drop-shadow(0 0 6px white);
-      border-radius: 100%;
-      transform: rotate(45deg);
-      animation: shootingStar 5s linear infinite;
-      z-index: 1;
-    }
-    @keyframes shootingStar {
-      0% {
-        transform: translateX(0) translateY(0) rotate(45deg);
-        opacity: 1;
-      }
-      70% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(120vw) translateY(120vh) rotate(45deg);
-        opacity: 0;
-      }
-    }
-    /* Discount button style */
-    #discountBtn {
-      display: block;
-      margin: 2rem auto 1rem auto;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #0ff;
-      background: transparent;
-      border: 2px solid #0ff;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
+      max-width: 250px;
       text-align: center;
-      width: 220px;
-      z-index: 10;
+      font-size: 1rem;
     }
     #discountBtn:hover {
-      background: #0ff;
-      color: #111;
-      box-shadow: 0 0 10px #0ff;
+      box-shadow: 0 0 25px #00ffff;
     }
-    #discountResult {
-      max-width: 400px;
-      margin: 0 auto 2rem auto;
-      padding: 1rem;
-      background: #222;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #0ff;
-      font-family: monospace;
-      text-align: center;
-      white-space: pre-wrap;
-      user-select: all;
-      z-index: 10;
-    }
+    .starry-background { position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; overflow:hidden; z-index:0; background:#111; }
+    .star { position:absolute; background:white; border-radius:50%; opacity:0.8; filter:drop-shadow(0 0 2px white); animation:twinkle 3s infinite ease-in-out; }
+    .star.small { width:1.5px; height:1.5px; animation-duration:3s; }
+    .star.medium { width:2.5px; height:2.5px; animation-duration:4s; }
+    .star.large { width:3.5px; height:3.5px; animation-duration:5s; }
+    @keyframes twinkle { 0%,100%{opacity:0.8;} 50%{opacity:0.2;} }
+    .shooting-star { position:fixed; top:-10px; left:-100px; width:100px; height:2px; background:linear-gradient(45deg,white,rgba(255,255,255,0)); filter:drop-shadow(0 0 6px white); border-radius:100%; transform:rotate(45deg); animation:shootingStar 5s linear infinite; z-index:1; }
+    @keyframes shootingStar { 0%{transform:translateX(0) translateY(0) rotate(45deg);opacity:1;}70%{opacity:1;}100%{transform:translateX(120vw) translateY(120vh) rotate(45deg);opacity:0;} }
   </style>
 </head>
 <body>
   <button id="auth-btn">Loading...</button>
   <div class="starry-background" id="stars"></div>
 
-  <header>
-    <h1 class="title">Abandoned Tweaks</h1>
-  </header>
+  <header><h1 class="title">Abandoned Tweaks</h1></header>
   <nav>
     <a href="https://discord.gg/qyZEhex3HJ" target="_blank" rel="noopener noreferrer">Discord</a>
     <a href="#">Purchase</a>
@@ -468,7 +197,7 @@
         <h3>Shotgun Pack V1</h3>
         <div class="price">$9.99</div>
         <div class="rating">★★★★★ (5)</div>
-        <div class="description">Enhances shotgun performance with precise tweaks.</div>
+        <div class="description">Shotgun pack version 1 optimized for faster reload and improved accuracy.</div>
         <div class="product-video">
           <iframe src="https://www.youtube.com/embed/aH9jyFFBDvA" frameborder="0" allowfullscreen></iframe>
         </div>
@@ -483,7 +212,7 @@
         <h3>Shotgun Pack V2</h3>
         <div class="price">$12.99</div>
         <div class="rating">★★★★★ (8)</div>
-        <div class="description">Improved shotgun settings with faster response.</div>
+        <div class="description">Shotgun pack version 2 with improved responsiveness and recoil control.</div>
         <div class="product-video">
           <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
         </div>
@@ -498,7 +227,7 @@
         <h3>Bloom Pack V1</h3>
         <div class="price">$9.99</div>
         <div class="rating">★★★★★ (15)</div>
-        <div class="description">Reduces bloom and improves accuracy on many guns.</div>
+        <div class="description">Reduces bloom and improves accuracy on many weapons.</div>
         <div class="product-video">
           <iframe src="https://www.youtube.com/embed/08tGTefwgtM" frameborder="0" allowfullscreen></iframe>
         </div>
@@ -540,11 +269,42 @@
 
     </div>
 
-    <!-- Discount Code Button -->
     <button id="discountBtn">Enter Discount Code</button>
-    <div id="discountResult"></div>
   </div>
 
-  <footer>© Abandoned Tweaks 2025 | All rights reserved</footer>
+  <footer>
+    &copy; 2025 Abandoned Tweaks. All rights reserved.
+  </footer>
+
+  <script>
+    // Starry background creation
+    const starContainer = document.getElementById('stars');
+    const starCount = 100;
+    for(let i=0; i<starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      // Random size class
+      const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random()*3)];
+      star.classList.add(sizeClass);
+      star.style.top = Math.random()*100 + 'vh';
+      star.style.left = Math.random()*100 + 'vw';
+      star.style.animationDelay = (Math.random()*5) + 's';
+      starContainer.appendChild(star);
+    }
+
+    // Shooting star periodically
+    function createShootingStar() {
+      const shootingStar = document.createElement('div');
+      shootingStar.classList.add('shooting-star');
+      shootingStar.style.top = Math.random()*50 + 'vh';
+      shootingStar.style.left = '-100px';
+      starContainer.appendChild(shootingStar);
+      setTimeout(() => {
+        shootingStar.remove();
+      }, 5000);
+    }
+    setInterval(createShootingStar, 15000);
+  </script>
+
 </body>
 </html>
