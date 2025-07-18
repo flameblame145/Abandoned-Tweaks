@@ -579,6 +579,73 @@
   </footer>
 
   <script>
+    function showDiscountPanel() {
+  document.getElementById('discountModal').style.display = 'block';
+  document.getElementById('discountInput').value = '';
+  document.getElementById('discountMessage').textContent = '';
+}
+
+function closeDiscountPanel() {
+  document.getElementById('discountModal').style.display = 'none';
+  document.getElementById('discountPanelContent').style.display = 'block';
+  document.getElementById('discountSuccess').style.display = 'none';
+}
+
+async function submitDiscountCode() {
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    alert('You must be logged in to enter a discount code.');
+    closeDiscountPanel();
+    return;
+  }
+
+  const code = document.getElementById('discountInput').value.trim();
+  if (!code) {
+    alert('Please enter a discount code.');
+    return;
+  }
+
+  if (code !== 'TikTok15') {
+    alert('Invalid discount code.');
+    return;
+  }
+
+  const usedRef = firebase.firestore().collection('discountCodesUsed').doc(user.uid);
+  const doc = await usedRef.get();
+
+  if (doc.exists) {
+    alert('You have already used this discount code once.');
+    closeDiscountPanel();
+    return;
+  }
+
+  const randomCode = Math.random().toString(36).substr(2, 10).toUpperCase();
+  const timestamp = new Date();
+
+  await usedRef.set({
+    codeUsed: code,
+    randomCode,
+    usedAt: timestamp.toISOString()
+  });
+
+  document.getElementById('discountPanelContent').style.display = 'none';
+  const successPanel = document.getElementById('discountSuccess');
+  successPanel.style.display = 'block';
+  successPanel.innerHTML = `
+    <h2>Success!</h2>
+    <p>Your unique order number is:</p>
+    <p style="font-weight:bold; font-size:1.2rem;">${randomCode}</p>
+    <p>Used on: ${timestamp.toLocaleString()}</p>
+    <button onclick="closeDiscountPanel()">Close</button>
+  `;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('discountBtn').addEventListener('click', showDiscountPanel);
+  document.getElementById('discountSubmit').addEventListener('click', submitDiscountCode);
+  document.getElementById('discountClose').addEventListener('click', closeDiscountPanel);
+});
+
     // Create stars randomly
     function createStar() {
       const star = document.createElement('div');
@@ -607,4 +674,76 @@
     setInterval(createShootingStar, 10000);
   </script>
 </body>
+  <!-- Discount Modal -->
+<div id="discountModal">
+  <button id="discountClose" aria-label="Close">&times;</button>
+  <div id="discountPanelContent">
+    <h2>Enter Discount Code</h2>
+    <input id="discountInput" type="text" placeholder="Enter code here..." />
+    <button id="discountSubmit">Submit</button>
+    <p id="discountMessage"></p>
+  </div>
+  <div id="discountSuccess" style="display:none;"></div>
+  <style>
+    /* Discount modal panel */
+#discountModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #00ffff;
+  padding: 2rem;
+  z-index: 2000;
+  width: 320px;
+  color: #0ff;
+  font-weight: bold;
+}
+
+#discountModal input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+#discountModal button {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #00ffff;
+  color: #111;
+  box-shadow: 0 0 10px #00ffff;
+  transition: box-shadow 0.3s;
+}
+
+#discountModal button:hover {
+  box-shadow: 0 0 20px #00ffff;
+}
+
+#discountClose {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #0ff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#discountClose:hover {
+  color: #00ffff;
+}
+  </style>
+</div>
 </html>
