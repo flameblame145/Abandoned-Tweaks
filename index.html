@@ -64,9 +64,22 @@
     footer { text-align:center; padding:1rem; font-size:0.9rem; color:#aaa; position:relative; z-index:10; }
 
     /* Auth toggle button */
-    #auth-btn { position:fixed; top:10px; right:10px; background:#0ff; border:none; color:#111; padding:0.5rem 1rem; border-radius:6px; font-weight:bold; cursor:pointer; box-shadow:0 0 10px #0ff; transition:box-shadow 0.3s; z-index:10; }
-    #auth-btn:hover { box-shadow:0 0 20px #00ffff; }
-
+#auth-btn {
+  position:fixed;
+  top:10px;
+  right:10px;
+  background:#0ff;
+  border:none;
+  color:#111;
+  padding:0.5rem 1rem;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 10px #0ff;
+  transition:box-shadow 0.3s;
+  z-index:1000; /* Increase from 10 to 1000 to stay on top */
+}
+#auth-btn:hover { box-shadow:0 0 20px #00ffff; }
     /* === Starry background styles === */
     .starry-background { position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; overflow:hidden; z-index:0; background:#111; }
     .star { position:absolute; background:white; border-radius:50%; opacity:0.8; filter:drop-shadow(0 0 2px white); animation:twinkle 3s infinite ease-in-out; }
