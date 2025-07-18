@@ -611,5 +611,14 @@
 
     setInterval(createShootingStar, 10000);
   </script>
+  <script>
+  function enterSite() {
+    const overlay = document.getElementById('intro-overlay');
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.8s ease';
+    setTimeout(() => overlay.remove(), 800);
+  }
+</script>
+  
 </body>
 </html>
