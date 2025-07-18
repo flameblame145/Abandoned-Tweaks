@@ -46,32 +46,6 @@
       return result;
     }
 
-    // Show discount panel with neon glow
-    function showDiscountPanel(randomCode, usedAt) {
-      // If panel already exists, remove it
-      const existingPanel = document.getElementById('discountPanel');
-      if (existingPanel) existingPanel.remove();
-
-      // Create panel container
-      const panel = document.createElement('div');
-      panel.id = 'discountPanel';
-
-      // Panel content
-      panel.innerHTML = `
-        <button id="closeDiscountPanel" aria-label="Close discount info">&times;</button>
-        <h2>Your Discount Code Number</h2>
-        <div id="codeDisplay">${randomCode}</div>
-        <div id="usedAtDisplay">Used on: ${new Date(usedAt).toLocaleString()}</div>
-      `;
-
-      document.body.appendChild(panel);
-
-      // Close button handler
-      document.getElementById('closeDiscountPanel').onclick = () => {
-        panel.remove();
-      };
-    }
-
     // Discount code logic
     async function enterDiscountCode() {
       const user = auth.currentUser;
@@ -88,17 +62,16 @@
         return;
       }
 
+      // Check if user already used code
       const usedRef = db.collection('discountCodesUsed').doc(user.uid);
       const doc = await usedRef.get();
 
       if (doc.exists) {
-        // Already used, show same panel
-        const data = doc.data();
-        showDiscountPanel(data.randomCode, data.usedAt);
+        alert('You have already used this discount code once.');
         return;
       }
 
-      // First use: generate and save code
+      // Generate random code and save with timestamp
       const randomCode = generateRandomCode();
       const timestamp = new Date();
 
@@ -108,7 +81,7 @@
         usedAt: timestamp.toISOString()
       });
 
-      showDiscountPanel(randomCode, timestamp.toISOString());
+      alert(`Success! Your unique code is: ${randomCode}\nUsed on: ${timestamp.toLocaleString()}`);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -403,83 +376,6 @@
     #discountBtn:hover {
       box-shadow: 0 0 20px #00ffff;
     }
-
-    /* Discount Panel Styles */
-    #discountPanel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #111;
-      border: 3px solid #00ffff;
-      border-radius: 16px;
-      padding: 2rem 3rem;
-      box-shadow:
-        0 0 10px #00ffff,
-        0 0 20px #00ffff,
-        0 0 30px #00ffff,
-        0 0 40px #00ffff;
-      color: #0ff;
-      font-family: 'Courier New', Courier, monospace;
-      text-align: center;
-      z-index: 1100;
-      animation: neonGlowPanel 1.5s ease-in-out infinite alternate;
-      max-width: 320px;
-      user-select: text;
-    }
-    @keyframes neonGlowPanel {
-      from {
-        box-shadow:
-          0 0 10px #00ffff,
-          0 0 20px #00ffff,
-          0 0 30px #00ffff,
-          0 0 40px #00ffff;
-      }
-      to {
-        box-shadow:
-          0 0 20px #00ffff,
-          0 0 30px #00ffff,
-          0 0 40px #00ffff,
-          0 0 50px #00ffff;
-      }
-    }
-    #discountPanel h2 {
-      margin-top: 0;
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px #00ffff;
-    }
-    #codeDisplay {
-      font-size: 1.8rem;
-      letter-spacing: 2px;
-      margin: 1rem 0;
-      font-weight: bold;
-      text-shadow: 0 0 15px #00ffff;
-    }
-    #usedAtDisplay {
-      font-size: 1rem;
-      color: #a0f0f0;
-      text-shadow: 0 0 8px #00ffff;
-    }
-    #closeDiscountPanel {
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      background: transparent;
-      border: none;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #00ffff;
-      cursor: pointer;
-      text-shadow: 0 0 10px #00ffff;
-      line-height: 1;
-      padding: 0;
-      user-select: none;
-    }
-    #closeDiscountPanel:hover {
-      color: #0ff;
-      text-shadow: 0 0 15px #0ff;
-    }
   </style>
 </head>
 <body>
@@ -509,11 +405,169 @@
         </div>
         <div class="purchase-buttons">
           <a href="https://paypal.me/paymepaypalplease/49.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/49.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">Cash App</a>
+          <a href="https://cash.app/$trazeymax/49.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
         </div>
       </div>
 
-      <!-- Other product cards here... -->
+      <!-- Taste Tester -->
+      <div class="product-card">
+        <h3 class="neon-text">Taste Tester</h3>
+        <div class="price">$19.99</div>
+        <div class="rating">★★★★★ (19)</div>
+        <div class="description">Massively improves aim, builds, and performance.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/19.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/19.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Shotgun Pack V1 -->
+      <div class="product-card">
+        <h3>Shotgun Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="rating">★★★★★ (7)</div>
+        <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Shotgun Pack V2 -->
+      <div class="product-card">
+        <h3>Shotgun Pack V2</h3>
+        <div class="price">$14.99</div>
+        <div class="rating">★★★★★ (8)</div>
+        <div class="description">Hit Harder Pumps, Increase Average Pump Damage, 185 everyone. ESSENTIAL PACK</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/7eDtKVOwSyE" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/14.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Bloom Pack V1 -->
+      <div class="product-card">
+        <h3>Bloom Pack V1</h3>
+        <div class="price">$5.99</div>
+        <div class="rating">★★★★★ (14)</div>
+        <div class="description">Reduce Bloom, Win Most Bloom Battles Constantly, AR Like a Laser Beam, Hit Most Shots!</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/9dpDf0SKI0I" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Bloom Pack V2 -->
+      <div class="product-card">
+        <h3>Bloom Pack V2</h3>
+        <div class="price">$9.99</div>
+        <div class="rating">★★★★★ (10)</div>
+        <div class="description">Max Bloom Reduction, AR & SMG like lasers, Dominate every fight.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/JjFTOm2E7eA" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- WiFi Tweaks -->
+      <div class="product-card">
+        <h3>WiFi Tweaks</h3>
+        <div class="price">$7.99</div>
+        <div class="rating">★★★★★ (20)</div>
+        <div class="description">Improve network latency and reduce ping spikes for smoother gameplay.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/7.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/7.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+      <!-- SMG Bloom Reducer -->
+      <div class="product-card">
+        <h3>SMG Bloom Reducer</h3>
+        <div class="price">$9.99</div>
+        <div class="description">Reduces bloom specifically for SMGs to improve your accuracy and fire rate.</div>
+        <div class="product-video">
+          <iframe src="https://www.youtube.com/embed/08tGTefwgtM" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+          <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+        </div>
+      </div>
+
+        <!-- Keyboard Tweaks -->
+      <div class="product-card">
+        <h3>Keyboard Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="rating">★★★★★ (19)</div>
+        <div class="description">Speed up your keystrokes—perfect for faster building & better response. ESSENTIAL PACK</div>
+        <div class="product-video"><iframe src="https://www.youtube.com/embed/VOxXStoaLx8" frameborder="0" allowfullscreen></iframe></div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/1.99" class="purchase-button paypal" target="_blank">PayPal</a>
+          <a href="https://cash.app/$trazeymax/1.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+        </div>
+      </div>
+
+      <!-- Mouse Tweaks -->
+      <div class="product-card">
+        <h3>Mouse Tweaks</h3>
+        <div class="price">$1.99</div>
+        <div class="rating">★★★★★ (23)</div>
+        <div class="description">Makes you click faster & improves timing—great for boosting CPS and smoother edits. DIAMOND PACK</div>
+        <div class="product-video"><iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe></div>
+        <div class="purchase-buttons">
+          <a href="https://paypal.me/paymepaypalplease/1.99" class="purchase-button paypal" target="_blank">PayPal</a>
+          <a href="https://cash.app/$trazeymax/1.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+  <h3>Spotify Premium Tweak</h3>
+  <div class="price">$14.99</div>
+         <div class="rating">★★★★★ (32)</div>
+  <div class="description">Enjoy unlimited skips, no ads, and high-quality audio with Spotify Premium – all for a one-time price.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+    <a href="https://cash.app/$trazeymax/14.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+  </div>
+</div>
+
+      <div class="product-card">
+  <h3>0 Delay</h3>
+  <div class="price">$4.99</div>
+  <div class="rating">★★★★★ (9)</div>
+  <div class="description">Experience zero input delay for faster building, smoother edits, and better gameplay in Fortnite.</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/G2igjYONmzw" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/4.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+    <a href="https://cash.app/$trazeymax/4.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+  </div>
+</div>
+
+
 
     </div>
   </div>
@@ -521,7 +575,36 @@
   <button id="discountBtn">Enter Discount Code</button>
 
   <footer>
-    © 2025 Abandoned Tweaks
+    &copy; 2025 Abandoned Tweaks. All rights reserved.
   </footer>
+
+  <script>
+    // Create stars randomly
+    function createStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const sizeClasses = ['small', 'medium', 'large'];
+      star.classList.add(sizeClasses[Math.floor(Math.random() * sizeClasses.length)]);
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDelay = (Math.random() * 3) + 's';
+      star.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.getElementById('stars').appendChild(star);
+    }
+
+    for(let i=0; i < 80; i++) createStar();
+
+    // Shooting star function (diagonal top-left to bottom-right)
+    function createShootingStar() {
+      const shootingStar = document.createElement('div');
+      shootingStar.classList.add('shooting-star');
+      shootingStar.style.top = '0px';
+      shootingStar.style.left = '0px';
+      document.getElementById('stars').appendChild(shootingStar);
+      setTimeout(() => shootingStar.remove(), 2000);
+    }
+
+    setInterval(createShootingStar, 10000);
+  </script>
 </body>
 </html>
