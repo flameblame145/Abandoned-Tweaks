@@ -625,5 +625,11 @@
   }
 </script>
   
-</body>
+</body> <script>
+  const ball = document.getElementById('cursor-ball');
+  document.addEventListener('mousemove', (e) => {
+    ball.style.top = e.clientY + 'px';
+    ball.style.left = e.clientX + 'px';
+  });
+</script>
 </html>
