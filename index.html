@@ -49,19 +49,25 @@
     .product-card h3 { margin:0.5rem 0; font-size:1.2rem; font-weight:bold; }
     .price { font-size:1rem; color:#ccc; margin-bottom:0.5rem; }
     .description { font-size:0.9rem; color:#bbb; margin-bottom:1rem; }
-    .product-video iframe { width:100%; border-radius:4px; }
     .purchase-buttons { display:flex; justify-content:center; gap:0.5rem; margin-top:0.5rem; }
 
-    /* Updated animated buttons */
+    /* Animated gradient buttons */
     .purchase-button.paypal, .purchase-button.cashapp {
-      display:inline-block; color:#fff; text-decoration:none; padding:0.5rem 0.8rem;
-      border-radius:4px; font-size:0.9rem; cursor:pointer; 
-      background-size:400% 400%; 
-      animation:gradientAnim 6s ease infinite, pulse 2s infinite; 
+      display:inline-block; 
+      color:#fff; 
+      text-decoration:none; 
+      padding:0.5rem 0.8rem;
+      border-radius:4px; 
+      font-size:0.9rem; 
+      cursor:pointer; 
+      background: linear-gradient(270deg, #ff0000, #ff9900, #33cc33, #0066ff, #9900cc, #ff0000);
+      background-size:1200% 1200%;
+      animation: animatedGradient 8s ease infinite, pulse 2s infinite;
       box-shadow:0 0 8px currentColor; 
       position: relative;
       overflow: hidden;
     }
+
     .purchase-button::after {
       content: '';
       position: absolute;
@@ -71,23 +77,26 @@
       transform: skewX(-25deg);
       animation: shine 2.5s infinite;
     }
-    @keyframes gradientAnim { 
-      0%{background-position:0% 50%} 
-      50%{background-position:100% 50%} 
-      100%{background-position:0% 50%} 
+
+    @keyframes animatedGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
+
     @keyframes shine {
       0% { left:-75%; }
       100% { left:125%; }
     }
+
     @keyframes pulse {
       0%,100% { box-shadow:0 0 8px currentColor; }
       50% { box-shadow:0 0 16px currentColor; }
     }
-    .purchase-button.paypal { background:linear-gradient(-45deg,#0057b7,#009cde,#003087,#0070ba); }
-    .purchase-button.paypal:hover { box-shadow:0 0 20px #00b0ff; }
-    .purchase-button.cashapp { background:linear-gradient(-45deg,#3ece47,#00d12e,#21a716,#2fbb00); }
-    .purchase-button.cashapp:hover { box-shadow:0 0 20px #00ff44; }
+
+    .purchase-button.paypal:hover, .purchase-button.cashapp:hover {
+      box-shadow:0 0 20px #fff;
+    }
 
     footer { text-align:center; padding:1rem; font-size:0.9rem; color:#aaa; }
     #auth-btn {
@@ -119,8 +128,33 @@
 
   <div class="container">
     <div class="products">
-      <!-- your product cards remain unchanged -->
-      <!-- keep all product cards here as in your original file -->
+      <div class="product-card">
+        <h3>Shotgun Pack V1</h3>
+        <div class="price">$9.99</div>
+        <div class="description">Boost your aim and reduce bloom for shotguns!</div>
+        <div class="purchase-buttons">
+          <a class="purchase-button paypal" href="#">PayPal</a>
+          <a class="purchase-button cashapp" href="#">CashApp</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <h3>Keyboard Tweaks</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Reduce input delay and add rapid trigger support!</div>
+        <div class="purchase-buttons">
+          <a class="purchase-button paypal" href="#">PayPal</a>
+          <a class="purchase-button cashapp" href="#">CashApp</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <h3>Max FPS</h3>
+        <div class="price">$4.99</div>
+        <div class="description">Skyrocket your FPS to 400+ with advanced tweaks!</div>
+        <div class="purchase-buttons">
+          <a class="purchase-button paypal" href="#">PayPal</a>
+          <a class="purchase-button cashapp" href="#">CashApp</a>
+        </div>
+      </div>
     </div>
   </div>
 
