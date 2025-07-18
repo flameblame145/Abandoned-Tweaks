@@ -652,6 +652,51 @@
     // Hide the button after click
     unmuteBtn.style.display = 'none';
   });
+  // Load YouTube IFrame API asynchronously
+let tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
+let player;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('youtube-player', {
+    height: '0',
+    width: '0',
+    videoId: '_xRN3dTg9s0',  // your YouTube video ID
+    playerVars: {
+      'autoplay': 0,
+      'controls': 0,
+      'mute': 0,
+      'loop': 1,
+      'playlist': '_xRN3dTg9s0', // to loop video
+      'modestbranding': 1,
+      'iv_load_policy': 3,
+      'disablekb': 1,
+      'rel': 0
+    },
+    events: {
+      'onReady': onPlayerReady
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  // Player is ready but don't autoplay yet
+}
+
+function enterSite() {
+  // Hide overlay
+  document.getElementById('intro-overlay').style.display = 'none';
+  // Show the hidden player container if needed
+  document.getElementById('youtube-player-container').style.display = 'block';
+
+  // Play video (unmuted)
+  if (player && typeof player.playVideo === 'function') {
+    player.playVideo();
+  }
+}
+
 ></iframe>
 </body>
 </html>
