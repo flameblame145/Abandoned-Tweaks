@@ -377,57 +377,8 @@
       box-shadow: 0 0 20px #00ffff;
     }
   </style>
-  /* Splash screen styling */
-#splash {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #000; /* or your brand color */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 1s ease;
-  perspective: 1000px;
-}
-
-#splash.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Spinning logo */
-#splash img {
-  width: 200px; /* adjust as needed */
-  animation: spin3d 3s linear infinite;
-  transform-style: preserve-3d;
-}
-
-@keyframes spin3d {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-}
-
-/* Main content hidden initially */
-#main-content {
-  display: none;
-}
-
-#main-content.visible {
-  display: block;
-}
-
 </head>
 <body>
-  <!-- Splash screen -->
-<div id="splash">
-  <img src="New_Project_43.png" alt="Logo">
-</div>
-
-<!-- Main content wrapper (everything else stays as-is) -->
-<div id="main-content">
-  <!-- existing header, nav, container, footer, etc. -->
-
   <button id="auth-btn">Loading...</button>
   <div class="starry-background" id="stars"></div>
 
@@ -525,7 +476,7 @@
         <div class="rating">★★★★★ (10)</div>
         <div class="description">Max Bloom Reduction, AR & SMG like lasers, Dominate every fight.</div>
         <div class="product-video">
-          <iframe src="https://www.youtube.com/watch?v=1CLf6Jy4kOc" frameborder="0" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/JjFTOm2E7eA" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="purchase-buttons">
           <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
@@ -554,7 +505,7 @@
         <div class="price">$9.99</div>
         <div class="description">Reduces bloom specifically for SMGs to improve your accuracy and fire rate.</div>
         <div class="product-video">
-          <iframe src="https://www.youtube.com/watch?v=3jTz40kOvEI" frameborder="0" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/08tGTefwgtM" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="purchase-buttons">
           <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
@@ -594,7 +545,7 @@
          <div class="rating">★★★★★ (32)</div>
   <div class="description">Enjoy unlimited skips, no ads, and high-quality audio with Spotify Premium – all for a one-time price.</div>
   <div class="product-video">
-    <iframe src="https://www.youtube.com/watch?v=_xRN3dTg9s0&list=RD_xRN3dTg9s0&start_radio=1" frameborder="0" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="purchase-buttons">
     <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
@@ -654,13 +605,5 @@
 
     setInterval(createShootingStar, 10000);
   </script>
-</body> <script>
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('splash').classList.add('fade-out');
-      document.getElementById('main-content').classList.add('visible');
-    }, 3000); // show splash for 3 seconds
-  });
-</script>
-
+</body>
 </html>
