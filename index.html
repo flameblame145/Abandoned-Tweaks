@@ -11,6 +11,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
   <script>
+    // Initialize Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
       authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
@@ -24,7 +25,7 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Handle auth button
+    // Auth button handling
     auth.onAuthStateChanged(user => {
       const btn = document.getElementById('auth-btn');
       if (user) {
@@ -32,11 +33,11 @@
         btn.onclick = () => auth.signOut().then(() => window.location.reload());
       } else {
         btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html'; // Adjust your login URL if needed
+        btn.onclick = () => window.location.href = 'login.html'; // Replace with your login page URL
       }
     });
 
-    // Generate random code helper
+    // Generate random code helper function
     function generateRandomCode(length = 12) {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       let result = '';
@@ -48,7 +49,8 @@
   </script>
 
   <style>
-    /* Base styles */
+    /* Your previous styles here (omitted for brevity, but same as before) */
+
     body {
       font-family: Arial, sans-serif;
       background: #111;
@@ -84,244 +86,8 @@
         background-position: 400% 50%;
       }
     }
-    .rainbow-text {
-      font-weight: bold;
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s linear infinite;
-      position: relative;
-      z-index: 10;
-    }
-    .neon-text {
-      font-weight: bold;
-      color: #0ff;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-      animation: neonGlow 1.5s ease-in-out infinite alternate;
-      position: relative;
-      z-index: 10;
-    }
-    @keyframes neonGlow {
-      from {
-        text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-      }
-      to {
-        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff, 0 0 50px #0ff;
-      }
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
-      position: relative;
-      z-index: 10;
-    }
-    nav a {
-      color: #f2f2f2;
-      text-decoration: none;
-      font-weight: bold;
-      background: #222;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    nav a:hover {
-      background: #333;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-    }
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 2rem;
-      position: relative;
-      z-index: 10;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .product-card {
-      background: #222;
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      z-index: 10;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-    }
-    .product-card h3 {
-      margin: 0.5rem 0;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-    .price {
-      font-size: 1rem;
-      color: #ccc;
-      margin-bottom: 0.5rem;
-    }
-    .rating {
-      font-size: 0.9rem;
-      color: #0ff;
-      margin-bottom: 0.5rem;
-    }
-    .description {
-      font-size: 0.9rem;
-      color: #bbb;
-      margin-bottom: 1rem;
-    }
-    .product-video iframe {
-      width: 100%;
-      border-radius: 4px;
-    }
-    .purchase-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .purchase-button.paypal,
-    .purchase-button.cashapp {
-      display: inline-block;
-      color: #fff;
-      text-decoration: none;
-      padding: 0.5rem 0.8rem;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      background-size: 400% 400%;
-      animation: gradientAnim 5s ease infinite;
-      box-shadow: 0 0 8px currentColor;
-      transition: box-shadow 0.3s;
-      white-space: nowrap;
-    }
-    .purchase-button.paypal {
-      background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
-    }
-    .purchase-button.paypal:hover {
-      box-shadow: 0 0 15px #00b0ff;
-    }
-    .purchase-button.cashapp {
-      background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
-    }
-    .purchase-button.cashapp:hover {
-      box-shadow: 0 0 15px #00ff44;
-    }
-    @keyframes gradientAnim {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #aaa;
-      position: relative;
-      z-index: 10;
-    }
-    #auth-btn {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: #0ff;
-      border: none;
-      color: #111;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 10px #0ff;
-      transition: box-shadow 0.3s;
-      z-index: 1000;
-    }
-    #auth-btn:hover {
-      box-shadow: 0 0 20px #00ffff;
-    }
-    .starry-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-      background: #111;
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      filter: drop-shadow(0 0 2px white);
-      animation: twinkle 3s infinite ease-in-out;
-    }
-    .star.small {
-      width: 1.5px;
-      height: 1.5px;
-      animation-duration: 3s;
-    }
-    .star.medium {
-      width: 2.5px;
-      height: 2.5px;
-      animation-duration: 4s;
-    }
-    .star.large {
-      width: 3.5px;
-      height: 3.5px;
-      animation-duration: 5s;
-    }
-    @keyframes twinkle {
-      0%,
-      100% {
-        opacity: 0.8;
-      }
-      50% {
-        opacity: 0.2;
-      }
-    }
-    .shooting-star {
-      position: fixed;
-      width: 80px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      transform: rotate(45deg);
-      animation: shoot 2s linear forwards;
-      z-index: 1;
-      pointer-events: none;
-    }
-    @keyframes shoot {
-      0% {
-        top: 0;
-        left: 0;
-        opacity: 0.8;
-      }
-      100% {
-        top: 100vh;
-        left: 100vw;
-        opacity: 0;
-      }
-    }
+    /* ... rest of styles (same as previous code block) ... */
 
-    /* Discount button style */
     #discountBtn {
       position: fixed;
       bottom: 20px;
@@ -342,7 +108,6 @@
       box-shadow: 0 0 20px #00ffff;
     }
 
-    /* Discount code panel styles */
     #discountPanel,
     #discountResultPanel {
       position: fixed;
@@ -363,14 +128,12 @@
       max-width: 90vw;
       box-sizing: border-box;
     }
-
     #discountPanel label {
       display: block;
       margin-bottom: 0.75rem;
       font-size: 1.2rem;
       color: #00ffff;
     }
-
     #discountPanel input[type="text"] {
       width: 100%;
       padding: 0.5rem;
@@ -382,12 +145,10 @@
       outline: none;
       box-sizing: border-box;
     }
-
     #discountPanel input[type="text"]:focus {
       border-color: #00ffff;
       box-shadow: 0 0 8px #00ffff;
     }
-
     #discountPanel button,
     #discountResultPanel button {
       margin-top: 1.5rem;
@@ -406,8 +167,6 @@
     #discountResultPanel button:hover {
       box-shadow: 0 0 20px #00ffff;
     }
-
-    /* Close button top right */
     .close-btn {
       position: absolute;
       top: 8px;
@@ -430,7 +189,8 @@
 </head>
 <body>
   <button id="auth-btn">Loading...</button>
-  <div class="starry-background" id="stars"></div>
+
+  <!-- Your starry background and header/nav here (omitted for brevity but same as before) -->
 
   <header>
     <h1 class="title">Abandoned Tweaks</h1>
@@ -443,8 +203,9 @@
 
   <div class="container">
     <div class="products">
+      <!-- All product cards from previous code go here, same as before -->
 
-      <!-- Variety Pack -->
+      <!-- Example: -->
       <div class="product-card">
         <h3 class="rainbow-text">Variety Pack</h3>
         <div class="price">$49.99</div>
@@ -458,84 +219,7 @@
           <a href="https://cash.app/$trazeymax/49.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
         </div>
       </div>
-
-      <!-- Taste Tester -->
-      <div class="product-card">
-        <h3 class="neon-text">Taste Tester</h3>
-        <div class="price">$19.99</div>
-        <div class="rating">★★★★★ (19)</div>
-        <div class="description">Massively improves aim, builds, and performance.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/19.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/19.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Shotgun Pack V1 -->
-      <div class="product-card">
-        <h3>Shotgun Pack V1</h3>
-        <div class="price">$5.99</div>
-        <div class="rating">★★★★★ (7)</div>
-        <div class="description">Hit Harder Pumps Most Of The Time, Increase Average Pump Damage, 185 most people. DIAMOND PACK</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/gD5y8SvbVTA" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Max FPS Pack -->
-      <div class="product-card">
-        <h3>Max FPS Pack</h3>
-        <div class="price">$5.99</div>
-        <div class="rating">★★★★★ (12)</div>
-        <div class="description">Boost FPS and smooth gameplay with optimized tweaks.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Keyboard Tweaks -->
-      <div class="product-card">
-        <h3>Keyboard Tweaks</h3>
-        <div class="price">$5.99</div>
-        <div class="rating">★★★★★ (10)</div>
-        <div class="description">Improve keyboard responsiveness and customization.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/lm4JylRfC6I" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Mouse Tweaks -->
-      <div class="product-card">
-        <h3>Mouse Tweaks</h3>
-        <div class="price">$5.99</div>
-        <div class="rating">★★★★★ (8)</div>
-        <div class="description">Enhance mouse precision and speed settings.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/YOUR_MOUSE_TWEAKS_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/5.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/5.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Add more product cards here as you had before -->
-
+      <!-- ... rest of products here -->
     </div>
   </div>
 
@@ -543,22 +227,18 @@
     &copy; 2025 Abandoned Tweaks
   </footer>
 
-  <!-- Discount Button -->
   <button id="discountBtn" title="Enter Discount Code">Discount</button>
 
-  <!-- Discount Panel and Result Panel will be created dynamically -->
-
   <script>
-    // Create discount panels dynamically on page load
+    // Discount panels and logic
     let discountPanel, discountResultPanel;
     let discountInput, discountSubmitBtn;
 
     function createDiscountPanels() {
-      // Create discount entry panel
       discountPanel = document.createElement('div');
       discountPanel.id = 'discountPanel';
 
-      // Close button for discount panel
+      // Close button
       const closeBtn = document.createElement('button');
       closeBtn.className = 'close-btn';
       closeBtn.innerHTML = '&times;';
@@ -568,31 +248,26 @@
       };
       discountPanel.appendChild(closeBtn);
 
-      // Label
       const label = document.createElement('label');
       label.htmlFor = 'discountCodeInput';
       label.textContent = 'Enter Discount Code:';
       discountPanel.appendChild(label);
 
-      // Input field
       discountInput = document.createElement('input');
       discountInput.type = 'text';
       discountInput.id = 'discountCodeInput';
       discountInput.placeholder = 'Discount Code';
       discountPanel.appendChild(discountInput);
 
-      // Submit button
       discountSubmitBtn = document.createElement('button');
       discountSubmitBtn.textContent = 'Submit';
       discountPanel.appendChild(discountSubmitBtn);
 
       document.body.appendChild(discountPanel);
 
-      // Create discount result panel
       discountResultPanel = document.createElement('div');
       discountResultPanel.id = 'discountResultPanel';
 
-      // Close button for result panel
       const resultCloseBtn = document.createElement('button');
       resultCloseBtn.className = 'close-btn';
       resultCloseBtn.innerHTML = '&times;';
@@ -605,9 +280,8 @@
       document.body.appendChild(discountResultPanel);
     }
 
-    // Show result panel with discount info
     function showDiscountResult(codeUsed, uniqueCode, usedAt) {
-      // Clear old content but keep close button
+      // Clear previous except close button
       discountResultPanel.querySelectorAll(':not(.close-btn)').forEach(el => el.remove());
 
       const p1 = document.createElement('p');
@@ -627,7 +301,6 @@
       discountResultPanel.style.display = 'block';
     }
 
-    // Handle discount submit click
     async function handleDiscountSubmit() {
       const user = auth.currentUser;
       if (!user) {
@@ -652,11 +325,9 @@
       try {
         const doc = await userDocRef.get();
         if (doc.exists) {
-          // User has already used code before, show previous info
           const data = doc.data();
           showDiscountResult('TikTok15', data.uniqueCode, data.usedAt.toDate());
         } else {
-          // Not used before - generate new code and save
           const newUniqueCode = generateRandomCode(12);
           const now = new Date();
 
@@ -673,11 +344,9 @@
       }
     }
 
-    // Init on DOM ready
     document.addEventListener('DOMContentLoaded', () => {
       createDiscountPanels();
 
-      // Discount button click opens panel
       document.getElementById('discountBtn').addEventListener('click', () => {
         discountInput.value = '';
         discountResultPanel.style.display = 'none';
@@ -685,38 +354,14 @@
         discountInput.focus();
       });
 
-      // Submit button event
       discountSubmitBtn.addEventListener('click', handleDiscountSubmit);
 
-      // Also allow pressing Enter in input to submit
       discountInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           handleDiscountSubmit();
         }
       });
     });
-  </script>
-
-  <script>
-    // Starry background effect
-    const starContainer = document.getElementById('stars');
-
-    function createStar() {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)];
-      star.classList.add(sizeClass);
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.animationDelay = `${Math.random() * 3}s`;
-      starContainer.appendChild(star);
-
-      setTimeout(() => star.remove(), 10000);
-    }
-
-    for (let i = 0; i < 150; i++) {
-      setTimeout(createStar, i * 70);
-    }
   </script>
 </body>
 </html>
