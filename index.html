@@ -630,6 +630,23 @@
   style="display:none;"
   allow="autoplay"
   frameborder="0"
+
+  
+<!-- Unmute button -->
+<button id="unmute-btn" style="position:fixed; bottom:20px; right:20px; z-index:1000;">
+  Unmute Music
+</button>
+
+<script>
+  const unmuteBtn = document.getElementById('unmute-btn');
+  const iframe = document.getElementById('bg-music');
+
+  unmuteBtn.addEventListener('click', () => {
+    // Change iframe src to remove mute=1 to allow sound
+    iframe.src = "https://www.youtube.com/embed/_xRN3dTg9s0?autoplay=1&loop=1&playlist=_xRN3dTg9s0";
+    // Hide the button after click
+    unmuteBtn.style.display = 'none';
+  });
 ></iframe>
 </body>
 </html>
