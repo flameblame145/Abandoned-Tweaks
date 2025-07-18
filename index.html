@@ -102,7 +102,7 @@
     const starContainer = document.getElementById('stars');
 
     // Add ~600 stars
-    for (let i = 0; i < 600; i++) {
+    for (let i = 0; i < 250; i++) {
       const star = document.createElement('div');
       const sizeClass = ['small','medium','large'][Math.floor(Math.random()*3)];
       star.className = `star ${sizeClass}`;
@@ -113,7 +113,7 @@
     }
 
     // Add 20 shooting stars
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 1; i++) {
       const shooting = document.createElement('div');
       shooting.className = 'shooting-star';
       shooting.style.top = Math.random()*100+'%';
