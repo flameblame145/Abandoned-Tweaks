@@ -199,7 +199,7 @@
     }
     #auth-btn:hover { box-shadow:0 0 20px #00ffff; }
 
-    /* Galaxy animated background */
+    /* Galaxy background and stars */
     .galaxy-background {
       position:fixed;
       top:0; left:0;
@@ -216,9 +216,9 @@
       filter:drop-shadow(0 0 2px white);
       animation:twinkle 3s infinite ease-in-out;
     }
-    .star.small { width:1.5px; height:1.5px; }
-    .star.medium { width:2.5px; height:2.5px; }
-    .star.large { width:3.5px; height:3.5px; }
+    .small { width:1.5px; height:1.5px; }
+    .medium { width:2.5px; height:2.5px; }
+    .large { width:3.5px; height:3.5px; }
     @keyframes twinkle { 0%,100%{opacity:0.8;} 50%{opacity:0.2;} }
   </style>
 </head>
@@ -226,16 +226,8 @@
   <!-- Auth button -->
   <button id="auth-btn">Loading...</button>
 
-  <!-- Galaxy background with stars -->
-  <div class="galaxy-background" aria-hidden="true">
-    <div class="star small" style="top:10%; left:15%; animation-delay:0s;"></div>
-    <div class="star small" style="top:25%; left:70%; animation-delay:1s;"></div>
-    <div class="star medium" style="top:50%; left:30%; animation-delay:2s;"></div>
-    <div class="star medium" style="top:75%; left:80%; animation-delay:3s;"></div>
-    <div class="star large" style="top:40%; left:50%; animation-delay:4s;"></div>
-    <div class="star large" style="top:85%; left:20%; animation-delay:5s;"></div>
-    <!-- add more stars as you like -->
-  </div>
+  <!-- Galaxy background -->
+  <div class="galaxy-background" id="galaxy"></div>
 
   <header><h1 class="title">Abandoned Tweaks</h1></header>
   <nav>
@@ -245,8 +237,31 @@
   </nav>
 
   <div class="container">
-    <!-- your products go here (unchanged) -->
-    <!-- ... -->
+    <!-- your products go here -->
   </div>
+
+  <script>
+    // Generate stars dynamically
+    const galaxy = document.getElementById('galaxy');
+    const starCount = 100; // adjust number of stars
+
+    for (let i=0; i<starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+
+      // random size
+      const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random()*3)];
+      star.classList.add(sizeClass);
+
+      // random position
+      star.style.top = Math.random()*100+'%';
+      star.style.left = Math.random()*100+'%';
+
+      // random animation delay
+      star.style.animationDelay = (Math.random()*5)+'s';
+
+      galaxy.appendChild(star);
+    }
+  </script>
 </body>
 </html>
