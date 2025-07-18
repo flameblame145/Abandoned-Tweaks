@@ -1,310 +1,511 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abandoned Tweaks</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Abandoned Tweaks</title>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
-      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
-      projectId: "abandonedtweaks-b47a2",
-      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
-      messagingSenderId: "26177710755",
-      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
-      measurementId: "G-6H06DVYMCV"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+<script>
+  // Initialize Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
+    authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
+    projectId: "abandonedtweaks-b47a2",
+    storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
+    messagingSenderId: "26177710755",
+    appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
+    measurementId: "G-6H06DVYMCV"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-    auth.onAuthStateChanged(user => {
-      const btn = document.getElementById('auth-btn');
-      if (user) {
-        btn.textContent = 'Logout';
-        btn.onclick = () => auth.signOut().then(() => window.location.reload());
-      } else {
-        btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html'; // Your login page
-      }
-    });
+  auth.onAuthStateChanged(user => {
+    const btn = document.getElementById('auth-btn');
+    if (user) {
+      btn.textContent = 'Logout';
+      btn.onclick = () => auth.signOut().then(() => window.location.reload());
+    } else {
+      btn.textContent = 'Login / Signup';
+      btn.onclick = () => window.location.href = 'login.html'; // adjust as needed
+    }
+  });
 
-    async function handleDiscountCode() {
-      const user = auth.currentUser;
-      if (!user) {
-        alert("You must be logged in to redeem a discount code.");
+  async function handleDiscountCode() {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("You must be logged in to redeem a discount code.");
+      return;
+    }
+    const code = prompt("Enter your discount code:");
+    if (!code) return;
+    if (code.trim().toUpperCase() !== "TIKTOK15") {
+      alert("Invalid discount code.");
+      return;
+    }
+    try {
+      const docRef = db.collection('discountRedemptions').doc(user.uid);
+      const doc = await docRef.get();
+      if (doc.exists && doc.data().used) {
+        alert("You have already used this discount code.");
         return;
       }
-
-      const code = prompt("Enter your discount code:");
-      if (!code) return;
-
-      if (code.trim().toUpperCase() !== "TIKTOK15") {
-        alert("Invalid discount code.");
-        return;
-      }
-
-      try {
-        const docRef = db.collection('discountRedemptions').doc(user.uid);
-        const doc = await docRef.get();
-
-        if (doc.exists && doc.data().used) {
-          alert("You have already used this discount code.");
-          return;
-        }
-
-        // Generate random code
-        const randomCode = Math.random().toString(36).slice(2, 12).toUpperCase();
-        const timestamp = new Date().toLocaleString();
-
-        await docRef.set({
-          used: true,
-          discountCodeEntered: code,
-          redemptionCode: randomCode,
-          timestamp: timestamp
-        });
-
-        alert(`Discount code accepted! Your unique code: ${randomCode}\nEntered at: ${timestamp}`);
-      } catch (error) {
-        console.error("Error redeeming discount:", error);
-        alert("An error occurred. Please try again later.");
-      }
+      const randomCode = Math.random().toString(36).slice(2, 12).toUpperCase();
+      const timestamp = new Date().toLocaleString();
+      await docRef.set({
+        used: true,
+        discountCodeEntered: code,
+        redemptionCode: randomCode,
+        timestamp: timestamp
+      });
+      alert(`Discount code accepted! Your unique code: ${randomCode}\nEntered at: ${timestamp}`);
+    } catch (error) {
+      console.error("Error redeeming discount:", error);
+      alert("An error occurred. Please try again later.");
     }
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('discountBtn').onclick = handleDiscountCode;
+  });
+</script>
 
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('discountBtn').onclick = handleDiscountCode;
-    });
-  </script>
-
-  <style>
-    body { font-family: Arial, sans-serif; background: #111; color: #f2f2f2; margin:0; padding:0; overflow-x:hidden; }
-    header { background:#111; text-align:center; padding:1rem; position:relative; z-index:10; }
-    header h1.title { font-weight:bold; font-size:2.5rem; margin:0; background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite; position:relative; z-index:10; }
-    @keyframes rainbow { 0%{background-position:0% 50%} 100%{background-position:400% 50%} }
-    .rainbow-text { font-weight:bold; background:linear-gradient(90deg, red,orange,yellow,green,blue,indigo,violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite; position:relative; z-index:10; }
-    .neon-text { font-weight:bold; color:#0ff; text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff; animation:neonGlow 1.5s ease-in-out infinite alternate; position:relative; z-index:10; }
-    @keyframes neonGlow { from{text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff;} to{text-shadow:0 0 10px #0ff,0 0 20px #0ff,0 0 30px #0ff,0 0 50px #0ff;} }
-    nav { display:flex; justify-content:center; gap:1rem; padding:1rem; position:relative; z-index:10; }
-    nav a { color:#f2f2f2; text-decoration:none; font-weight:bold; background:#222; padding:0.5rem 1rem; border-radius:8px; box-shadow:0 0 10px rgba(255,255,255,0.2); transition:background 0.3s,box-shadow 0.3s; }
-    nav a:hover { background:#333; box-shadow:0 0 15px rgba(255,255,255,0.4); }
-    .container { max-width:1200px; margin:auto; padding:2rem; position:relative; z-index:10; }
-    .products { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; }
-    .product-card { background:#222; border-radius:8px; padding:1rem; text-align:center; box-shadow:0 0 15px rgba(0,255,255,0.2); transition:transform 0.3s,box-shadow 0.3s; position:relative; z-index:10; }
-    .product-card:hover { transform:translateY(-5px); box-shadow:0 0 25px rgba(0,255,255,0.5); }
-    .product-card h3 { margin:0.5rem 0; font-size:1.2rem; font-weight:bold; }
-    .price { font-size:1rem; color:#ccc; margin-bottom:0.5rem; }
-    .description { font-size:0.9rem; color:#bbb; margin-bottom:1rem; }
-    .product-video iframe { width:100%; border-radius:4px; }
-    .purchase-buttons { display:flex; justify-content:center; gap:0.5rem; margin-top:0.5rem; }
-    .purchase-button.paypal, .purchase-button.cashapp {
-      display:inline-block; color:#fff; text-decoration:none; padding:0.5rem 0.8rem;
-      border-radius:4px; font-size:0.9rem; cursor:pointer; background-size:400% 400%;
-      animation:gradientAnim 5s ease infinite; box-shadow:0 0 8px currentColor; transition:box-shadow 0.3s;
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  header {
+    background: #111;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    z-index: 10;
+  }
+  header h1.title {
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin: 0;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 8s linear infinite;
+    position: relative;
+    z-index: 10;
+  }
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 50%
     }
-    .purchase-button.paypal { background:linear-gradient(-45deg,#0057b7,#009cde,#003087,#0070ba); }
-    .purchase-button.paypal:hover { box-shadow:0 0 15px #00b0ff; }
-    .purchase-button.cashapp { background:linear-gradient(-45deg,#3ece47,#00d12e,#21a716,#2fbb00); }
-    .purchase-button.cashapp:hover { box-shadow:0 0 15px #00ff44; }
-    @keyframes gradientAnim { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
-    footer { text-align:center; padding:1rem; font-size:0.9rem; color:#aaa; position:relative; z-index:10; }
-    #auth-btn {
-      position:fixed; top:10px; right:10px; background:#0ff; border:none; color:#111;
-      padding:0.5rem 1rem; border-radius:6px; font-weight:bold; cursor:pointer;
-      box-shadow:0 0 10px #0ff; transition:box-shadow 0.3s; z-index:1000;
+    100% {
+      background-position: 400% 50%
     }
-    #auth-btn:hover { box-shadow:0 0 20px #00ffff; }
-    #discountBtn {
-      margin: 2rem auto 1rem auto;
-      display: block;
-      padding: 0.75rem 1.5rem;
-      background: #0ff;
-      color: #111;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 15px #0ff;
-      transition: box-shadow 0.3s;
-      max-width: 250px;
-      text-align: center;
-      font-size: 1rem;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    position: relative;
+    z-index: 10;
+  }
+  nav a {
+    color: #f2f2f2;
+    text-decoration: none;
+    font-weight: bold;
+    background: #222;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  nav a:hover {
+    background: #333;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  }
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+  }
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    background: #222;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    z-index: 10;
+  }
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+  }
+  .product-card h3 {
+    margin: 0.5rem 0;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  .price {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 0.5rem;
+  }
+  .description {
+    font-size: 0.9rem;
+    color: #bbb;
+    margin-bottom: 1rem;
+  }
+  .product-video iframe {
+    width: 100%;
+    height: 160px;
+    border-radius: 4px;
+  }
+  .purchase-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .purchase-button.paypal,
+  .purchase-button.cashapp {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-size: 400% 400%;
+    animation: gradientAnim 5s ease infinite;
+    box-shadow: 0 0 8px currentColor;
+    transition: box-shadow 0.3s;
+  }
+  .purchase-button.paypal {
+    background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
+  }
+  .purchase-button.paypal:hover {
+    box-shadow: 0 0 15px #00b0ff;
+  }
+  .purchase-button.cashapp {
+    background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
+  }
+  .purchase-button.cashapp:hover {
+    box-shadow: 0 0 15px #00ff44;
+  }
+  @keyframes gradientAnim {
+    0% {
+      background-position: 0% 50%
     }
-    #discountBtn:hover {
-      box-shadow: 0 0 25px #00ffff;
+    50% {
+      background-position: 100% 50%
     }
-    .starry-background { position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; overflow:hidden; z-index:0; background:#111; }
-    .star { position:absolute; background:white; border-radius:50%; opacity:0.8; filter:drop-shadow(0 0 2px white); animation:twinkle 3s infinite ease-in-out; }
-    .star.small { width:1.5px; height:1.5px; animation-duration:3s; }
-    .star.medium { width:2.5px; height:2.5px; animation-duration:4s; }
-    .star.large { width:3.5px; height:3.5px; animation-duration:5s; }
-    @keyframes twinkle { 0%,100%{opacity:0.8;} 50%{opacity:0.2;} }
-    .shooting-star { position:fixed; top:-10px; left:-100px; width:100px; height:2px; background:linear-gradient(45deg,white,rgba(255,255,255,0)); filter:drop-shadow(0 0 6px white); border-radius:100%; transform:rotate(45deg); animation:shootingStar 5s linear infinite; z-index:1; }
-    @keyframes shootingStar { 0%{transform:translateX(0) translateY(0) rotate(45deg);opacity:1;}70%{opacity:1;}100%{transform:translateX(120vw) translateY(120vh) rotate(45deg);opacity:0;} }
-  </style>
+    100% {
+      background-position: 0% 50%
+    }
+  }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    position: relative;
+    z-index: 10;
+  }
+  #auth-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #0ff;
+    border: none;
+    color: #111;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 10px #0ff;
+    transition: box-shadow 0.3s;
+    z-index: 1000;
+  }
+  #auth-btn:hover {
+    box-shadow: 0 0 20px #00ffff;
+  }
+  #discountBtn {
+    margin: 2rem auto 1rem auto;
+    display: block;
+    padding: 0.75rem 1.5rem;
+    background: #0ff;
+    color: #111;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px #0ff;
+    transition: box-shadow 0.3s;
+    max-width: 250px;
+    text-align: center;
+    font-size: 1rem;
+  }
+  #discountBtn:hover {
+    box-shadow: 0 0 25px #00ffff;
+  }
+</style>
 </head>
 <body>
-  <button id="auth-btn">Loading...</button>
-  <div class="starry-background" id="stars"></div>
+<button id="auth-btn">Loading...</button>
 
-  <header><h1 class="title">Abandoned Tweaks</h1></header>
-  <nav>
-    <a href="https://discord.gg/qyZEhex3HJ" target="_blank" rel="noopener noreferrer">Discord</a>
-    <a href="#">Purchase</a>
-    <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank" rel="noopener noreferrer">TikTok</a>
-  </nav>
+<header>
+  <h1 class="title">Abandoned Tweaks</h1>
+</header>
 
-  <div class="container">
-    <div class="products">
+<nav>
+  <a href="https://discord.gg/qyZEhex3HJ" target="_blank" rel="noopener noreferrer">Discord</a>
+  <a href="#">Purchase</a>
+  <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank" rel="noopener noreferrer">TikTok</a>
+</nav>
 
-      <!-- Variety Pack -->
-      <div class="product-card">
-        <h3 class="rainbow-text">Variety Pack</h3>
-        <div class="price">$49.99</div>
-        <div class="rating">★★★★★ (14)</div>
-        <div class="description">All of the packs — even ones unreleased.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/49.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/49.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
+<div class="container">
+  <div class="products">
+
+    <!-- Variety Pack -->
+    <div class="product-card">
+      <h3>Variety Pack</h3>
+      <div class="price">$49.99</div>
+      <div class="description">All of the packs — even ones unreleased.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/bye_iNOUFEY" frameborder="0" allowfullscreen></iframe>
       </div>
-
-      <!-- Taste Tester -->
-      <div class="product-card">
-        <h3 class="neon-text">Taste Tester</h3>
-        <div class="price">$19.99</div>
-        <div class="rating">★★★★★ (19)</div>
-        <div class="description">Massively improves aim, builds, and performance.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/19.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/19.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/49.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/49.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
       </div>
-
-      <!-- Shotgun Pack V1 -->
-      <div class="product-card">
-        <h3>Shotgun Pack V1</h3>
-        <div class="price">$9.99</div>
-        <div class="rating">★★★★★ (5)</div>
-        <div class="description">Shotgun pack version 1 optimized for faster reload and improved accuracy.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/aH9jyFFBDvA" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Shotgun Pack V2 -->
-      <div class="product-card">
-        <h3>Shotgun Pack V2</h3>
-        <div class="price">$12.99</div>
-        <div class="rating">★★★★★ (8)</div>
-        <div class="description">Shotgun pack version 2 with improved responsiveness and recoil control.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/12.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/12.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Bloom Pack V1 -->
-      <div class="product-card">
-        <h3>Bloom Pack V1</h3>
-        <div class="price">$9.99</div>
-        <div class="rating">★★★★★ (15)</div>
-        <div class="description">Reduces bloom and improves accuracy on many weapons.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/08tGTefwgtM" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Max FPS -->
-      <div class="product-card">
-        <h3>Max FPS</h3>
-        <div class="price">$4.99</div>
-        <div class="rating">★★★★★ (7)</div>
-        <div class="description">Makes your FPS skyrocket to 400 with optimized settings.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/4.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/4.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
-      <!-- Spotify Premium Tweak -->
-      <div class="product-card">
-        <h3>Spotify Premium Tweak</h3>
-        <div class="price">$14.99</div>
-        <div class="rating">★★★★★ (10)</div>
-        <div class="description">Enjoy unlimited skips, no ads, and high-quality audio with Spotify Premium – one-time purchase.</div>
-        <div class="product-video">
-          <iframe src="https://www.youtube.com/embed/someVideoID" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="purchase-buttons">
-          <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
-          <a href="https://cash.app/$trazeymax/14.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
-        </div>
-      </div>
-
     </div>
 
-    <button id="discountBtn">Enter Discount Code</button>
+    <!-- Taste Tester -->
+    <div class="product-card">
+      <h3>Taste Tester</h3>
+      <div class="price">$19.99</div>
+      <div class="description">Massively improves aim, builds, and performance.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/1LcI4dj9k4w" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/19.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/19.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Shotgun Pack V1 -->
+    <div class="product-card">
+      <h3>Shotgun Pack V1</h3>
+      <div class="price">$9.99</div>
+      <div class="description">Shotgun pack version 1 optimized for faster reload and improved accuracy.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/aH9jyFFBDvA" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Shotgun Pack V2 -->
+    <div class="product-card">
+      <h3>Shotgun Pack V2</h3>
+      <div class="price">$12.99</div>
+      <div class="description">Shotgun pack version 2 with improved responsiveness and recoil control.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/12.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/12.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Bloom Pack V1 -->
+    <div class="product-card">
+      <h3>Bloom Pack V1</h3>
+      <div class="price">$9.99</div>
+      <div class="description">Reduces bloom and improves accuracy on many weapons.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/08tGTefwgtM" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Bloom Pack V2 -->
+    <div class="product-card">
+      <h3>Bloom Pack V2</h3>
+      <div class="price">$12.99</div>
+      <div class="description">Improved bloom reduction and performance tweaks.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/NEW_VIDEO_ID_BLOOMV2" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/12.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/12.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Max FPS -->
+    <div class="product-card">
+      <h3>Max FPS</h3>
+      <div class="price">$4.99</div>
+      <div class="description">Makes your FPS skyrocket to 400 with optimized settings.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/mR7CJ8SX7zg" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/4.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/4.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Spotify Premium Tweak -->
+    <div class="product-card">
+      <h3>Spotify Premium Tweak</h3>
+      <div class="price">$14.99</div>
+      <div class="description">Enjoy unlimited skips, no ads, and high-quality audio with Spotify Premium – one-time purchase.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/someVideoID" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/14.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- WiFi Tweaks -->
+    <div class="product-card">
+      <h3>WiFi Tweaks</h3>
+      <div class="price">$14.99</div>
+      <div class="description">Optimize your WiFi connection for lower latency and better speed.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/WvOeNU7w2U4" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/14.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/14.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Keyboard Pack -->
+    <div class="product-card">
+      <h3>Keyboard Pack</h3>
+      <div class="price">$9.99</div>
+      <div class="description">Makes your keypresses have zero delay and includes rapid trigger.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/keyboardVideoID" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
+    <!-- Mouse Pack -->
+    <div class="product-card">
+      <h3>Mouse Pack</h3>
+      <div class="price">$9.99</div>
+      <div class="description">Optimized mouse settings for precision and speed.</div>
+      <div class="product-video">
+        <iframe src="https://www.youtube.com/embed/mouseVideoID" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="purchase-buttons">
+        <a href="https://paypal.me/paymepaypalplease/9.99" class="purchase-button paypal" target="_blank" rel="noopener noreferrer">PayPal</a>
+        <a href="https://cash.app/$trazeymax/9.99" class="purchase-button cashapp" target="_blank" rel="noopener noreferrer">CashApp</a>
+      </div>
+    </div>
+
   </div>
 
-  <footer>
-    &copy; 2025 Abandoned Tweaks. All rights reserved.
-  </footer>
+  <button id="discountBtn">Enter Discount Code</button>
+</div>
 
-  <script>
-    // Starry background creation
-    const starContainer = document.getElementById('stars');
-    const starCount = 100;
-    for(let i=0; i<starCount; i++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      // Random size class
-      const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random()*3)];
-      star.classList.add(sizeClass);
-      star.style.top = Math.random()*100 + 'vh';
-      star.style.left = Math.random()*100 + 'vw';
-      star.style.animationDelay = (Math.random()*5) + 's';
-      starContainer.appendChild(star);
-    }
+<footer>
+  &copy; 2025 Abandoned Tweaks. All rights reserved.
+</footer>
 
-    // Shooting star periodically
-    function createShootingStar() {
-      const shootingStar = document.createElement('div');
-      shootingStar.classList.add('shooting-star');
-      shootingStar.style.top = Math.random()*50 + 'vh';
-      shootingStar.style.left = '-100px';
-      starContainer.appendChild(shootingStar);
-      setTimeout(() => {
-        shootingStar.remove();
-      }, 5000);
+<!-- Starry background -->
+<div id="stars" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events:none;"></div>
+
+<script>
+  const starContainer = document.getElementById('stars');
+  const starCount = 100;
+  for(let i=0; i<starCount; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const sizeClass = ['small', 'medium', 'large'][Math.floor(Math.random()*3)];
+    star.classList.add(sizeClass);
+    star.style.position = 'absolute';
+    star.style.background = 'white';
+    star.style.borderRadius = '50%';
+    if(sizeClass==='small') {
+      star.style.width = star.style.height = '1px';
+      star.style.opacity = 0.5;
+    } else if(sizeClass==='medium') {
+      star.style.width = star.style.height = '2px';
+      star.style.opacity = 0.7;
+    } else {
+      star.style.width = star.style.height = '3px';
+      star.style.opacity = 1;
     }
-    setInterval(createShootingStar, 15000);
-  </script>
+    star.style.top = Math.random()*100 + 'vh';
+    star.style.left = Math.random()*100 + 'vw';
+    star.style.animation = `twinkle ${(Math.random()*3)+2}s infinite alternate`;
+    starContainer.appendChild(star);
+  }
+
+  function createShootingStar() {
+    const shootingStar = document.createElement('div');
+    shootingStar.style.position = 'absolute';
+    shootingStar.style.width = '80px';
+    shootingStar.style.height = '2px';
+    shootingStar.style.background = 'white';
+    shootingStar.style.top = Math.random()*50 + 'vh';
+    shootingStar.style.left = '-100px';
+    shootingStar.style.opacity = '0.8';
+    shootingStar.style.borderRadius = '50%';
+    shootingStar.style.transform = 'rotate(45deg)';
+    shootingStar.style.animation = 'shoot 1s linear forwards';
+    starContainer.appendChild(shootingStar);
+    setTimeout(() => shootingStar.remove(), 1000);
+  }
+  setInterval(createShootingStar, 15000);
+
+</script>
+
+<style>
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+  @keyframes shoot {
+    0% { left: -100px; opacity: 0.8; }
+    100% { left: 110vw; opacity: 0; }
+  }
+</style>
 
 </body>
 </html>
