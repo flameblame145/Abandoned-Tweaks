@@ -11,6 +11,51 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
   <script>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f2f2f2;
+    }
+
+    #play-music {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 999;
+      padding: 10px 15px;
+      background: #0ff;
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to Abandoned Tweaks</h1>
+
+  <!-- Music Play Button -->
+  <button id="play-music">Play Music</button>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="https://media.vocaroo.com/mp3/1e9yN53ZiVoV" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    document.getElementById("play-music").addEventListener("click", function () {
+      const music = document.getElementById("bg-music");
+      music.volume = 0.5;
+      music.play();
+    });
+  </script>
+
     const firebaseConfig = {
       apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
       authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
