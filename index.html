@@ -424,6 +424,94 @@ button#submitDiscountBtn {
   </style>
 </head>
 <body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const discountBtn = document.getElementById('discountBtn');
+  const discountPanel = document.getElementById('discountPanel');
+  const closeDiscountPanel = document.getElementById('closeDiscountPanel');
+  const submitDiscountBtn = document.getElementById('submitDiscountBtn');
+  const discountInput = document.getElementById('discountInput');
+
+  const resultPanel = document.getElementById('resultPanel');
+  const closeResultPanel = document.getElementById('closeResultPanel');
+  const orderNumberSpan = document.getElementById('orderNumber');
+  const usedAtSpan = document.getElementById('usedAt');
+
+  // Open discount input modal when button clicked
+  discountBtn.addEventListener('click', () => {
+    discountInput.value = '';
+    discountPanel.style.display = 'block';
+  });
+
+  // Close discount input modal
+  closeDiscountPanel.addEventListener('click', () => {
+    discountPanel.style.display = 'none';
+  });
+
+  // Close result modal
+  closeResultPanel.addEventListener('click', () => {
+    resultPanel.style.display = 'none';
+  });
+
+  // Handle submitting the discount code from input modal
+  submitDiscountBtn.addEventListener('click', async () => {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      alert('You must be logged in to enter a discount code.');
+      return;
+    }
+
+    const code = discountInput.value.trim();
+    if (!code) return alert('Please enter a discount code.');
+
+    if (code !== 'TikTok15') {
+      alert('Invalid discount code.');
+      return;
+    }
+
+    const usedRef = firebase.firestore().collection('discountCodesUsed').doc(user.uid);
+    const doc = await usedRef.get();
+
+    if (doc.exists) {
+      alert('You have already used this discount code once.');
+      discountPanel.style.display = 'none';
+      return;
+    }
+
+    const randomCode = generateRandomCode();
+    const timestamp = new Date();
+
+    await usedRef.set({
+      codeUsed: code,
+      randomCode,
+      usedAt: timestamp.toISOString()
+    });
+
+    // Show the result modal with info
+    orderNumberSpan.textContent = randomCode;
+    usedAtSpan.textContent = timestamp.toLocaleString();
+
+    discountPanel.style.display = 'none';
+    resultPanel.style.display = 'block';
+  });
+
+  // Optional: close modals when clicking outside modal content
+  window.addEventListener('click', (e) => {
+    if (e.target === discountPanel) discountPanel.style.display = 'none';
+    if (e.target === resultPanel) resultPanel.style.display = 'none';
+  });
+
+  // The generateRandomCode function from your script
+  function generateRandomCode(length = 12) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+});
+<script>
   <button id="auth-btn">Loading...</button>
   <div class="starry-background" id="stars"></div>
 
