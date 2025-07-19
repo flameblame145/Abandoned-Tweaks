@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Redeem your code</h2>
+  <input type="text" id="code" placeholder="Enter your code">
+  <button onclick="redeem()">Redeem</button>
+
+  <p id="result"></p>
+
+<script>
+function redeem() {
+  var code = document.getElementById("code").value;
+  if (!code) {
+    alert("Please enter a code.");
+    return;
+  }
+  // replace with your Apps Script URL:
+  var url = "https://script.google.com/macros/s/AKfycb.../exec?code=" + encodeURIComponent(code);
+  window.location = url;
+}
+</script>
+</body>
+</html>
