@@ -451,8 +451,7 @@
   0% { background-position: 0% 50%; }
   100% { background-position: 400% 50%; }
 }
-  </style>
-  /* Glow trail dot style */
+/* Glow trail dot style */
 .glow-dot {
   position: fixed;
   width: 8px;
@@ -482,6 +481,15 @@
   <p style="margin-top:1rem; font-size:1.2rem; color:#ccc; cursor:pointer;" onclick="enterSite()">click to enter</p>
 </div>
 <button id="redeemBtn" onclick="showRedeem()">REDEEM</button>
+  
+  <!-- Redeem floating panel -->
+<div id="redeemPanel">
+  <h3>Redeem</h3>
+  <input type="text" id="redeemCode" placeholder="Enter your code">
+  <br>
+  <button id="redeemSubmit" onclick="submitRedeem()">Submit</button>
+  <button id="redeemClose" onclick="closeRedeem()">Close</button>
+</div>
 
   <header>
     <h1 class="title">Abandoned Tweaks</h1>
