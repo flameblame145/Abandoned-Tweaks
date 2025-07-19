@@ -89,90 +89,8 @@
     });
   </script>
 
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Abandoned Tweaks</title>
-  <img src="image.png" alt="My Logo" style="height: 100px;">
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
-      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
-      projectId: "abandonedtweaks-b47a2",
-      storageBucket: "abandonedtweaks-b47a2.appspot.com",
-      messagingSenderId: "26177710755",
-      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
-      measurementId: "G-6H06DVYMCV"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    // Handle auth button
-    auth.onAuthStateChanged(user => {
-      const btn = document.getElementById('auth-btn');
-      if (user) {
-        btn.textContent = 'Logout';
-        btn.onclick = () => auth.signOut().then(() => window.location.reload());
-      } else {
-        btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html'; // Adjust to your login page
-      }
-    });
-
-    async function submitRedeemCode() {
-      const user = auth.currentUser;
-      if (!user) {
-        alert('You must be logged in to redeem a code.');
-        return;
-      }
-      const code = document.getElementById('redeemInput').value.trim();
-      if (!code) {
-        alert('Please enter a code.');
-        return;
-      }
-
-      const codeRef = db.collection('redeemCodes').doc(code);
-      const doc = await codeRef.get();
-
-      if (!doc.exists) {
-        alert('Invalid code.');
-        return;
-      }
-
-      if (doc.data().used) {
-        alert('This code has already been used.');
-        return;
-      }
-
-      await codeRef.update({
-        used: true,
-        redeemedBy: user.uid,
-        redeemedAt: new Date().toISOString()
-      });
-
-      alert('Success! Code redeemed.');
-      document.getElementById('redeemPanel').style.display = 'none';
-    }
-
-    function showRedeemPanel() {
-      document.getElementById('redeemPanel').style.display = 'block';
-    }
-
-    function closeRedeemPanel() {
-      document.getElementById('redeemPanel').style.display = 'none';
-    }
-  </script>
-
   <style>
+    /* Base styles */
     body {
       font-family: Arial, sans-serif;
       background: #111;
@@ -181,87 +99,381 @@
       padding: 0;
       overflow-x: hidden;
     }
-    /* existing styles ... */
+    #intro-overlay {
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
 
-    /* New redeem panel styles */
-    #redeemBtn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
+    header {
+      background: #111;
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+      z-index: 10;
+    }
+    header h1.title {
+      font-weight: bold;
+      font-size: 2.5rem;
+      margin: 0;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s linear infinite;
+      position: relative;
+      z-index: 10;
+    }
+    @keyframes rainbow {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 400% 50%;
+      }
+    }
+    .rainbow-text {
       font-weight: bold;
       background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
       background-size: 400% 400%;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 0 10px #fff;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       animation: rainbow 8s linear infinite;
-      z-index: 1000;
+      position: relative;
+      z-index: 10;
     }
-
-    #redeemPanel {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    .neon-text {
+      font-weight: bold;
+      color: #0ff;
+      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+      animation: neonGlow 1.5s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 10;
+    }
+    @keyframes neonGlow {
+      from {
+        text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+      }
+      to {
+        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff, 0 0 50px #0ff;
+      }
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem;
+      position: relative;
+      z-index: 10;
+    }
+    nav a {
+      color: #f2f2f2;
+      text-decoration: none;
+      font-weight: bold;
       background: #222;
-      padding: 20px;
-      border: 5px solid transparent;
-      border-image: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet) 1;
-      border-radius: 15px;
-      z-index: 2000;
-    }
-
-    #redeemPanel input {
-      padding: 0.5rem;
-      width: 200px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    #redeemPanel button {
       padding: 0.5rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    nav a:hover {
+      background: #333;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 10;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: #222;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 10;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+    }
+    .product-card h3 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .price {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      color: #bbb;
+      margin-bottom: 1rem;
+    }
+    .product-video iframe {
+      width: 100%;
+      border-radius: 4px;
+    }
+    .purchase-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .purchase-button.paypal,
+    .purchase-button.cashapp {
+      display: inline-block;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background-size: 400% 400%;
+      animation: gradientAnim 5s ease infinite;
+      box-shadow: 0 0 8px currentColor;
+      transition: box-shadow 0.3s;
+    }
+    .purchase-button.paypal {
+      background: linear-gradient(-45deg, #0057b7, #009cde, #003087, #0070ba);
+    }
+    .purchase-button.paypal:hover {
+      box-shadow: 0 0 15px #00b0ff;
+    }
+    .purchase-button.cashapp {
+      background: linear-gradient(-45deg, #3ece47, #00d12e, #21a716, #2fbb00);
+    }
+    .purchase-button.cashapp:hover {
+      box-shadow: 0 0 15px #00ff44;
+    }
+    @keyframes gradientAnim {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      position: relative;
+      z-index: 10;
+    }
+    #auth-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
       background: #0ff;
-      color: #111;
       border: none;
-      border-radius: 5px;
+      color: #111;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+      transition: box-shadow 0.3s;
+      z-index: 1000;
+    }
+    #auth-btn:hover {
+      box-shadow: 0 0 20px #00ffff;
+    }
+    .starry-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+      background: #111;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 2px white);
+      animation: twinkle 3s infinite ease-in-out;
+    }
+    .star.small {
+      width: 1.5px;
+      height: 1.5px;
+      animation-duration: 3s;
+    }
+    .star.medium {
+      width: 2.5px;
+      height: 2.5px;
+      animation-duration: 4s;
+    }
+    .star.large {
+      width: 3.5px;
+      height: 3.5px;
+      animation-duration: 5s;
+    }
+    @keyframes twinkle {
+      0%,
+      100% {
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.2;
+      }
+    }
+    .shooting-star {
+      position: fixed;
+      width: 80px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: shoot 2s linear forwards;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes shoot {
+      0% {
+        top: 0;
+        left: 0;
+        opacity: 0.8;
+      }
+      100% {
+        top: 100vh;
+        left: 100vw;
+        opacity: 0;
+      }
     }
 
-    #redeemPanel button:hover {
+    /* Discount button style */
+    #discountBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
       background: #00ffff;
+      border: none;
+      border-radius: 8px;
+      color: #111;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffff;
+      transition: box-shadow 0.3s;
+      z-index: 1000;
     }
+    #discountBtn:hover {
+      box-shadow: 0 0 20px #00ffff;
+    }
+    /* Redeem button styles */
+#redeemBtn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400% 400%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  animation: rainbow 6s linear infinite;
+  z-index: 1000;
+}
 
-    @keyframes rainbow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 400% 50%; }
-    }
+/* Redeem panel floating box */
+#redeemPanel {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  padding: 20px;
+  border: 4px solid transparent;
+  border-image: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet) 1;
+  border-radius: 12px;
+  z-index: 2000;
+  text-align: center;
+}
+
+/* Input inside panel */
+#redeemPanel input {
+  padding: 8px;
+  width: 200px;
+  border-radius: 4px;
+  border: none;
+  margin-bottom: 10px;
+}
+
+/* Buttons inside panel */
+#redeemPanel button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Submit button style */
+#redeemSubmit {
+  background: #0ff;
+  color: #000;
+}
+
+/* Close button style */
+#redeemClose {
+  background: #555;
+  color: #fff;
+}
+
+/* Rainbow animation keyframes */
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
   </style>
+  /* Glow trail dot style */
+.glow-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 8px white);
+  animation: fadeOut 0.8s forwards;
+  z-index: 10000;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
 </head>
 <body>
-  <button id="auth-btn">Loading...</button>
-
-  <!-- New redeem button & panel -->
-  <button id="redeemBtn" onclick="showRedeemPanel()">REDEEM</button>
-  <div id="redeemPanel">
-    <h3 style="margin-top:0;">Redeem</h3>
-    <input type="text" id="redeemInput" placeholder="Enter your code">
-    <br>
-    <button onclick="submitRedeemCode()">Submit</button>
-    <button onclick="closeRedeemPanel()" style="margin-left:5px; background:#555; color:#fff;">Close</button>
-  </div>
-
-  <!-- Your existing page content below... -->
-  <!-- intro overlay, header, nav, products, footer, scripts, etc. -->
-
-</body>
-</html>
   <button id="auth-btn">Loading...</button>
   <div class="starry-background" id="stars"></div>
   <!-- Intro Overlay -->
@@ -269,6 +481,7 @@
   <h1 style="font-size:3rem; margin:0; background:linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite;">Abandoned Tweaks</h1>
   <p style="margin-top:1rem; font-size:1.2rem; color:#ccc; cursor:pointer;" onclick="enterSite()">click to enter</p>
 </div>
+<button id="redeemBtn" onclick="showRedeem()">REDEEM</button>
 
   <header>
     <h1 class="title">Abandoned Tweaks</h1>
@@ -511,6 +724,23 @@
     document.body.appendChild(dot);
     setTimeout(() => dot.remove(), 800); // remove after fade out
   });
+<script>
+function showRedeem() {
+  document.getElementById('redeemPanel').style.display = 'block';
+}
+function closeRedeem() {
+  document.getElementById('redeemPanel').style.display = 'none';
+}
+function submitRedeem() {
+  const code = document.getElementById('redeemCode').value.trim();
+  if (!code) {
+    alert('Please enter a code.');
+    return;
+  }
+  // TODO: send code to your backend to check & redeem
+  alert('Code submitted: ' + code);
+  closeRedeem();
+}
 </script>
 </body>
 </html>
