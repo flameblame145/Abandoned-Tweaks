@@ -167,67 +167,17 @@
     }
     setInterval(createShootingStar, 10000);
 
-    <script>
-function submitRedeem() {
-  const code = document.getElementById('redeemCode').value.trim();
- const validCodes = [
-  "shotgunpackv1-Ftw1thwC-0rHCMNwd",
-  "shotgunpackv1-pPN4D8sw-hD1eUYID",
-  "shotgunpackv1-B5l6Wg2G-OHrmtlp9",
-  "shotgunpackv1-SGMmpBRN-d5oWKerV",
-  "shotgunpackv1-ZrKczAxS-ESWKENj6",
-  "shotgunpackv1-NmO6uIDf-ylN1a5p8",
-  "shotgunpackv1-GHbIEPtW-kcpYapvS",
-  "shotgunpackv1-WJ9KpG9H-bP2ULxDy",
-  "shotgunpackv1-TIkpHlZN-3yZl7NmR",
-  "shotgunpackv1-KyyVZZZh-i6Uz7Ldv",
-  "shotgunpackv1-3ErVuSIB-RHbXoUlC",
-  "shotgunpackv1-GztPbmRz-NEi2cx6T",
-  "shotgunpackv1-m2jDbiJa-b6M9M1tJ",
-  "shotgunpackv1-bmBaX6N9-iZY8c3TR",
-  "shotgunpackv1-L26FgqXC-mSv7npxJ",
-  "shotgunpackv1-OW4RVoBP-f3cB9bsZ",
-  "shotgunpackv1-wes5mzhC-x1vCJ4Tf",
-  "shotgunpackv1-F3AX6v7i-Lbbi7FZV",
-  "shotgunpackv1-Pn70TrkU-cpTtLR7U",
-  "shotgunpackv1-R3IxUvep-oLu6iO7a",
-  "shotgunpackv1-WhjPrlPV-J0X8TsMi",
-  "shotgunpackv1-ZysB7FdV-5A1Ddhnm",
-  "shotgunpackv1-cBkjOrUG-Cn18E31H",
-  "shotgunpackv1-PkPka7HU-9N5LVHvp",
-  "shotgunpackv1-wzMm4ldN-cgApyq6F",
-  "shotgunpackv1-tD6Um3P2-AErgGdOf",
-  "shotgunpackv1-KAxtGjYd-TH6nX1s7",
-  "shotgunpackv1-VJpNjOpP-1PKqvRKg",
-  "shotgunpackv1-AjUw2mZV-5eMcjs9z",
-  "shotgunpackv1-D8b7wRoP-UBdOHTnH",
-  "shotgunpackv1-HjU2YVxU-pFoe57YV",
-  "shotgunpackv1-wBMQcUXi-lIA4Y6GB",
-  "shotgunpackv1-ZnSRt6Za-6HdZx5g3",
-  "shotgunpackv1-ZWAbXEpv-2OPDN6fJ",
-  "shotgunpackv1-OExdXsuX-VhOUulDj",
-  "shotgunpackv1-XN5C2cAG-y1B8LM3v",
-  "shotgunpackv1-BRksFgqJ-nldrdBGH",
-  "shotgunpackv1-OfEYTKK9-VV3e63Wz",
-  "shotgunpackv1-x7TeAkzI-gpvHZi3I",
-  "shotgunpackv1-DQgF1pDB-E7pqJSBR",
-  "shotgunpackv1-E1pSPiOl-mG48hFv5",
-  "shotgunpackv1-gzKKlXyM-RdJGjXqp",
-  "shotgunpackv1-0hj9JlMR-4mvh9Ego",
-  "shotgunpackv1-RHNWp4Gl-kU1ZcNKh",
-  "shotgunpackv1-DUeUBJ2m-02bfDq6F",
-  "shotgunpackv1-Q5GqjDKa-dSMEonC3",
-  "shotgunpackv1-bFj9DBd9-LpTKr1Lb",
-  "shotgunpackv1-82rV4fga-n8PaHwDR",
-  "shotgunpackv1-f6NZex1w-tfFqql8n",
-  "shotgunpackv1-A6nEvQlZ-N7ZkgOZt"
-];
-  if (validCodes.includes(code)) {
-    window.location.href = "YOUR_DOWNLOAD_LINK_HERE";
-  } else {
-    alert('Invalid code. Please try again.');
-  }
-}
-</script>
+    function redeemCode() {
+      const code = document.getElementById('codeInput').value.trim();
+      if(code === "shotgunpackv1-Z13jdn2-nNjO2j76") {
+        window.location.href = "https://yourdownloadlink.com"; // replace with real link
+      } else {
+        alert("Invalid code!");
+      }
+    }
+    function goBack() {
+      window.location.href = "index.html"; // replace with actual main page
+    }
+  </script>
 </body>
 </html>
