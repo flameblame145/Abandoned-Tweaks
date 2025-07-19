@@ -446,6 +446,16 @@
     <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
   </nav>
 
+  <!-- Redeem floating panel -->
+<div id="redeemPanel">
+  <h2>Redeem</h2>
+  <input type="text" id="redeemCode" placeholder="Enter your code">
+  <br>
+  <button id="redeemSubmit" onclick="submitRedeem()">Submit</button>
+  <button id="redeemClose" onclick="closeRedeem()">Close</button>
+</div>
+
+
   <div class="container">
     <div class="products">
 
@@ -692,6 +702,23 @@ function submitRedeem() {
     return;
   }
   // TODO: send code to your backend to check & redeem
+  alert('Code submitted: ' + code);
+  closeRedeem();
+}
+</script>
+  <script>
+function showRedeem() {
+  document.getElementById('redeemPanel').style.display = 'block';
+}
+function closeRedeem() {
+  document.getElementById('redeemPanel').style.display = 'none';
+}
+function submitRedeem() {
+  const code = document.getElementById('redeemCode').value.trim();
+  if (!code) {
+    alert('Please enter a code.');
+    return;
+  }
   alert('Code submitted: ' + code);
   closeRedeem();
 }
