@@ -60,6 +60,24 @@
     50%  { transform: translate(-50%, -50%) translateY(-20px); }
     100% { transform: translate(-50%, -50%) translateY(0px); }
   }
+
+  .back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    color: #0ff;
+    text-decoration: none;
+    border: 2px solid #0ff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    transition: background 0.3s, color 0.3s;
+    font-size: 0.9em;
+  }
+
+  .back-button:hover {
+    background: #0ff;
+    color: black;
+  }
 </style>
 </head>
 <body>
@@ -69,6 +87,7 @@
 <div class="floating-panel" id="redeemPanel">
   <div id="redeemDate">Loading...</div>
   <div>successfully redeemed discount</div>
+  <a class="back-button" href="https://abandonedtweaks.xyz/index.html">Back</a>
 </div>
 
 <script>
