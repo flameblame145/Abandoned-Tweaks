@@ -8,74 +8,71 @@
     body {
       margin: 0;
       height: 100vh;
-      background: black;
+      background: #111;
       overflow: hidden;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      color: #f2f2f2;
     }
 
-    /* Starry background */
-    .stars, .stars2, .stars3 {
+    /* Starry background same as main */
+    .starry-background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/demo/stars.png') repeat top center;
-      animation: moveStars 200s linear infinite;
-    }
-
-    .stars2 {
-      background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/demo/stars.png') repeat top center;
-      animation: moveStars 300s linear infinite;
-      opacity: 0.5;
-    }
-
-    .stars3 {
-      background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/demo/stars.png') repeat top center;
-      animation: moveStars 400s linear infinite;
-      opacity: 0.2;
-    }
-
-    @keyframes moveStars {
-      from {background-position: 0 0;}
-      to {background-position: -10000px 5000px;}
-    }
-
-    /* Shooting stars */
-    .shooting-star {
-      position: absolute;
-      top: -10px;
-      width: 2px;
-      height: 80px;
       background: white;
-      opacity: 0;
+      border-radius: 50%;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 2px white);
+      animation: twinkle 3s infinite ease-in-out;
+    }
+    .star.small { width: 1.5px; height: 1.5px; animation-duration: 3s; }
+    .star.medium { width: 2.5px; height: 2.5px; animation-duration: 4s; }
+    .star.large { width: 3.5px; height: 3.5px; animation-duration: 5s; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 0.2; }
+    }
+
+    .shooting-star {
+      position: fixed;
+      width: 80px; height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
       transform: rotate(45deg);
-      animation: shooting 3s linear infinite;
+      animation: shoot 2s linear forwards;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes shoot {
+      0% { top: 0; left: 0; opacity: 0.8; }
+      100% { top: 100vh; left: 100vw; opacity: 0; }
     }
 
-    @keyframes shooting {
-      0% {
-        top: -10px;
-        left: 0;
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      100% {
-        top: 100%;
-        left: 100%;
-        opacity: 0;
-      }
+    /* Floating panel & neon outline */
+    .container {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-
     .panel {
       background: rgba(20, 20, 20, 0.9);
       padding: 40px;
       border-radius: 16px;
-      position: relative;
       animation: float 3s ease-in-out infinite;
-      z-index: 10;
+      position: relative;
     }
-
     .panel::before {
       content: "";
       position: absolute;
@@ -86,17 +83,15 @@
       animation: neon 8s linear infinite;
       z-index: -1;
     }
-
     @keyframes neon {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     @keyframes float {
-      0% { transform: translateY(0px); }
+      0% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+      100% { transform: translateY(0); }
     }
 
     input[type="text"] {
@@ -110,7 +105,6 @@
       color: white;
       font-size: 16px;
     }
-
     button {
       background: #00ffff;
       color: black;
@@ -122,43 +116,25 @@
       transition: background 0.3s;
       margin-top: 8px;
     }
-
     button:hover {
       background: #00bbbb;
     }
-
     .back-btn {
       background: #ff00ff;
       color: white;
       margin-top: 12px;
     }
-
     .back-btn:hover {
       background: #cc00cc;
-    }
-
-    .container {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
-  <div class="stars2"></div>
-  <div class="stars3"></div>
-
-  <div class="shooting-star"></div>
-  <div class="shooting-star" style="animation-delay: 5s;"></div>
-  <div class="shooting-star" style="animation-delay: 10s;"></div>
+  <div class="starry-background" id="stars"></div>
 
   <div class="container">
     <div class="panel">
-      <h2 style="color:white; text-align:center; margin-bottom: 20px;">Enter Your Code</h2>
+      <h2 style="text-align:center; margin-bottom: 20px;">Enter Your Code</h2>
       <input type="text" id="codeInput" placeholder="Enter code here..." />
       <button onclick="redeemCode()">Redeem</button>
       <button class="back-btn" onclick="goBack()">Back to Main</button>
@@ -166,18 +142,41 @@
   </div>
 
   <script>
+    // create twinkling stars
+    function createStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const sizes = ['small', 'medium', 'large'];
+      star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDelay = (Math.random() * 3) + 's';
+      star.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.getElementById('stars').appendChild(star);
+    }
+    for(let i=0; i<80; i++) createStar();
+
+    // shooting stars
+    function createShootingStar() {
+      const s = document.createElement('div');
+      s.classList.add('shooting-star');
+      s.style.top = '0px';
+      s.style.left = '0px';
+      document.getElementById('stars').appendChild(s);
+      setTimeout(()=>s.remove(), 2000);
+    }
+    setInterval(createShootingStar, 10000);
+
     function redeemCode() {
       const code = document.getElementById('codeInput').value.trim();
-      // Replace this with your actual validation logic:
       if(code === "shotgunpackv1-Z13jdn2-nNjO2j76") {
-        window.location.href = "https://yourdownloadlink.com";
+        window.location.href = "https://yourdownloadlink.com"; // replace with real link
       } else {
         alert("Invalid code!");
       }
     }
-
     function goBack() {
-      window.location.href = "index.html"; // change to your main page if different
+      window.location.href = "index.html"; // replace with actual main page
     }
   </script>
 </body>
