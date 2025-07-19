@@ -3,90 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-<img src="image.png" alt="My Logo" style="height: 100px;">
+  <img src="image.png" alt="My Logo" style="height: 100px;">
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
   <script>
-<script>
-const firebaseConfig = {
+    const firebaseConfig = {
       apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
       authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
       projectId: "abandonedtweaks-b47a2",
-      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
+      storageBucket: "abandonedtweaks-b47a2.appspot.com",
       messagingSenderId: "26177710755",
       appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
       measurementId: "G-6H06DVYMCV"
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    // Handle auth button
-    auth.onAuthStateChanged(user => {
-      const btn = document.getElementById('auth-btn');
-      if (user) {
-        btn.textContent = 'Logout';
-        btn.onclick = () => auth.signOut().then(() => window.location.reload());
-      } else {
-        btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html'; // Adjust if you have a login page
-      }
-    });
-
-    // Generate random code helper
-    function generateRandomCode(length = 12) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    }
-
-    // Discount code logic
-    async function enterDiscountCode() {
-      const user = auth.currentUser;
-      if (!user) {
-        alert('You must be logged in to enter a discount code.');
-        return;
-      }
-
-      const code = prompt('Enter your discount code:');
-      if (!code) return;
-
-      if (code !== 'TikTok15') {
-        alert('Invalid discount code.');
-        return;
-      }
-
-      // Check if user already used code
-      const usedRef = db.collection('discountCodesUsed').doc(user.uid);
-      const doc = await usedRef.get();
-
-      if (doc.exists) {
-        alert('You have already used this discount code once.');
-        return;
-      }
-
-      // Generate random code and save with timestamp
-      const randomCode = generateRandomCode();
-      const timestamp = new Date();
-
-      await usedRef.set({
-        codeUsed: code,
-        randomCode,
-        usedAt: timestamp.toISOString()
-      });
-
-      alert(`Success! Your unique code is: ${randomCode}\nUsed on: ${timestamp.toLocaleString()}`);
-    }
 
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('discountBtn').addEventListener('click', enterDiscountCode);
+      const btn = document.getElementById('auth-btn');
+      btn.textContent = 'Loading...';
+      
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          btn.textContent = 'Logout';
+          btn.onclick = () => auth.signOut().then(() => window.location.reload());
+        } else {
+          btn.textContent = 'Login / Signup';
+          btn.onclick = () => window.location.href = 'login.html';
+        }
+      }, error => {
+        console.error('Auth observer error:', error);
+        btn.textContent = 'Login / Signup';
+        btn.onclick = () => window.location.href = 'login.html';
+      });
     });
   </script>
 
