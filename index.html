@@ -749,6 +749,16 @@ function submitRedeem() {
   alert('Code submitted: ' + code);
   closeRedeem();
 }
+      <script>
+  document.addEventListener('mousemove', e => {
+    const dot = document.createElement('div');
+    dot.classList.add('glow-dot');
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 800); // remove after fade out
+  });
+</script>
 </script>
 </body>
 </html>
