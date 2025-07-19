@@ -3,56 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <img src="image.png" alt="My Logo" style="height: 100px;">
+<img src="image.png" alt="My Logo" style="height: 100px;">
 
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
-  <script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-</script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
       authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
       projectId: "abandonedtweaks-b47a2",
-      storageBucket: "abandonedtweaks-b47a2.appspot.com",
+      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
       messagingSenderId: "26177710755",
       appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
       measurementId: "G-6H06DVYMCV"
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Handle auth button
+    auth.onAuthStateChanged(user => {
+      const btn = document.getElementById('auth-btn');
+      if (user) {
+        btn.textContent = 'Logout';
+        btn.onclick = () => auth.signOut().then(() => window.location.reload());
+      } else {
+        btn.textContent = 'Login / Signup';
+        btn.onclick = () => window.location.href = 'login.html'; // Adjust if you have a login page
+      }
+    });
+
+    // Generate random code helper
+    function generateRandomCode(length = 12) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    // Discount code logic
+    async function enterDiscountCode() {
+      const user = auth.currentUser;
+      if (!user) {
+        alert('You must be logged in to enter a discount code.');
+        return;
+      }
+
+      const code = prompt('Enter your discount code:');
+      if (!code) return;
+
+      if (code !== 'TikTok15') {
+        alert('Invalid discount code.');
+        return;
+      }
+
+      // Check if user already used code
+      const usedRef = db.collection('discountCodesUsed').doc(user.uid);
+      const doc = await usedRef.get();
+
+      if (doc.exists) {
+        alert('You have already used this discount code once.');
+        return;
+      }
+
+      // Generate random code and save with timestamp
+      const randomCode = generateRandomCode();
+      const timestamp = new Date();
+
+      await usedRef.set({
+        codeUsed: code,
+        randomCode,
+        usedAt: timestamp.toISOString()
+      });
+
+      alert(`Success! Your unique code is: ${randomCode}\nUsed on: ${timestamp.toLocaleString()}`);
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('auth-btn');
-      btn.textContent = 'Loading...';
-      
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          btn.textContent = 'Logout';
-          btn.onclick = () => auth.signOut().then(() => window.location.reload());
-        } else {
-          btn.textContent = 'Login / Signup';
-          btn.onclick = () => window.location.href = 'login.html';
-        }
-      }, error => {
-        console.error('Auth observer error:', error);
-        btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html';
-      });
+      document.getElementById('discountBtn').addEventListener('click', enterDiscountCode);
     });
-  </script>
   </script>
 
   <style>
@@ -347,76 +381,6 @@
     #discountBtn:hover {
       box-shadow: 0 0 20px #00ffff;
     }
-    /* Redeem button styles */
-#redeemBtn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
-  background-size: 400% 400%;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  animation: rainbow 6s linear infinite;
-  z-index: 1000;
-}
-
-/* Redeem panel floating box */
-#redeemPanel {
-  display: none; /* hidden by default */
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #222;
-  padding: 20px;
-  border: 4px solid transparent;
-  border-image: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet) 1;
-  border-radius: 12px;
-  z-index: 2000;
-  text-align: center;
-}
-
-/* Input inside panel */
-#redeemPanel input {
-  padding: 8px;
-  width: 200px;
-  border-radius: 4px;
-  border: none;
-  margin-bottom: 10px;
-}
-
-/* Buttons inside panel */
-#redeemPanel button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  margin: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* Submit button style */
-#redeemSubmit {
-  background: #0ff;
-  color: #000;
-}
-
-/* Close button style */
-#redeemClose {
-  background: #555;
-  color: #fff;
-}
-
-/* Rainbow animation keyframes */
-@keyframes rainbow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 400% 50%; }
-}
   </style>
   /* Glow trail dot style */
 .glow-dot {
@@ -447,7 +411,6 @@
   <h1 style="font-size:3rem; margin:0; background:linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite;">Abandoned Tweaks</h1>
   <p style="margin-top:1rem; font-size:1.2rem; color:#ccc; cursor:pointer;" onclick="enterSite()">click to enter</p>
 </div>
-<button id="redeemBtn" onclick="showRedeem()">REDEEM</button>
 
   <header>
     <h1 class="title">Abandoned Tweaks</h1>
@@ -457,16 +420,6 @@
     <a href="#">Purchase</a>
     <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
   </nav>
-
-  <!-- Redeem floating panel -->
-<div id="redeemPanel">
-  <h2>Redeem</h2>
-  <input type="text" id="redeemCode" placeholder="Enter your code">
-  <br>
-  <button id="redeemSubmit" onclick="submitRedeem()">Submit</button>
-  <button id="redeemClose" onclick="closeRedeem()">Close</button>
-</div>
-
 
   <div class="container">
     <div class="products">
@@ -700,40 +653,6 @@
     document.body.appendChild(dot);
     setTimeout(() => dot.remove(), 800); // remove after fade out
   });
-<script>
-function showRedeem() {
-  document.getElementById('redeemPanel').style.display = 'block';
-}
-function closeRedeem() {
-  document.getElementById('redeemPanel').style.display = 'none';
-}
-function submitRedeem() {
-  const code = document.getElementById('redeemCode').value.trim();
-  if (!code) {
-    alert('Please enter a code.');
-    return;
-  }
-  // TODO: send code to your backend to check & redeem
-  alert('Code submitted: ' + code);
-  closeRedeem();
-}
-</script>
- <script>
-function showRedeem() {
-  document.getElementById('redeemPanel').style.display = 'block';
-}
-function closeRedeem() {
-  document.getElementById('redeemPanel').style.display = 'none';
-}
-function submitRedeem() {
-  const code = document.getElementById('redeemCode').value.trim();
-  if (!code) {
-    alert('Please enter a code.');
-    return;
-  }
-  alert('Code submitted: ' + code);
-  closeRedeem();
-}
 </script>
 </body>
 </html>
