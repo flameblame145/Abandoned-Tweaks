@@ -653,6 +653,32 @@
     document.body.appendChild(dot);
     setTimeout(() => dot.remove(), 800); // remove after fade out
   });
-</script>
+</script><button onclick="window.location.href='redeem.html'" 
+  style="
+    position: fixed; 
+    bottom: 20px; 
+    left: 20px; 
+    padding: 12px 24px; 
+    font-size: 16px; 
+    font-weight: bold;
+    color: #fff; 
+    background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet); 
+    background-size: 400% 400%;
+    border: none; 
+    border-radius: 10px;
+    cursor: pointer; 
+    animation: rainbow 6s linear infinite; 
+    z-index: 1000;
+  ">
+  Redeem
+</button>
+
+<style>
+@keyframes rainbow {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+</style>
 </body>
 </html>
