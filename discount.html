@@ -9,39 +9,33 @@
     margin: 0;
     padding: 0;
     height: 100%;
-    background: black;
     overflow: hidden;
     font-family: 'Segoe UI', sans-serif;
+    background: black;
     color: #0ff;
   }
 
-  /* Starry background with twinkling effect */
-  .stars, .stars2, .stars3 {
+  /* Starry background using CSS */
+  .stars {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(white 1px, transparent 1px) 0 0,
+      radial-gradient(white 1px, transparent 1px) 50px 50px,
+      radial-gradient(white 1px, transparent 1px) 25px 75px,
+      radial-gradient(white 1px, transparent 1px) 75px 25px;
+    background-size: 100px 100px;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: transparent url('https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/star.png') repeat;
+    animation: moveStars 100s linear infinite;
     z-index: 0;
-    animation: moveStars 200s linear infinite;
-  }
-
-  .stars2 {
-    background-size: contain;
-    opacity: 0.5;
-    animation-duration: 300s;
-  }
-
-  .stars3 {
-    background-size: cover;
-    opacity: 0.3;
-    animation-duration: 400s;
+    opacity: 0.8;
   }
 
   @keyframes moveStars {
-    from { background-position: 0 0; }
-    to { background-position: -10000px 5000px; }
+    from { background-position: 0 0, 0 0, 0 0, 0 0; }
+    to { background-position: 10000px 5000px, 10000px 5000px, 10000px 5000px, 10000px 5000px; }
   }
 
   .floating-panel {
@@ -70,10 +64,7 @@
 </head>
 <body>
 
-<!-- Star layers -->
 <div class="stars"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
 
 <div class="floating-panel" id="redeemPanel">
   <div id="redeemDate">Loading...</div>
