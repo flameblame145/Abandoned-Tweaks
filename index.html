@@ -632,4 +632,25 @@
     ball.style.left = e.clientX + 'px';
   });
 </script>
+  <script>
+  const ball = document.getElementById('cursor-ball');
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ballX = mouseX;
+  let ballY = mouseY;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animate() {
+    ballX += (mouseX - ballX) * 0.2;  // adjust the speed by changing 0.2
+    ballY += (mouseY - ballY) * 0.2;
+    ball.style.left = ballX + 'px';
+    ball.style.top = ballY + 'px';
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
 </html>
