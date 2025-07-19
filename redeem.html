@@ -3,76 +3,181 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redeem</title>
+  <title>Redeem Code</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: #111;
-      color: #f2f2f2;
-      font-family: Arial, sans-serif;
+      height: 100vh;
+      background: black;
+      overflow: hidden;
+      font-family: sans-serif;
     }
 
-    /* Redeem panel centered */
-    #redeemPanel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #222;
-      padding: 20px;
-      border: 3px solid #0ff;
-      border-radius: 10px;
-      z-index: 2000;
-      text-align: center;
+    /* Starry background */
+    .stars, .stars2, .stars3 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/demo/stars.png') repeat top center;
+      animation: moveStars 200s linear infinite;
     }
 
-    #redeemPanel input {
-      padding: 8px;
-      width: 200px;
-      margin-bottom: 10px;
-      border-radius: 4px;
+    .stars2 {
+      background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/demo/stars.png') repeat top center;
+      animation: moveStars 300s linear infinite;
+      opacity: 0.5;
+    }
+
+    .stars3 {
+      background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/demo/stars.png') repeat top center;
+      animation: moveStars 400s linear infinite;
+      opacity: 0.2;
+    }
+
+    @keyframes moveStars {
+      from {background-position: 0 0;}
+      to {background-position: -10000px 5000px;}
+    }
+
+    /* Shooting stars */
+    .shooting-star {
+      position: absolute;
+      top: -10px;
+      width: 2px;
+      height: 80px;
+      background: white;
+      opacity: 0;
+      transform: rotate(45deg);
+      animation: shooting 3s linear infinite;
+    }
+
+    @keyframes shooting {
+      0% {
+        top: -10px;
+        left: 0;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        top: 100%;
+        left: 100%;
+        opacity: 0;
+      }
+    }
+
+    .panel {
+      background: rgba(20, 20, 20, 0.9);
+      padding: 40px;
+      border-radius: 16px;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+      z-index: 10;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: -4px; left: -4px; right: -4px; bottom: -4px;
+      border-radius: 16px;
+      background: linear-gradient(270deg, #ff00ff, #00ffff, #ff00ff);
+      background-size: 600% 600%;
+      animation: neon 8s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes neon {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
       border: none;
+      border-radius: 8px;
+      outline: none;
+      background: #1a1a1a;
+      color: white;
+      font-size: 16px;
     }
 
-    #redeemPanel button {
-      padding: 8px 12px;
-      margin: 4px;
+    button {
+      background: #00ffff;
+      color: black;
       border: none;
-      border-radius: 4px;
-      font-weight: bold;
+      border-radius: 8px;
+      padding: 12px 20px;
       cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+      margin-top: 8px;
     }
 
-    #redeemSubmit {
-      background: #0ff;
-      color: #000;
+    button:hover {
+      background: #00bbbb;
+    }
+
+    .back-btn {
+      background: #ff00ff;
+      color: white;
+      margin-top: 12px;
+    }
+
+    .back-btn:hover {
+      background: #cc00cc;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
   </style>
 </head>
 <body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
 
-  <div id="redeemPanel">
-    <h2>Enter Your Code</h2>
-    <input type="text" id="redeemCode" placeholder="Enter your code">
-    <br>
-    <button id="redeemSubmit" onclick="submitRedeem()">Submit</button>
+  <div class="shooting-star"></div>
+  <div class="shooting-star" style="animation-delay: 5s;"></div>
+  <div class="shooting-star" style="animation-delay: 10s;"></div>
+
+  <div class="container">
+    <div class="panel">
+      <h2 style="color:white; text-align:center; margin-bottom: 20px;">Enter Your Code</h2>
+      <input type="text" id="codeInput" placeholder="Enter code here..." />
+      <button onclick="redeemCode()">Redeem</button>
+      <button class="back-btn" onclick="goBack()">Back to Main</button>
+    </div>
   </div>
 
   <script>
-    function submitRedeem() {
-      const code = document.getElementById('redeemCode').value.trim();
-      if (!code) {
-        alert('Please enter a code.');
-        return;
-      }
-
-      // ✅ Check if the code matches
-      if (code === 'shotgunpackv1-Z13jdn2-nNjO2j76') {
-        window.location.href = 'https://main-pdf2-aspose-app.s3.us-west-2.amazonaws.com/9b86c39f-c584-4e21-b7f7-805ea9166e6c/ShotGun%20Pack.zip.zip?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22ShotGun%2BPack.zip.zip%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4XIV7DNDPELHCB2Q%2F20250719%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250719T184043Z&X-Amz-SignedHeaders=host&X-Amz-Signature=101eaf2f9cea23a047506dc2ce1e85bad4a700d65c46ae4f8989ab69e6db4b9a';
+    function redeemCode() {
+      const code = document.getElementById('codeInput').value.trim();
+      // Replace this with your actual validation logic:
+      if(code === "shotgunpackv1-Z13jdn2-nNjO2j76") {
+        window.location.href = "https://yourdownloadlink.com";
       } else {
-        alert('Invalid code. Try again.');
+        alert("Invalid code!");
       }
+    }
+
+    function goBack() {
+      window.location.href = "index.html"; // change to your main page if different
     }
   </script>
 </body>
