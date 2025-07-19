@@ -1,23 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redeem</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Redeem panel centered */
+    #redeemPanel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #222;
+      padding: 20px;
+      border: 3px solid #0ff;
+      border-radius: 10px;
+      z-index: 2000;
+      text-align: center;
+    }
+
+    #redeemPanel input {
+      padding: 8px;
+      width: 200px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    #redeemPanel button {
+      padding: 8px 12px;
+      margin: 4px;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #redeemSubmit {
+      background: #0ff;
+      color: #000;
+    }
+  </style>
+</head>
 <body>
-  <h2>Redeem your code</h2>
-  <input type="text" id="code" placeholder="Enter your code">
-  <button onclick="redeem()">Redeem</button>
 
-  <p id="result"></p>
+  <div id="redeemPanel">
+    <h2>Enter Your Code</h2>
+    <input type="text" id="redeemCode" placeholder="Enter your code">
+    <br>
+    <button id="redeemSubmit" onclick="submitRedeem()">Submit</button>
+  </div>
 
-<script>
-function redeem() {
-  var code = document.getElementById("code").value;
-  if (!code) {
-    alert("Please enter a code.");
-    return;
-  }
-  // replace with your Apps Script URL:
-  var url = "https://script.google.com/macros/s/AKfycb.../exec?code=" + encodeURIComponent(code);
-  window.location = url;
-}
-</script>
+  <script>
+    function submitRedeem() {
+      const code = document.getElementById('redeemCode').value.trim();
+      if (!code) {
+        alert('Please enter a code.');
+        return;
+      }
+
+      // ✅ Check if the code matches
+      if (code === 'shotgunpackv1-Z13jdn2-nNjO2j76') {
+        window.location.href = 'https://main-pdf2-aspose-app.s3.us-west-2.amazonaws.com/9b86c39f-c584-4e21-b7f7-805ea9166e6c/ShotGun%20Pack.zip.zip?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22ShotGun%2BPack.zip.zip%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4XIV7DNDPELHCB2Q%2F20250719%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250719T184043Z&X-Amz-SignedHeaders=host&X-Amz-Signature=101eaf2f9cea23a047506dc2ce1e85bad4a700d65c46ae4f8989ab69e6db4b9a';
+      } else {
+        alert('Invalid code. Try again.');
+      }
+    }
+  </script>
 </body>
 </html>
