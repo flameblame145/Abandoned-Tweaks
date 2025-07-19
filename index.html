@@ -41,40 +41,6 @@
       });
     });
   </script>
-
-      const code = prompt('Enter your discount code:');
-      if (!code) return;
-
-      if (code !== 'TikTok15') {
-        alert('Invalid discount code.');
-        return;
-      }
-
-      // Check if user already used code
-      const usedRef = db.collection('discountCodesUsed').doc(user.uid);
-      const doc = await usedRef.get();
-
-      if (doc.exists) {
-        alert('You have already used this discount code once.');
-        return;
-      }
-
-      // Generate random code and save with timestamp
-      const randomCode = generateRandomCode();
-      const timestamp = new Date();
-
-      await usedRef.set({
-        codeUsed: code,
-        randomCode,
-        usedAt: timestamp.toISOString()
-      });
-
-      alert(Success! Your unique code is: ${randomCode}\nUsed on: ${timestamp.toLocaleString()});
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('discountBtn').addEventListener('click', enterDiscountCode);
-    });
   </script>
 
   <style>
