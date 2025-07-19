@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redeem Success</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: black;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: #0ff;
+  }
+
+  /* Starry background */
+  body::before {
+    content: '';
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: url('https://i.ibb.co/FqkH1yT/starry-bg.png') repeat;
+    z-index: -1;
+    animation: moveStars 100s linear infinite;
+    opacity: 0.5;
+  }
+
+  @keyframes moveStars {
+    from { background-position: 0 0; }
+    to { background-position: -10000px 5000px; }
+  }
+
+  .floating-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.6);
+    border: 2px solid #0ff;
+    border-radius: 15px;
+    padding: 30px 50px;
+    text-align: center;
+    font-size: 1.5em;
+    color: #0ff;
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%   { transform: translate(-50%, -50%) translateY(0px); }
+    50%  { transform: translate(-50%, -50%) translateY(-20px); }
+    100% { transform: translate(-50%, -50%) translateY(0px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="floating-panel" id="redeemPanel">
+  <div id="redeemDate">Loading...</div>
+  <div>successfully redeemed discount</div>
+</div>
+
+<script>
+  const dateKey = 'redeemDate';
+  let storedDate = localStorage.getItem(dateKey);
+  if (!storedDate) {
+    storedDate = new Date().toLocaleString();
+    localStorage.setItem(dateKey, storedDate);
+  }
+  document.getElementById('redeemDate').textContent = storedDate;
+</script>
+
+</body>
+</html>
