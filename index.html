@@ -11,40 +11,40 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
-      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
-      projectId: "abandonedtweaks-b47a2",
-      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
-      messagingSenderId: "26177710755",
-      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
-      measurementId: "G-6H06DVYMCV"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
+  authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
+  projectId: "abandonedtweaks-b47a2",
+  storageBucket: "abandonedtweaks-b47a2.appspot.com",
+  messagingSenderId: "26177710755",
+  appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
+  measurementId: "G-6H06DVYMCV"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-    // Handle auth button
-    auth.onAuthStateChanged(user => {
-      const btn = document.getElementById('auth-btn');
-      if (user) {
-        btn.textContent = 'Logout';
-        btn.onclick = () => auth.signOut().then(() => window.location.reload());
-      } else {
-        btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html'; // Adjust if you have a login page
-      }
-    });
-
-    // Generate random code helper
-    function generateRandomCode(length = 12) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
+// Make sure DOM is loaded before querying button
+window.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('auth-btn');
+  btn.textContent = 'Loading...';
+  
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      btn.textContent = 'Logout';
+      btn.onclick = () => auth.signOut().then(() => window.location.reload());
+    } else {
+      btn.textContent = 'Login / Signup';
+      btn.onclick = () => window.location.href = 'login.html';
     }
+  }, error => {
+    console.error('Auth observer error:', error);
+    btn.textContent = 'Login / Signup';
+    btn.onclick = () => window.location.href = 'login.html';
+  });
+});
+</script>
+
 
     // Discount code logic
     async function enterDiscountCode() {
