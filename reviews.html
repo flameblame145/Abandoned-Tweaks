@@ -128,8 +128,7 @@ const baseTexts={
   'Shotgun Pack V2':['Big pumps every single shot!','Feels way more powerful!','Closer fights end faster!','My shotgun shots never miss!'],
   'Bloom Pack V1':['Less random bloom now!','More accurate AR shots!','Feels smoother when spraying!','Definitely helps aim a lot!']
 };
-const suffixes=["Helped me win more fights.","KD went up fast!","Feels super clean!","Totally worth it!","Feels like cheating almost!","Improved instantly!","Now I'm hitting shots easily!","Super consistent hits!","Made a huge difference!","Feels way better overall!"];
-const emojis=["🔥","💯","⭐","✅","🎯","⚡","🔝","🥇","🚀","😎"];
+const suffixes=["Helped me win more fights.","KD went up fast!","Totally worth it!","Feels super clean!","Made a huge difference!","Super consistent hits!","Feels like cheating almost!","Improved instantly!","Now I'm hitting shots easily!","Feels way better overall!"];
 
 // Random name
 function randomName(){
@@ -146,8 +145,7 @@ products.forEach(product=>{
   for(let i=0;i<20;i++){
     const base=baseTexts[product][Math.floor(Math.random()*baseTexts[product].length)];
     const suffix=suffixes[Math.floor(Math.random()*suffixes.length)];
-    const emoji=emojis[Math.floor(Math.random()*emojis.length)];
-    const text=`${base} ${suffix} ${emoji}`;
+    const text=`${base} ${suffix}`;
     const name=randomName();
     const stars=Math.floor(Math.random()*2)+4;
     productReviews[product].push({name,product,stars,text});
