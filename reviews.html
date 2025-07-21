@@ -22,17 +22,73 @@
   z-index: -2;
 }
 
-.stars3 {
-  background-image: radial-gradient(white 1px, transparent 1px);
-  background-size: 70px 70px;
-  animation: starScroll 200s linear infinite;
-  opacity: 0.3;
-}
-
-  @keyframes starScroll {
-    from { background-position: 0 0; }
-    to { background-position: -1000px 1000px; }
-  }
+ .starry-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+      background: #111;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 2px white);
+      animation: twinkle 3s infinite ease-in-out;
+    }
+    .star.small {
+      width: 1.5px;
+      height: 1.5px;
+      animation-duration: 3s;
+    }
+    .star.medium {
+      width: 2.5px;
+      height: 2.5px;
+      animation-duration: 4s;
+    }
+    .star.large {
+      width: 3.5px;
+      height: 3.5px;
+      animation-duration: 5s;
+    }
+    @keyframes twinkle {
+      0%,
+      100% {
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.2;
+      }
+    }
+    .shooting-star {
+      position: fixed;
+      width: 80px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: shoot 2s linear forwards;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @keyframes shoot {
+      0% {
+        top: 0;
+        left: 0;
+        opacity: 0.8;
+      }
+      100% {
+        top: 100vh;
+        left: 100vw;
+        opacity: 0;
+      }
+    }
 
   .floating-panel {
     margin: 40px auto;
