@@ -20,90 +20,23 @@
     overflow: hidden;
     pointer-events: none;
   }
-  .star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 2px white);
-    animation: twinkle 3s infinite ease-in-out;
-  }
+  .star { position: absolute; background: white; border-radius: 50%; opacity: 0.8; filter: drop-shadow(0 0 2px white); animation: twinkle 3s infinite ease-in-out; }
   .star.small { width: 1.5px; height: 1.5px; animation-duration: 3s; }
   .star.medium { width: 2.5px; height: 2.5px; animation-duration: 4s; }
   .star.large { width: 3.5px; height: 3.5px; animation-duration: 5s; }
   @keyframes twinkle { 0%,100% {opacity:0.8;} 50% {opacity:0.2;} }
-  .floating-panel {
-    margin: 40px auto;
-    max-width: 1200px;
-    padding: 20px;
-    background: rgba(0,0,0,0.8);
-    border: 3px solid #00f7ff;
-    border-radius: 20px;
-    box-shadow: 0 0 20px #00f7ff;
-    animation: float 4s ease-in-out infinite;
-    z-index: 1;
-    position: relative;
-  }
+  .floating-panel { margin: 40px auto; max-width: 1200px; padding: 20px; background: rgba(0,0,0,0.8); border: 3px solid #00f7ff; border-radius: 20px; box-shadow: 0 0 20px #00f7ff; animation: float 4s ease-in-out infinite; z-index: 1; position: relative; }
   @keyframes float { 0%,100% {transform:translateY(0px);} 50% {transform:translateY(-10px);} }
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, auto);
-    gap: 15px;
-  }
-  .review-card {
-    background: rgba(20,20,20,0.9);
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #00f7ff;
-    box-shadow: 0 0 10px #00f7ff;
-    font-size: 13px;
-  }
+  .reviews-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, auto); gap: 15px; }
+  .review-card { background: rgba(20,20,20,0.9); padding: 10px; border-radius: 10px; border: 1px solid #00f7ff; box-shadow: 0 0 10px #00f7ff; font-size: 13px; }
   .review-name { font-weight: bold; margin-bottom: 5px; }
   .review-product { color: #00f7ff; font-size: 12px; margin-bottom: 3px; }
   .review-stars { color: gold; margin-bottom: 3px; }
-  .pagination {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .pagination button {
-    background: #00f7ff;
-    color: #000;
-    border: none;
-    padding: 8px 16px;
-    margin: 0 5px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 0 5px #00f7ff;
-  }
-  .pagination button:disabled {
-    background: #333;
-    color: #777;
-    box-shadow: none;
-    cursor: default;
-  }
-  .back-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-    background-size: 400% 400%;
-    animation: rainbow 5s ease infinite;
-    color: #000;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  @keyframes rainbow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+  .pagination { text-align: center; margin-top: 20px; }
+  .pagination button { background: #00f7ff; color: #000; border: none; padding: 8px 16px; margin: 0 5px; font-size: 14px; border-radius: 5px; cursor: pointer; box-shadow: 0 0 5px #00f7ff; }
+  .pagination button:disabled { background: #333; color: #777; box-shadow: none; cursor: default; }
+  .back-button { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet); background-size: 400% 400%; animation: rainbow 5s ease infinite; color: #000; border: none; padding: 10px 20px; font-size: 14px; border-radius: 8px; cursor: pointer; text-decoration: none; font-weight: bold; }
+  @keyframes rainbow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 </style>
 </head>
 <body>
@@ -120,7 +53,7 @@
 <a href="https://abandonedtweaks.xyz/index.html" class="back-button">Back</a>
 
 <script>
-// Generate 100 stars dynamically
+// stars
 const starsContainer = document.querySelector('.stars');
 for (let i = 0; i < 100; i++) {
   const star = document.createElement('div');
@@ -131,6 +64,7 @@ for (let i = 0; i < 100; i++) {
   starsContainer.appendChild(star);
 }
 
+// reviews
 const baseReviews = [
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
@@ -159,85 +93,155 @@ const extraReviewTexts = {
     'My pumps hit so much harder now!',
     'Finally getting consistent 185s!',
     'Pump shots feel super clean.',
-    'Perfect pack for close fights!'
+    'Perfect for box fights.',
+    'More damage every close fight!',
+    'Pump headshots feel insane!',
+    'Love how it buffs damage!',
+    'Game feels unfair in my favor!',
+    'Easier to 200 someone!',
+    'Pumps feel way smoother!'
   ],
   'Bloom Pack V2': [
     'Barely miss shots now!',
     'Bloom feels almost gone!',
     'Sprays feel tighter and accurate.',
-    'Better aim in every fight!'
+    'Better aim in every fight!',
+    'My SMG beams now!',
+    'AR shots hit more often!',
+    'Sprays never felt this good!',
+    'Close range is OP now!',
+    'Love the accuracy boost!',
+    'Huge difference in fights!'
   ],
   'WiFi Tweaks': [
     'Ping dropped by a lot!',
     'Smoother gameplay every game.',
     'Less lag spikes for sure.',
-    'Feels like I have better servers!'
+    'Feels like I have better servers!',
+    'No more rubberbanding!',
+    'Lower delay on builds!',
+    'Better hit reg now!',
+    'Fast servers every game!',
+    'Game feels way more stable!',
+    'Good for late game zones!'
   ],
   'Variety Pack': [
     'All tweaks together, best value!',
     'Got everything I needed in one!',
     'Great bundle for the price!',
-    'Worth it if you want every tweak!'
+    'Worth it if you want every tweak!',
+    'Covers every part of gameplay!',
+    'My edits, aim and ping improved!',
+    'Easy upgrade to my gameplay!',
+    'Saved money with the bundle!',
+    'Perfect starter pack!',
+    'Love having all tweaks at once!'
   ],
   'Mouse Tweaks': [
     'Edits feel faster now!',
     'Mouse movements smoother!',
     'Improved my aim a ton!',
-    'Editing speed is crazy!'
+    'Editing speed is crazy!',
+    'Feels snappier overall!',
+    'Less input delay!',
+    'More control in fights!',
+    'Crosshair placement is better!',
+    'Perfect for fast plays!',
+    'Really helped my mechanics!'
   ],
   '0 Delay': [
     'Feels insanely smooth!',
     'Edits come out instantly!',
     'No input lag anymore!',
-    'Building feels much quicker!'
+    'Building feels much quicker!',
+    'Game responsiveness improved!',
+    'Everything feels more reactive!',
+    'Better piece control now!',
+    'Perfect for creative warriors!',
+    'Turbo build is smoother!',
+    'Crazy difference on high ping!'
   ],
   'Taste Tester': [
     'Aim feels more consistent!',
     'Edits are faster after this!',
     'My flicks got way better!',
-    'Great boost to aiming!'
+    'Great boost to aiming!',
+    'Helped in box fights!',
+    'Faster triple edits now!',
+    'Love the feel of crosshair!',
+    'Closer crosshair control!',
+    'Feels good for tracking!',
+    'Good boost for shotgun aim!'
   ],
   'Keyboard Tweaks': [
     'Key response is faster now!',
     'Building speed went up!',
     'Feels easier to triple edit!',
-    'Better movement control!'
+    'Better movement control!',
+    'More responsive keys!',
+    'Smooth building edits!',
+    'Perfect for fast plays!',
+    'Feels good in box fights!',
+    'Love the speed buff!',
+    'Instant key input!'
   ],
   'Spotify Premium': [
     'No ads ever, love it!',
     'Works perfect on my phone!',
     'Finally got premium for cheap!',
-    'Unlimited skips and playlists!'
+    'Unlimited skips and playlists!',
+    'Listen offline anytime!',
+    'Good for long drives!',
+    'Easy to share playlists!',
+    'Sounds quality feels better!',
+    'Love the interface!',
+    'Perfect for parties!'
   ],
   'SMG Bloom Pack V2': [
     'My sprays are lasers now!',
     'Feels like no bloom!',
     'Close range fights feel better!',
-    'Way better tracking!'
+    'Way better tracking!',
+    'More headshots at close range!',
+    'Feels OP on SMG!',
+    'Perfect for spray metas!',
+    'Tighter bullet spread!',
+    'Better first shot accuracy!',
+    'Love the difference!'
   ],
   'Shotgun Pack V2': [
     '185s almost every shot!',
     'Pumps feel stronger!',
     'Great for box fights!',
-    'Feels like more damage output!'
+    'Feels like more damage output!',
+    'Higher headshot ratio!',
+    'Insane in close range!',
+    'More consistent pump shots!',
+    'Perfect for edit plays!',
+    'Feels powerful every game!',
+    'Love the pump buff!'
   ],
   'Bloom Pack V1': [
     'Less random misses now!',
     'Better spraying control!',
     'Tighter shot grouping!',
-    'My aim feels buffed!'
+    'My aim feels buffed!',
+    'Feels smoother to spray!',
+    'Huge help in long fights!',
+    'Better SMG follow ups!',
+    'Love the accuracy!',
+    'Close range aim feels stronger!',
+    'Feels fairer in fights!'
   ]
 };
 
 const reviews = [...baseReviews];
-
-// Add 80 extra reviews
 for (let i = 0; i < 80; i++) {
   const product = baseReviews[i % baseReviews.length].product;
   const textOptions = extraReviewTexts[product] || ['Great tweak!'];
-  const text = textOptions[i % textOptions.length];
+  const text = textOptions[Math.floor(Math.random() * textOptions.length)];
   const name = String.fromCharCode(65 + (i % 26)) + '****';
-  const stars = Math.floor(Math.random() * 2) + 4; // 4 or 5 stars
+  const stars = Math.floor(Math.random() * 2) + 4;
   reviews.push({ name, product, stars, text });
 }
 
