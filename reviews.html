@@ -13,61 +13,21 @@
     background: black;
   }
 
-  /* Starfield layers */
-  .stars, .stars2, .stars3 {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-repeat: repeat;
-    z-index: -2;
-  }
-
+  /* Simple animated starfield */
   .starry-background {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-    background: #111;
+    top: 0; left: 0;
+    width: 200%;  /* larger than screen to allow scroll effect */
+    height: 200%;
+    background: url('https://i.imgur.com/6lJGQ2k.png') repeat;
+    background-size: cover;
+    animation: starScroll 60s linear infinite;
+    z-index: -1;
   }
 
-  .star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 2px white);
-    animation: twinkle 3s infinite ease-in-out;
-  }
-
-  .star.small { width: 1.5px; height: 1.5px; animation-duration: 3s; }
-  .star.medium { width: 2.5px; height: 2.5px; animation-duration: 4s; }
-  .star.large { width: 3.5px; height: 3.5px; animation-duration: 5s; }
-
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 0.2; }
-  }
-
-  .shooting-star {
-    position: fixed;
-    width: 80px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    transform: rotate(45deg);
-    animation: shoot 2s linear forwards;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  @keyframes shoot {
-    0% { top: 0; left: 0; opacity: 0.8; }
-    100% { top: 100vh; left: 100vw; opacity: 0; }
+  @keyframes starScroll {
+    0% { transform: translate(0,0); }
+    100% { transform: translate(-50%, -50%); }
   }
 
   .floating-panel {
@@ -113,7 +73,7 @@
     margin-bottom: 3px;
   }
 
-  .review-stars {   /* ✅ fixed: unique name to avoid conflict */
+  .review-stars {
     color: gold;
     margin-bottom: 3px;
   }
@@ -144,9 +104,7 @@
 </style>
 </head>
 <body>
-<div class="stars"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
+<div class="starry-background"></div>
 
 <div class="floating-panel">
   <div id="reviews" class="reviews-grid"></div>
