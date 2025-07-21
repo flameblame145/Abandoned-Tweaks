@@ -1,3 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reviews Slider with Starry Background</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    background: black;
+  }
+  .stars {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    z-index:-2; overflow:hidden; pointer-events:none;
+  }
+  .star {
+    position:absolute; background:white; border-radius:50%;
+    opacity:0.8; filter:drop-shadow(0 0 2px white); animation: twinkle 3s infinite ease-in-out;
+  }
+  .star.small { width:1.5px; height:1.5px; animation-duration:3s; }
+  .star.medium { width:2.5px; height:2.5px; animation-duration:4s; }
+  .star.large { width:3.5px; height:3.5px; animation-duration:5s; }
+  @keyframes twinkle { 0%,100%{opacity:0.8;} 50%{opacity:0.2;} }
+
+  .floating-panel {
+    margin:40px auto; max-width:1200px; padding:20px;
+    background:rgba(0,0,0,0.8); border:3px solid #00f7ff; border-radius:20px;
+    box-shadow:0 0 20px #00f7ff; animation: float 4s ease-in-out infinite;
+    z-index:1; position:relative;
+  }
+  @keyframes float { 0%,100%{ transform:translateY(0px);} 50%{ transform:translateY(-10px);} }
+
+  .reviews-grid { display:grid; grid-template-columns: repeat(4,1fr); gap:15px; }
+  .review-card {
+    background: rgba(20,20,20,0.9); padding:10px; border-radius:10px;
+    border:1px solid #00f7ff; box-shadow:0 0 10px #00f7ff; font-size:13px;
+  }
+  .review-name { font-weight:bold; margin-bottom:5px; }
+  .review-product { color:#00f7ff; font-size:12px; margin-bottom:3px; }
+  .review-stars { color:gold; margin-bottom:3px; }
+
+  .pagination { text-align:center; margin-top:20px; }
+  .pagination button {
+    background:#00f7ff; color:#000; border:none; padding:8px 16px; margin:0 5px;
+    font-size:14px; border-radius:5px; cursor:pointer; box-shadow:0 0 5px #00f7ff;
+  }
+  .pagination button:disabled { background:#333; color:#777; box-shadow:none; cursor:default; }
+
+  .back-button {
+    position: fixed; bottom:20px; right:20px; padding:10px 16px; font-size:14px;
+    border:none; border-radius:8px; cursor:pointer;
+    background: linear-gradient(270deg, #ff0000, #ff9900, #33cc33, #3399ff, #cc33ff, #ff0000);
+    background-size:1200% 1200%; color:white; animation: rainbow 8s ease infinite;
+    box-shadow:0 0 10px #fff; text-decoration:none;
+  }
+  @keyframes rainbow { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+
+  .add-review-button, .reset-reviews-button {
+    position: fixed; bottom:20px; left:20px; padding:10px 16px; font-size:14px;
+    border:none; border-radius:8px; cursor:pointer; background:#00f7ff; color:black;
+    box-shadow:0 0 10px #00f7ff; display:flex; align-items:center; gap:5px; margin-bottom: 50px;
+  }
+  .reset-reviews-button {
+    bottom:60px;
+  }
+
+  .modal {
+    display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:2;
+  }
+  .modal-content {
+    background:rgba(10,10,10,0.95); border:2px solid #00f7ff; border-radius:15px;
+    padding:20px; text-align:center; max-width:300px; box-shadow:0 0 15px #00f7ff;
+  }
+  .modal-content button {
+    margin-top:15px; padding:8px 16px; font-size:14px; border:none; border-radius:5px;
+    background:#00f7ff; color:#000; cursor:pointer; box-shadow:0 0 5px #00f7ff;
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="floating-panel">
+  <h2 id="productTitle" style="text-align:center; color:#00f7ff; margin-bottom:15px;"></h2>
+  <div id="reviews" class="reviews-grid"></div>
+  <div class="pagination">
+    <button id="prevBtn">Prev</button>
+    <button id="nextBtn">Next</button>
+  </div>
+</div>
+
+<a href="https://abandonedtweaks.xyz/index.html" class="back-button">Back</a>
+<button class="add-review-button" id="addReviewBtn">✈ Add Review</button>
+<button class="reset-reviews-button" id="resetReviewsBtn">🔄 Reset Reviews</button>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <p>You have to make a purchase to add a review</p>
+    <button id="closeModalBtn">Back</button>
+  </div>
+</div>
+
 <script>
 // Generate stars
 const starsContainer = document.querySelector('.stars');
@@ -34,7 +140,6 @@ const suffixes=["Helped me win more fights.","KD went up!","Feels great!","Total
 const boosters=["Honestly,","For real,","Not kidding,","In my opinion,","To be honest,","After trying it,","I gotta say,","Surprisingly,"];
 const endings=["Highly recommend.","Worth the price.","Can't go back now.","So glad I got this.","Big W!","Amazing tweak!","Game changer!","It just works!"];
 
-// Random name
 function randomName(){
   const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const secondChars='abcdefghijklmnopqrstuvwxyz';
@@ -45,11 +150,12 @@ function randomName(){
   }
 }
 
-// Check if reviews are stored in localStorage
+// Load or create reviews
 let productReviews = JSON.parse(localStorage.getItem('productReviews'));
+if (!productReviews) createAndSaveReviews();
 
-if (!productReviews) {
-  productReviews = {};
+function createAndSaveReviews(){
+  productReviews={};
   products.forEach(product=>{
     productReviews[product]=[];
     for(let i=0;i<20;i++){
@@ -89,4 +195,13 @@ renderPage(currentProductIndex);
 // Modal handlers
 document.getElementById('addReviewBtn').onclick=()=>{document.getElementById('modal').style.display='flex';};
 document.getElementById('closeModalBtn').onclick=()=>{document.getElementById('modal').style.display='none';};
+
+// Reset reviews button
+document.getElementById('resetReviewsBtn').onclick=()=>{
+  localStorage.removeItem('productReviews');
+  createAndSaveReviews();
+  renderPage(currentProductIndex);
+};
 </script>
+</body>
+</html>
