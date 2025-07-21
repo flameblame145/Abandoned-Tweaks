@@ -13,7 +13,6 @@
     color: #fff;
   }
 
-  /* Starry background */
   .starry-background {
     position: fixed;
     top:0; left:0;
@@ -41,7 +40,6 @@
     50% { opacity:0.2; }
   }
 
-  /* Floating panel */
   .review-panel {
     position: relative;
     margin: 50px auto;
@@ -69,26 +67,13 @@
 
   .review:last-child { border-bottom: none; }
 
-  .review h4 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #0ff;
-  }
+  .review h4 { margin: 0; font-size: 1.2rem; color: #0ff; }
 
-  .review .stars {
-    color: gold;
-    margin: 3px 0;
-  }
+  .review .stars { color: gold; margin: 3px 0; }
 
-  .review .name {
-    font-size: 0.9rem;
-    color: #ccc;
-  }
+  .review .name { font-size: 0.9rem; color: #ccc; }
 
-  .review .text {
-    font-size: 0.95rem;
-    color: #aaa;
-  }
+  .review .text { font-size: 0.95rem; color: #aaa; }
 
   .nav-buttons {
     text-align: center;
@@ -107,18 +92,14 @@
     box-shadow: 0 0 8px #0ff;
   }
 
-  .nav-buttons button:hover {
-    box-shadow: 0 0 16px #0ff;
-  }
+  .nav-buttons button:hover { box-shadow: 0 0 16px #0ff; }
 </style>
 </head>
 <body>
 
 <div class="starry-background" id="stars"></div>
 
-<div class="review-panel" id="reviewPanel">
-  <!-- Reviews will be inserted here by JS -->
-</div>
+<div class="review-panel" id="reviewPanel"></div>
 
 <div class="nav-buttons">
   <button onclick="prevPage()">⟨ Prev</button>
@@ -139,20 +120,33 @@
   }
   for(let i=0; i<100; i++) createStar();
 
-  // Reviews data
   const reviews = [
-    { title:"Variety Pack", stars:"★★★★★", name:"FaZeClutch", text:"All the packs helped my gameplay big time!" },
-    { title:"Shotgun Pack V1", stars:"★★★★☆", name:"TfueJr", text:"My pumps hit harder now, solid buy." },
-    { title:"Bloom Pack V2", stars:"★★★★★", name:"BoxKing77", text:"My AR feels like a laser, winning fights easier." },
-    { title:"WiFi Tweaks", stars:"★★★★☆", name:"CrankyCranker", text:"Ping dropped and gameplay is smoother." },
-    { title:"Aimbot Pack V1", stars:"★★★★★", name:"NRGBoxFight", text:"Aim feels stickier and tracks players better." },
-    { title:"Edit Speed Boost", stars:"★★★★★", name:"SweatBuilds", text:"Editing is lightning fast now!" },
-    { title:"Build Sens Booster", stars:"★★★★☆", name:"ProTunneler", text:"Ramps and walls place way quicker." },
-    { title:"FPS Pack V2", stars:"★★★★★", name:"FPSLord", text:"Got stable 144 FPS from barely 90 before." },
-    { title:"Turbo Reset Mod", stars:"★★★★☆", name:"ResetKing", text:"Box fighting became insane." },
-    { title:"Keyboard Tweaks", stars:"★★★★★", name:"KeySmashPro", text:"Faster keystrokes for quick edits." },
-    { title:"Mouse Tweaks", stars:"★★★★★", name:"Clicker", text:"Clicking faster feels smooth & helps a lot." },
-    { title:"SMG Bloom Pack V2", stars:"★★★★☆", name:"SprayMeta", text:"My SMG literally doesn’t miss." }
+    { title:"Variety Pack", stars:"★★★★★", name:"A****", text:"All the packs improved my gameplay massively!" },
+    { title:"Shotgun Pack V1", stars:"★★★★☆", name:"B****", text:"Pumps feel way stronger now. Solid choice!" },
+    { title:"Bloom Pack V2", stars:"★★★★★", name:"C****", text:"My AR is literally a laser beam now!" },
+    { title:"WiFi Tweaks", stars:"★★★★☆", name:"D****", text:"Noticed fewer spikes and better ping." },
+    { title:"Aimbot Pack V1", stars:"★★★★★", name:"E****", text:"Aiming feels so much smoother and accurate!" },
+    { title:"Edit Speed Boost", stars:"★★★★★", name:"F****", text:"My edits are lightning fast. Love it!" },
+    { title:"Build Sens Booster", stars:"★★★★☆", name:"G****", text:"Building feels quicker and more responsive." },
+    { title:"FPS Pack V2", stars:"★★★★★", name:"H****", text:"Got my FPS stable even in late game fights." },
+    { title:"Turbo Reset Mod", stars:"★★★★☆", name:"I****", text:"Resetting walls is way faster now!" },
+    { title:"Keyboard Tweaks", stars:"★★★★★", name:"J****", text:"Feels smoother to build and edit." },
+    { title:"Mouse Tweaks", stars:"★★★★★", name:"K****", text:"Clicking faster feels effortless!" },
+    { title:"SMG Bloom Pack V2", stars:"★★★★☆", name:"L****", text:"Hits more shots up close, great pack!" },
+    { title:"No Recoil Mod", stars:"★★★★★", name:"M****", text:"Barely any recoil, especially on ARs." },
+    { title:"Smooth Build Pack", stars:"★★★★☆", name:"N****", text:"Builds place cleaner, less stutter." },
+    { title:"Ultra Aim Pack", stars:"★★★★★", name:"O****", text:"My crosshair locks on target so easily." },
+    { title:"Low Ping Pack", stars:"★★★★★", name:"P****", text:"Ping dropped by about 10ms, big difference." },
+    { title:"Zero Delay Edit", stars:"★★★★☆", name:"Q****", text:"Edits feel near instant, very happy." },
+    { title:"Fortnite Boost V3", stars:"★★★★★", name:"R****", text:"Game runs smoother overall, worth it!" },
+    { title:"Builder Pro Mod", stars:"★★★★☆", name:"S****", text:"Ramp rushes are faster than before." },
+    { title:"Smoother FPS Pack", stars:"★★★★★", name:"T****", text:"No more FPS drops in big fights." },
+    { title:"Quick Reset Tool", stars:"★★★★★", name:"U****", text:"Resetting is almost automatic now!" },
+    { title:"Controller Tweaks", stars:"★★★★☆", name:"V****", text:"Better stick response, small delay gone." },
+    { title:"Headshot Boost Pack", stars:"★★★★★", name:"W****", text:"Feels like I’m hitting headshots constantly!" },
+    { title:"Turbo Edit Pack", stars:"★★★★★", name:"X****", text:"My edits feel twice as fast now." },
+    { title:"Spray Meta Pack", stars:"★★★★☆", name:"Y****", text:"Better tracking and bloom control." },
+    { title:"Ping Lock V2", stars:"★★★★★", name:"Z****", text:"Holds steady ping, even in stacked lobbies." }
   ];
 
   let currentPage = 0;
