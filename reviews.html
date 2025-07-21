@@ -13,13 +13,25 @@
     background: black;
   }
 
-  .stars {
+  /* Starfield layers */
+  .stars, .stars2, .stars3 {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
+    background-repeat: repeat;
     z-index: -2;
-    overflow: hidden;
+  }
+
+  .starry-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    background: #111;
   }
 
   .star {
@@ -31,27 +43,31 @@
     animation: twinkle 3s infinite ease-in-out;
   }
 
-  .star.small {
-    width: 1.5px;
-    height: 1.5px;
-    animation-duration: 3s;
-  }
-
-  .star.medium {
-    width: 2.5px;
-    height: 2.5px;
-    animation-duration: 4s;
-  }
-
-  .star.large {
-    width: 3.5px;
-    height: 3.5px;
-    animation-duration: 5s;
-  }
+  .star.small { width: 1.5px; height: 1.5px; animation-duration: 3s; }
+  .star.medium { width: 2.5px; height: 2.5px; animation-duration: 4s; }
+  .star.large { width: 3.5px; height: 3.5px; animation-duration: 5s; }
 
   @keyframes twinkle {
     0%, 100% { opacity: 0.8; }
     50% { opacity: 0.2; }
+  }
+
+  .shooting-star {
+    position: fixed;
+    width: 80px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    transform: rotate(45deg);
+    animation: shoot 2s linear forwards;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes shoot {
+    0% { top: 0; left: 0; opacity: 0.8; }
+    100% { top: 100vh; left: 100vw; opacity: 0; }
   }
 
   .floating-panel {
@@ -63,8 +79,6 @@
     border-radius: 20px;
     box-shadow: 0 0 20px #00f7ff;
     animation: float 4s ease-in-out infinite;
-    z-index: 1;
-    position: relative;
   }
 
   @keyframes float {
@@ -99,7 +113,7 @@
     margin-bottom: 3px;
   }
 
-  .stars {
+  .review-stars {   /* ✅ fixed: unique name to avoid conflict */
     color: gold;
     margin-bottom: 3px;
   }
@@ -131,6 +145,8 @@
 </head>
 <body>
 <div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
 
 <div class="floating-panel">
   <div id="reviews" class="reviews-grid"></div>
@@ -141,17 +157,6 @@
 </div>
 
 <script>
-// Generate 100 stars dynamically
-const starsContainer = document.querySelector('.stars');
-for (let i = 0; i < 100; i++) {
-  const star = document.createElement('div');
-  const size = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)];
-  star.className = `star ${size}`;
-  star.style.top = Math.random() * 100 + '%';
-  star.style.left = Math.random() * 100 + '%';
-  starsContainer.appendChild(star);
-}
-
 const reviews = [
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
@@ -186,7 +191,7 @@ function renderPage(page) {
     <div class="review-card">
       <div class="review-name">${r.name}</div>
       <div class="review-product">${r.product}</div>
-      <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
       <div class="text">${r.text}</div>
     </div>
   `).join('');
