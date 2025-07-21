@@ -132,9 +132,6 @@ const baseTexts={
   'Shotgun Pack V2':['185s almost every shot!'],
   'Bloom Pack V1':['Less random misses now!']
 };
-const suffixes=["Helped me win more fights.","KD went up!","Feels great!","Totally worth it!","Better damage!","Feels like cheating!","Perfect tweak!","Noticeable difference!","Improved instantly!","Now I'm hitting shots!","Game feels different!","Absolutely love this!","Feels OP!","Big difference!","Would buy again!","Super responsive!","Huge upgrade!","Can't believe how well this works!"];
-const boosters=["Honestly,","For real,","Not kidding,","In my opinion,","To be honest,","After trying it,","I gotta say,","Surprisingly,"];
-const endings=["Highly recommend.","Worth the price.","Can't go back now.","So glad I got this.","Big W!","Amazing tweak!","Game changer!","It just works!"];
 
 function randomName(){
   const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -155,11 +152,7 @@ function createAndSaveReviews(){
   products.forEach(product=>{
     productReviews[product]=[];
     for(let i=0;i<20;i++){
-      const base=baseTexts[product][0];
-      const suffix=suffixes[Math.floor(Math.random()*suffixes.length)];
-      const booster=boosters[Math.floor(Math.random()*boosters.length)];
-      const ending=endings[Math.floor(Math.random()*endings.length)];
-      const text=`${booster} ${base} ${suffix} ${ending}`;
+      const text=baseTexts[product][0]; // Only use the base text, no booster/suffix/ending
       const name=randomName();
       const stars=Math.floor(Math.random()*2)+4;
       productReviews[product].push({name,product,stars,text});
