@@ -45,15 +45,15 @@
 <div class="floating-panel">
   <div id="reviews" class="reviews-grid"></div>
   <div class="pagination">
-    <button id="prevBtn">Prev</button>
-    <button id="nextBtn">Next</button>
+    <button id="prevBtn">Prev Product</button>
+    <button id="nextBtn">Next Product</button>
   </div>
 </div>
 
 <a href="https://abandonedtweaks.xyz/index.html" class="back-button">Back</a>
 
 <script>
-// stars
+// Generate stars
 const starsContainer = document.querySelector('.stars');
 for (let i = 0; i < 100; i++) {
   const star = document.createElement('div');
@@ -64,195 +64,48 @@ for (let i = 0; i < 100; i++) {
   starsContainer.appendChild(star);
 }
 
-// reviews
-const baseReviews = [
-  {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
-  {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
-  {name:'Z****', product:'WiFi Tweaks', stars:5, text:'Reduced my ping and made gameplay smoother.'},
-  {name:'M****', product:'Variety Pack', stars:5, text:'Worth every dollar, got every tweak.'},
-  {name:'N****', product:'Mouse Tweaks', stars:4, text:'Faster edits after using this.'},
-  {name:'Y****', product:'0 Delay', stars:5, text:'Insanely smooth, feels like no input lag.'},
-  {name:'F****', product:'Taste Tester', stars:5, text:'Aiming feels so much easier now!'},
-  {name:'P****', product:'Keyboard Tweaks', stars:5, text:'My building speed improved a lot!'},
-  {name:'J****', product:'Spotify Premium', stars:5, text:'Got premium working perfectly, no ads!'},
-  {name:'C****', product:'SMG Bloom Pack V2', stars:4, text:'Laser beams every spray.'},
-  {name:'S****', product:'Shotgun Pack V2', stars:5, text:'I can 185 everyone easily.'},
-  {name:'A****', product:'Bloom Pack V1', stars:5, text:'Reduced bloom instantly, worth it!'},
-  {name:'D****', product:'WiFi Tweaks', stars:5, text:'Ping dropped, gameplay is smooth!'},
-  {name:'U****', product:'Taste Tester', stars:4, text:'My edits and aim got faster.'},
-  {name:'T****', product:'Variety Pack', stars:5, text:'Got all the packs, best bundle!'},
-  {name:'K****', product:'Keyboard Tweaks', stars:5, text:'My keystrokes feel super fast!'},
-  {name:'L****', product:'Mouse Tweaks', stars:5, text:'Editing and aiming feels insane now!'},
-  {name:'V****', product:'0 Delay', stars:4, text:'Game feels a lot smoother.'},
-  {name:'G****', product:'Spotify Premium', stars:5, text:'No ads, premium works great!'},
-  {name:'Q****', product:'Shotgun Pack V1', stars:5, text:'Pumps feel way harder now!'}
+// Products list
+const products = [
+  'Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack',
+  'Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks',
+  'Spotify Premium','SMG Bloom Pack V2','Shotgun Pack V2','Bloom Pack V1'
 ];
 
-const extraReviewTexts = {
-  'Shotgun Pack V1': [
-    'My pumps hit so much harder now!',
-    'Finally getting consistent 185s!',
-    'Pump shots feel super clean.',
-    'Perfect for box fights.',
-    'More damage every close fight!',
-    'Pump headshots feel insane!',
-    'Love how it buffs damage!',
-    'Game feels unfair in my favor!',
-    'Easier to 200 someone!',
-    'Pumps feel way smoother!'
-  ],
-  'Bloom Pack V2': [
-    'Barely miss shots now!',
-    'Bloom feels almost gone!',
-    'Sprays feel tighter and accurate.',
-    'Better aim in every fight!',
-    'My SMG beams now!',
-    'AR shots hit more often!',
-    'Sprays never felt this good!',
-    'Close range is OP now!',
-    'Love the accuracy boost!',
-    'Huge difference in fights!'
-  ],
-  'WiFi Tweaks': [
-    'Ping dropped by a lot!',
-    'Smoother gameplay every game.',
-    'Less lag spikes for sure.',
-    'Feels like I have better servers!',
-    'No more rubberbanding!',
-    'Lower delay on builds!',
-    'Better hit reg now!',
-    'Fast servers every game!',
-    'Game feels way more stable!',
-    'Good for late game zones!'
-  ],
-  'Variety Pack': [
-    'All tweaks together, best value!',
-    'Got everything I needed in one!',
-    'Great bundle for the price!',
-    'Worth it if you want every tweak!',
-    'Covers every part of gameplay!',
-    'My edits, aim and ping improved!',
-    'Easy upgrade to my gameplay!',
-    'Saved money with the bundle!',
-    'Perfect starter pack!',
-    'Love having all tweaks at once!'
-  ],
-  'Mouse Tweaks': [
-    'Edits feel faster now!',
-    'Mouse movements smoother!',
-    'Improved my aim a ton!',
-    'Editing speed is crazy!',
-    'Feels snappier overall!',
-    'Less input delay!',
-    'More control in fights!',
-    'Crosshair placement is better!',
-    'Perfect for fast plays!',
-    'Really helped my mechanics!'
-  ],
-  '0 Delay': [
-    'Feels insanely smooth!',
-    'Edits come out instantly!',
-    'No input lag anymore!',
-    'Building feels much quicker!',
-    'Game responsiveness improved!',
-    'Everything feels more reactive!',
-    'Better piece control now!',
-    'Perfect for creative warriors!',
-    'Turbo build is smoother!',
-    'Crazy difference on high ping!'
-  ],
-  'Taste Tester': [
-    'Aim feels more consistent!',
-    'Edits are faster after this!',
-    'My flicks got way better!',
-    'Great boost to aiming!',
-    'Helped in box fights!',
-    'Faster triple edits now!',
-    'Love the feel of crosshair!',
-    'Closer crosshair control!',
-    'Feels good for tracking!',
-    'Good boost for shotgun aim!'
-  ],
-  'Keyboard Tweaks': [
-    'Key response is faster now!',
-    'Building speed went up!',
-    'Feels easier to triple edit!',
-    'Better movement control!',
-    'More responsive keys!',
-    'Smooth building edits!',
-    'Perfect for fast plays!',
-    'Feels good in box fights!',
-    'Love the speed buff!',
-    'Instant key input!'
-  ],
-  'Spotify Premium': [
-    'No ads ever, love it!',
-    'Works perfect on my phone!',
-    'Finally got premium for cheap!',
-    'Unlimited skips and playlists!',
-    'Listen offline anytime!',
-    'Good for long drives!',
-    'Easy to share playlists!',
-    'Sounds quality feels better!',
-    'Love the interface!',
-    'Perfect for parties!'
-  ],
-  'SMG Bloom Pack V2': [
-    'My sprays are lasers now!',
-    'Feels like no bloom!',
-    'Close range fights feel better!',
-    'Way better tracking!',
-    'More headshots at close range!',
-    'Feels OP on SMG!',
-    'Perfect for spray metas!',
-    'Tighter bullet spread!',
-    'Better first shot accuracy!',
-    'Love the difference!'
-  ],
-  'Shotgun Pack V2': [
-    '185s almost every shot!',
-    'Pumps feel stronger!',
-    'Great for box fights!',
-    'Feels like more damage output!',
-    'Higher headshot ratio!',
-    'Insane in close range!',
-    'More consistent pump shots!',
-    'Perfect for edit plays!',
-    'Feels powerful every game!',
-    'Love the pump buff!'
-  ],
-  'Bloom Pack V1': [
-    'Less random misses now!',
-    'Better spraying control!',
-    'Tighter shot grouping!',
-    'My aim feels buffed!',
-    'Feels smoother to spray!',
-    'Huge help in long fights!',
-    'Better SMG follow ups!',
-    'Love the accuracy!',
-    'Close range aim feels stronger!',
-    'Feels fairer in fights!'
-  ]
+// Example review texts per product
+const reviewTexts = {
+  'Shotgun Pack V1': ['My pumps hit so much harder now!', 'Pump shots feel super clean.', 'Finally getting consistent 185s!', 'Perfect for box fights!'],
+  'Bloom Pack V2': ['Barely miss shots now!', 'Bloom feels almost gone!', 'Sprays feel tighter and accurate.', 'My SMG beams now!'],
+  'WiFi Tweaks': ['Ping dropped by a lot!', 'Smoother gameplay every game.', 'No more rubberbanding!', 'Better hit reg now!'],
+  'Variety Pack': ['All tweaks together, best value!', 'Got everything I needed!', 'Great bundle for the price!', 'My edits, aim and ping improved!'],
+  'Mouse Tweaks': ['Edits feel faster now!', 'Mouse movements smoother!', 'Improved my aim a ton!', 'Feels snappier overall!'],
+  '0 Delay': ['Feels insanely smooth!', 'Edits come out instantly!', 'No input lag anymore!', 'Everything feels more reactive!'],
+  'Taste Tester': ['Aim feels more consistent!', 'Edits are faster after this!', 'My flicks got way better!', 'Great boost to aiming!'],
+  'Keyboard Tweaks': ['Key response is faster now!', 'Building speed went up!', 'Feels easier to triple edit!', 'More responsive keys!'],
+  'Spotify Premium': ['No ads ever, love it!', 'Unlimited skips and playlists!', 'Listen offline anytime!', 'Works perfect on my phone!'],
+  'SMG Bloom Pack V2': ['My sprays are lasers now!', 'Feels like no bloom!', 'Close range fights feel better!', 'Way better tracking!'],
+  'Shotgun Pack V2': ['185s almost every shot!', 'Pumps feel stronger!', 'Great for box fights!', 'Feels like more damage output!'],
+  'Bloom Pack V1': ['Less random misses now!', 'Better spraying control!', 'Tighter shot grouping!', 'My aim feels buffed!']
 };
 
-const reviews = [...baseReviews];
-for (let i = 0; i < 80; i++) {
-  const product = baseReviews[i % baseReviews.length].product;
-  const textOptions = extraReviewTexts[product] || ['Great tweak!'];
-  const text = textOptions[Math.floor(Math.random() * textOptions.length)];
-  const name = String.fromCharCode(65 + (i % 26)) + '****';
-  const stars = Math.floor(Math.random() * 2) + 4;
-  reviews.push({ name, product, stars, text });
-}
+// Build reviews by product
+const productReviews = {};
+products.forEach(product => {
+  productReviews[product] = [];
+  for (let i = 0; i < 20; i++) {
+    const textOptions = reviewTexts[product];
+    const text = textOptions[Math.floor(Math.random() * textOptions.length)];
+    const name = String.fromCharCode(65 + (i % 26)) + '****';
+    const stars = Math.floor(Math.random() * 2) + 4;
+    productReviews[product].push({ name, product, stars, text });
+  }
+});
 
-const reviewsPerPage = 20;
-let currentPage = 0;
+let currentProductIndex = 0;
 
-function renderPage(page) {
-  const start = page * reviewsPerPage;
-  const end = start + reviewsPerPage;
-  const pageReviews = reviews.slice(start, end);
-  document.getElementById('reviews').innerHTML = pageReviews.map(r=>`
+function renderPage(productIndex) {
+  const product = products[productIndex];
+  const reviews = productReviews[product];
+  document.getElementById('reviews').innerHTML = reviews.map(r=>`
     <div class="review-card">
       <div class="review-name">${r.name}</div>
       <div class="review-product">${r.product}</div>
@@ -260,14 +113,14 @@ function renderPage(page) {
       <div class="text">${r.text}</div>
     </div>
   `).join('');
-  document.getElementById('prevBtn').disabled = page === 0;
-  document.getElementById('nextBtn').disabled = end >= reviews.length;
+  document.getElementById('prevBtn').disabled = productIndex === 0;
+  document.getElementById('nextBtn').disabled = productIndex === products.length - 1;
 }
 
-document.getElementById('prevBtn').onclick = () => { if(currentPage>0){currentPage--; renderPage(currentPage);} };
-document.getElementById('nextBtn').onclick = () => { if((currentPage+1)*reviewsPerPage<reviews.length){currentPage++; renderPage(currentPage);} };
+document.getElementById('prevBtn').onclick = ()=>{ if(currentProductIndex>0){currentProductIndex--; renderPage(currentProductIndex);} };
+document.getElementById('nextBtn').onclick = ()=>{ if(currentProductIndex<products.length-1){currentProductIndex++; renderPage(currentProductIndex);} };
 
-renderPage(0);
+renderPage(currentProductIndex);
 </script>
 </body>
 </html>
