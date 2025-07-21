@@ -181,19 +181,24 @@ const reviews = [
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
   {name:'Z****', product:'WiFi Tweaks', stars:5, text:'Reduced my ping and made gameplay smoother.'},
-  // ... more hardcoded reviews
-  ...Array.from({length:127}).map(()=>({
-    name:String.fromCharCode(65+Math.floor(Math.random()*26))+'****',
-    product:[
-      'Shotgun Pack V1','Shotgun Pack V2','Bloom Pack V1','Bloom Pack V2',
-      'WiFi Tweaks','Variety Pack','Taste Tester','Keyboard Tweaks',
-      'Mouse Tweaks','0 Delay','Spotify Premium','SMG Bloom Pack V2'
-    ][Math.floor(Math.random()*12)],
-    stars:[4,5][Math.floor(Math.random()*2)],
-    text:['Improved my aim!','Feels so smooth!','Definitely worth it!',
-    'Helped me build faster!','Got me more wins!','Insane value!',
-    'Boosted performance!','Less lag now!'][Math.floor(Math.random()*8)]
-  }))
+  {name:'M****', product:'Variety Pack', stars:5, text:'Worth every dollar, got every tweak.'},
+  {name:'N****', product:'Mouse Tweaks', stars:4, text:'Faster edits after using this.'},
+  {name:'Y****', product:'0 Delay', stars:5, text:'Insanely smooth, feels like no input lag.'},
+  {name:'F****', product:'Taste Tester', stars:5, text:'Aiming feels so much easier now!'},
+  {name:'P****', product:'Keyboard Tweaks', stars:5, text:'My building speed improved a lot!'},
+  {name:'J****', product:'Spotify Premium', stars:5, text:'Got premium working perfectly, no ads!'},
+  {name:'C****', product:'SMG Bloom Pack V2', stars:4, text:'Laser beams every spray.'},
+  {name:'S****', product:'Shotgun Pack V2', stars:5, text:'I can 185 everyone easily.'},
+  {name:'A****', product:'Bloom Pack V1', stars:5, text:'Reduced bloom instantly, worth it!'},
+  {name:'D****', product:'WiFi Tweaks', stars:5, text:'Ping dropped, gameplay is smooth!'},
+  {name:'U****', product:'Taste Tester', stars:4, text:'My edits and aim got faster.'},
+  {name:'T****', product:'Variety Pack', stars:5, text:'Got all the packs, best bundle!'},
+  {name:'K****', product:'Keyboard Tweaks', stars:5, text:'My keystrokes feel super fast!'},
+  {name:'L****', product:'Mouse Tweaks', stars:5, text:'Editing and aiming feels insane now!'},
+  {name:'V****', product:'0 Delay', stars:4, text:'Game feels a lot smoother.'},
+  {name:'G****', product:'Spotify Premium', stars:5, text:'No ads, premium works great!'},
+  {name:'Q****', product:'Shotgun Pack V1', stars:5, text:'Pumps feel way harder now!'}
+  // Add more if you want
 ];
 
 const reviewsPerPage = 20;
@@ -207,7 +212,7 @@ function renderPage(page) {
     <div class="review-card">
       <div class="review-name">${r.name}</div>
       <div class="review-product">${r.product}</div>
-      <div class="stars-text">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+      <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
       <div class="text">${r.text}</div>
     </div>
   `).join('');
@@ -220,5 +225,3 @@ document.getElementById('nextBtn').onclick = ()=>{ if((currentPage+1)*reviewsPer
 
 renderPage(0);
 </script>
-</body>
-</html>
