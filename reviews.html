@@ -1,74 +1,190 @@
-<!-- Aimbot Pack -->
-<div class="product-card">
-  <h3>Aimbot Pack V1</h3>
-  <div class="price">$7.99</div>
-  <div class="rating">★★★★☆ (15)</div>
-  <div class="description">Helps you track players better, smoother aim assist. “Definitely made my aim feel stickier!” – FaZeClutch</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/abc123xyz" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/7.99" class="purchase-button paypal" target="_blank">PayPal</a>
-    <a href="https://cash.app/$trazeymax/7.99" class="purchase-button cashapp" target="_blank">CashApp</a>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Floating Neon Review Panel</title>
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: #fff;
+  }
+
+  /* Starry background */
+  .starry-background {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index: 0;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px white);
+    animation: twinkle 3s infinite ease-in-out;
+  }
+
+  .star.small { width: 1.5px; height: 1.5px; animation-duration: 3s; }
+  .star.medium { width: 2.5px; height: 2.5px; animation-duration: 4s; }
+  .star.large { width: 3.5px; height: 3.5px; animation-duration: 5s; }
+
+  @keyframes twinkle {
+    0%,100% { opacity:0.8; }
+    50% { opacity:0.2; }
+  }
+
+  /* Floating panel */
+  .review-panel {
+    position: relative;
+    margin: 50px auto;
+    max-width: 700px;
+    background: rgba(20,20,20,0.9);
+    border: 3px solid #0ff;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #0ff, 0 0 30px #0ff;
+    animation: float 6s ease-in-out infinite;
+    padding: 20px;
+    z-index: 2;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .review {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .review:last-child { border-bottom: none; }
+
+  .review h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #0ff;
+  }
+
+  .review .stars {
+    color: gold;
+    margin: 3px 0;
+  }
+
+  .review .name {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  .review .text {
+    font-size: 0.95rem;
+    color: #aaa;
+  }
+
+  .nav-buttons {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .nav-buttons button {
+    background: #0ff;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    padding: 8px 14px;
+    margin: 0 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 8px #0ff;
+  }
+
+  .nav-buttons button:hover {
+    box-shadow: 0 0 16px #0ff;
+  }
+</style>
+</head>
+<body>
+
+<div class="starry-background" id="stars"></div>
+
+<div class="review-panel" id="reviewPanel">
+  <!-- Reviews will be inserted here by JS -->
 </div>
 
-<!-- Edit Speed Boost -->
-<div class="product-card">
-  <h3>Edit Speed Boost</h3>
-  <div class="price">$3.49</div>
-  <div class="rating">★★★★★ (22)</div>
-  <div class="description">Edits feel lightning-fast, no stutter! “Editing like a creative warrior now.” – TfueJr</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/def456uvw" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/3.49" class="purchase-button paypal" target="_blank">PayPal</a>
-    <a href="https://cash.app/$trazeymax/3.49" class="purchase-button cashapp" target="_blank">CashApp</a>
-  </div>
+<div class="nav-buttons">
+  <button onclick="prevPage()">⟨ Prev</button>
+  <button onclick="nextPage()">Next ⟩</button>
 </div>
 
-<!-- Build Sens Booster -->
-<div class="product-card">
-  <h3>Build Sens Booster</h3>
-  <div class="price">$2.99</div>
-  <div class="rating">★★★★☆ (18)</div>
-  <div class="description">Faster build placement & smoother ramp rush. “Tunneling so quick now!” – NRGBoxFight</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/ghi789rst" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/2.99" class="purchase-button paypal" target="_blank">PayPal</a>
-    <a href="https://cash.app/$trazeymax/2.99" class="purchase-button cashapp" target="_blank">CashApp</a>
-  </div>
-</div>
+<script>
+  // Create stars
+  function createStar() {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    const sizes = ['small','medium','large'];
+    star.classList.add(sizes[Math.floor(Math.random()*sizes.length)]);
+    star.style.top = Math.random()*100 + 'vh';
+    star.style.left = Math.random()*100 + 'vw';
+    star.style.animationDelay = (Math.random()*3)+'s';
+    document.getElementById('stars').appendChild(star);
+  }
+  for(let i=0; i<100; i++) createStar();
 
-<!-- FPS Pack -->
-<div class="product-card">
-  <h3>FPS Pack V2</h3>
-  <div class="price">$4.99</div>
-  <div class="rating">★★★★★ (25)</div>
-  <div class="description">Increased frames and smoother performance. “Went from 90 to stable 144 FPS!” – CrankyCranker</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/jkl012mno" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/4.99" class="purchase-button paypal" target="_blank">PayPal</a>
-    <a href="https://cash.app/$trazeymax/4.99" class="purchase-button cashapp" target="_blank">CashApp</a>
-  </div>
-</div>
+  // Reviews data
+  const reviews = [
+    { title:"Variety Pack", stars:"★★★★★", name:"FaZeClutch", text:"All the packs helped my gameplay big time!" },
+    { title:"Shotgun Pack V1", stars:"★★★★☆", name:"TfueJr", text:"My pumps hit harder now, solid buy." },
+    { title:"Bloom Pack V2", stars:"★★★★★", name:"BoxKing77", text:"My AR feels like a laser, winning fights easier." },
+    { title:"WiFi Tweaks", stars:"★★★★☆", name:"CrankyCranker", text:"Ping dropped and gameplay is smoother." },
+    { title:"Aimbot Pack V1", stars:"★★★★★", name:"NRGBoxFight", text:"Aim feels stickier and tracks players better." },
+    { title:"Edit Speed Boost", stars:"★★★★★", name:"SweatBuilds", text:"Editing is lightning fast now!" },
+    { title:"Build Sens Booster", stars:"★★★★☆", name:"ProTunneler", text:"Ramps and walls place way quicker." },
+    { title:"FPS Pack V2", stars:"★★★★★", name:"FPSLord", text:"Got stable 144 FPS from barely 90 before." },
+    { title:"Turbo Reset Mod", stars:"★★★★☆", name:"ResetKing", text:"Box fighting became insane." },
+    { title:"Keyboard Tweaks", stars:"★★★★★", name:"KeySmashPro", text:"Faster keystrokes for quick edits." },
+    { title:"Mouse Tweaks", stars:"★★★★★", name:"Clicker", text:"Clicking faster feels smooth & helps a lot." },
+    { title:"SMG Bloom Pack V2", stars:"★★★★☆", name:"SprayMeta", text:"My SMG literally doesn’t miss." }
+  ];
 
-<!-- Turbo Reset -->
-<div class="product-card">
-  <h3>Turbo Reset Mod</h3>
-  <div class="price">$3.99</div>
-  <div class="rating">★★★★☆ (17)</div>
-  <div class="description">Reset walls instantly! “Box fights became way easier.” – BoxKing77</div>
-  <div class="product-video">
-    <iframe src="https://www.youtube.com/embed/pqr345stu" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="purchase-buttons">
-    <a href="https://paypal.me/paymepaypalplease/3.99" class="purchase-button paypal" target="_blank">PayPal</a>
-    <a href="https://cash.app/$trazeymax/3.99" class="purchase-button cashapp" target="_blank">CashApp</a>
-  </div>
-</div>
+  let currentPage = 0;
+  const perPage = 4;
+
+  function renderPage() {
+    const panel = document.getElementById('reviewPanel');
+    panel.innerHTML = '';
+    const start = currentPage * perPage;
+    const pageItems = reviews.slice(start, start+perPage);
+    pageItems.forEach(r => {
+      panel.innerHTML += `
+        <div class="review">
+          <h4>${r.title}</h4>
+          <div class="stars">${r.stars}</div>
+          <div class="name">by ${r.name}</div>
+          <div class="text">${r.text}</div>
+        </div>`;
+    });
+  }
+
+  function nextPage() {
+    currentPage = (currentPage+1) * perPage >= reviews.length ? 0 : currentPage+1;
+    renderPage();
+  }
+
+  function prevPage() {
+    currentPage = currentPage === 0 ? Math.floor((reviews.length-1)/perPage) : currentPage-1;
+    renderPage();
+  }
+
+  renderPage();
+</script>
+</body>
+</html>
