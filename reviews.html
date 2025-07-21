@@ -152,6 +152,7 @@ for (let i = 0; i < 100; i++) {
   starsContainer.appendChild(star);
 }
 
+// Original reviews
 const reviews = [
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
@@ -175,13 +176,29 @@ const reviews = [
   {name:'Q****', product:'Shotgun Pack V1', stars:5, text:'Pumps feel way harder now!'}
 ];
 
-// Add 80 more fake reviews
+// Extra varied texts matching product
+const extraTexts = {
+  'Shotgun Pack V1': ['Pump shots feel so clean!', 'My damage is higher now.', 'Pump hits never miss!', 'Feels OP now!'],
+  'Bloom Pack V2': ['My bloom is way better now.', 'Shots land more often.', 'Huge difference in spray!', 'Feels way smoother.'],
+  'WiFi Tweaks': ['Ping is stable now.', 'Lag is gone!', 'Gameplay feels faster.', 'Better connection always.'],
+  'Variety Pack': ['Got every tweak I needed.', 'Best deal for the price!', 'Everything works perfect.', 'All in one pack!'],
+  'Mouse Tweaks': ['Editing faster now!', 'Better flick shots.', 'Aim feels locked in.', 'Big boost to aim speed.'],
+  '0 Delay': ['Instant build placement.', 'Edits feel buttery.', 'Feels ultra responsive.', 'Super smooth now.'],
+  'Taste Tester': ['Easier headshots.', 'Tracking got easier.', 'Snaps feel clean.', 'More consistent aim.'],
+  'Keyboard Tweaks': ['Edits fly now.', 'Feels super responsive.', 'My builds got faster.', 'Better key presses.'],
+  'Spotify Premium': ['No ads ever.', 'Works flawlessly.', 'Best deal for music.', 'Playing playlists nonstop.']
+};
+
+// Add 80 more reviews with random varied texts
 for (let i = 0; i < 80; i++) {
+  const productList = Object.keys(extraTexts);
+  const product = productList[i % productList.length];
+  const textList = extraTexts[product];
   reviews.push({
     name: String.fromCharCode(65 + (i % 26)) + '****',
-    product: ['Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack','Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks','Spotify Premium'][i % 9],
-    stars: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
-    text: 'This tweak really helped me a lot! ' + (i+1)
+    product: product,
+    stars: Math.floor(Math.random() * 2) + 4,
+    text: textList[Math.floor(Math.random() * textList.length)]
   });
 }
 
