@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abandoned Tweaks</title>
+<img src="image.png" alt="My Logo" style="height: 100px;">
+<!-- Your Firebase and other scripts stay the same... -->
+<style>
+/* Your existing styles... */
+
+/* Review slider styles */
+.review-slider {
+  margin: 2rem auto;
+  max-width: 1000px;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+.review-pages {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.review-page {
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.review {
+  background: #222;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,255,255,0.3);
+}
+.review h4 {
+  margin: 0 0 0.5rem;
+  color: #0ff;
+  font-size: 1rem;
+}
+.stars {
+  color: gold;
+  margin-bottom: 0.5rem;
+}
+.review .product-title {
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+.review .desc {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+.review-nav {
+  text-align: center;
+  margin-top: 1rem;
+}
+.review-nav button {
+  background: #0ff;
+  border: none;
+  color: #111;
+  padding: 0.4rem 0.8rem;
+  margin: 0 0.3rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.review-nav button:hover {
+  background: #00dddd;
+}
+</style>
+</head>
+<body>
+
+<!-- Your intro overlay, header, etc. -->
+
+<header>
+<h1 class="title">Abandoned Tweaks</h1>
+</header>
+
+<nav>
+  <a href="https://discord.gg/qyZEhex3HJ" target="_blank">Discord</a>
+  <a href="#">Purchase</a>
+  <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
+  <a href="#reviews">Reviews</a> <!-- New reviews button -->
+</nav>
+
+<div class="container">
+  <div class="products">
+    <!-- your product cards here (unchanged) -->
+  </div>
+
+  <!-- ⭐️ NEW: Review slider -->
+  <div id="reviews" class="review-slider">
+    <div id="reviewPages" class="review-pages">
+      <!-- Page 1 -->
+      <div class="review-page">
+        <div class="review">
+          <h4>CrackedJarvis</h4>
+          <div class="stars">★★★★★</div>
+          <div class="product-title">Shotgun Pack V1</div>
+          <div class="desc">Helped me get 185 pumps way more often. Huge upgrade!</div>
+        </div>
+        <div class="review">
+          <h4>EditKingYT</h4>
+          <div class="stars">★★★★☆</div>
+          <div class="product-title">Keyboard Tweaks</div>
+          <div class="desc">Edits feel faster and smoother, great boost in speed.</div>
+        </div>
+        <div class="review">
+          <h4>ClutchNinja</h4>
+          <div class="stars">★★★★★</div>
+          <div class="product-title">Bloom Pack V2</div>
+          <div class="desc">AR feels like a laser now, barely missing shots!</div>
+        </div>
+        <div class="review">
+          <h4>ZoneWarzKid</h4>
+          <div class="stars">★★★★☆</div>
+          <div class="product-title">WiFi Tweaks</div>
+          <div class="desc">Lower ping and more stable gameplay. Worth it!</div>
+        </div>
+      </div>
+
+      <!-- Page 2 -->
+      <div class="review-page">
+        <div class="review">
+          <h4>BoxedYouLOL</h4>
+          <div class="stars">★★★★★</div>
+          <div class="product-title">Taste Tester</div>
+          <div class="desc">My builds and aim improved, feels way smoother now.</div>
+        </div>
+        <div class="review">
+          <h4>HighGroundHero</h4>
+          <div class="stars">★★★★☆</div>
+          <div class="product-title">Variety Pack</div>
+          <div class="desc">Got all the packs in one, big time saver!</div>
+        </div>
+        <div class="review">
+          <h4>RampRushPro</h4>
+          <div class="stars">★★★★★</div>
+          <div class="product-title">Mouse Tweaks</div>
+          <div class="desc">Clicks faster & edits smoother. Loving it!</div>
+        </div>
+        <div class="review">
+          <h4>90sMaster</h4>
+          <div class="stars">★★★★☆</div>
+          <div class="product-title">Shotgun Pack V2</div>
+          <div class="desc">Better pumps almost every fight. Good buy.</div>
+        </div>
+      </div>
+
+      <!-- Page 3 -->
+      <div class="review-page">
+        <div class="review">
+          <h4>FNBuilderX</h4>
+          <div class="stars">★★★★★</div>
+          <div class="product-title">Bloom Pack V1</div>
+          <div class="desc">Winning bloom fights much more often. Solid tweak!</div>
+        </div>
+        <div class="review">
+          <h4>LateGameWarlord</h4>
+          <div class="stars">★★★★☆</div>
+          <div class="product-title">Spotify Premium</div>
+          <div class="desc">No ads, smooth music grind. Great for long sessions.</div>
+        </div>
+        <div class="review">
+          <h4>PeaceControlKyle</h4>
+          <div class="stars">★★★★★</div>
+          <div class="product-title">0 Delay</div>
+          <div class="desc">Feels like instant edits & faster builds. Recommend!</div>
+        </div>
+        <div class="review">
+          <h4>WKeyBandit</h4>
+          <div class="stars">★★★★☆</div>
+          <div class="product-title">SMG Bloom Pack V2</div>
+          <div class="desc">Sprays feel so clean, barely missing shots now.</div>
+        </div>
+      </div>
+
+      <!-- Add more pages (Page 4, 5, etc.) the same way if you want -->
+    </div>
+    <div class="review-nav">
+      <button onclick="showPage(0)">1</button>
+      <button onclick="showPage(1)">2</button>
+      <button onclick="showPage(2)">3</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+&copy; 2025 Abandoned Tweaks. All rights reserved.
+</footer>
+
+<script>
+// Review slider script
+let currentPage = 0;
+function showPage(index) {
+  const slider = document.getElementById('reviewPages');
+  const pageWidth = slider.offsetWidth;
+  slider.style.transform = 'translateX(-' + (index * pageWidth) + 'px)';
+  currentPage = index;
+}
+</script>
+</body>
+</html>
