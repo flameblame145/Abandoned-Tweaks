@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -100,9 +100,9 @@
   }
 
   .review-stars {
-  color: gold;
-  margin-bottom: 3px;
-}
+    color: gold;
+    margin-bottom: 3px;
+  }
 
   .pagination {
     text-align: center;
@@ -151,6 +151,7 @@ for (let i = 0; i < 100; i++) {
   star.style.left = Math.random() * 100 + '%';
   starsContainer.appendChild(star);
 }
+
 const reviews = [
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
@@ -173,6 +174,16 @@ const reviews = [
   {name:'G****', product:'Spotify Premium', stars:5, text:'No ads, premium works great!'},
   {name:'Q****', product:'Shotgun Pack V1', stars:5, text:'Pumps feel way harder now!'}
 ];
+
+// Add 80 more fake reviews
+for (let i = 0; i < 80; i++) {
+  reviews.push({
+    name: String.fromCharCode(65 + (i % 26)) + '****',
+    product: ['Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack','Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks','Spotify Premium'][i % 9],
+    stars: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
+    text: 'This tweak really helped me a lot! ' + (i+1)
+  });
+}
 
 const reviewsPerPage = 20;
 let currentPage = 0;
