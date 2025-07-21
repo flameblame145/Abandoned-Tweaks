@@ -13,82 +13,46 @@
     background: black;
   }
 
-  /* Starfield layers */
-  .stars, .stars2, .stars3 {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-repeat: repeat;
-  z-index: -2;
-}
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+  }
 
- .starry-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-      background: #111;
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      filter: drop-shadow(0 0 2px white);
-      animation: twinkle 3s infinite ease-in-out;
-    }
-    .star.small {
-      width: 1.5px;
-      height: 1.5px;
-      animation-duration: 3s;
-    }
-    .star.medium {
-      width: 2.5px;
-      height: 2.5px;
-      animation-duration: 4s;
-    }
-    .star.large {
-      width: 3.5px;
-      height: 3.5px;
-      animation-duration: 5s;
-    }
-    @keyframes twinkle {
-      0%,
-      100% {
-        opacity: 0.8;
-      }
-      50% {
-        opacity: 0.2;
-      }
-    }
-    .shooting-star {
-      position: fixed;
-      width: 80px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      transform: rotate(45deg);
-      animation: shoot 2s linear forwards;
-      z-index: 1;
-      pointer-events: none;
-    }
-    @keyframes shoot {
-      0% {
-        top: 0;
-        left: 0;
-        opacity: 0.8;
-      }
-      100% {
-        top: 100vh;
-        left: 100vw;
-        opacity: 0;
-      }
-    }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px white);
+    animation: twinkle 3s infinite ease-in-out;
+  }
+
+  .star.small {
+    width: 1.5px;
+    height: 1.5px;
+    animation-duration: 3s;
+  }
+
+  .star.medium {
+    width: 2.5px;
+    height: 2.5px;
+    animation-duration: 4s;
+  }
+
+  .star.large {
+    width: 3.5px;
+    height: 3.5px;
+    animation-duration: 5s;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.2; }
+  }
 
   .floating-panel {
     margin: 40px auto;
@@ -99,6 +63,8 @@
     border-radius: 20px;
     box-shadow: 0 0 20px #00f7ff;
     animation: float 4s ease-in-out infinite;
+    z-index: 1;
+    position: relative;
   }
 
   @keyframes float {
@@ -133,7 +99,7 @@
     margin-bottom: 3px;
   }
 
-  .stars-text {
+  .stars {
     color: gold;
     margin-bottom: 3px;
   }
@@ -165,8 +131,6 @@
 </head>
 <body>
 <div class="stars"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
 
 <div class="floating-panel">
   <div id="reviews" class="reviews-grid"></div>
@@ -177,6 +141,17 @@
 </div>
 
 <script>
+// Generate 100 stars dynamically
+const starsContainer = document.querySelector('.stars');
+for (let i = 0; i < 100; i++) {
+  const star = document.createElement('div');
+  const size = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)];
+  star.className = `star ${size}`;
+  star.style.top = Math.random() * 100 + '%';
+  star.style.left = Math.random() * 100 + '%';
+  starsContainer.appendChild(star);
+}
+
 const reviews = [
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
@@ -198,7 +173,6 @@ const reviews = [
   {name:'V****', product:'0 Delay', stars:4, text:'Game feels a lot smoother.'},
   {name:'G****', product:'Spotify Premium', stars:5, text:'No ads, premium works great!'},
   {name:'Q****', product:'Shotgun Pack V1', stars:5, text:'Pumps feel way harder now!'}
-  // Add more if you want
 ];
 
 const reviewsPerPage = 20;
@@ -225,3 +199,5 @@ document.getElementById('nextBtn').onclick = ()=>{ if((currentPage+1)*reviewsPer
 
 renderPage(0);
 </script>
+</body>
+</html>
