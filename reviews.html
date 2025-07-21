@@ -101,7 +101,7 @@
 </div>
 
 <script>
-// Generate stars
+// Stars
 const starsContainer = document.querySelector('.stars');
 for (let i=0;i<100;i++) {
   const star=document.createElement('div');
@@ -113,50 +113,39 @@ for (let i=0;i<100;i++) {
 }
 
 // Data
-const products=[
-  'Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack',
-  'Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks',
-  'Spotify Premium','SMG Bloom Pack V2','Shotgun Pack V2','Bloom Pack V1'
-];
+const products=[ 'Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack','Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks','Spotify Premium','SMG Bloom Pack V2','Shotgun Pack V2','Bloom Pack V1' ];
 const baseTexts={
-  'Shotgun Pack V1':['My pumps hit so much harder now!'],
-  'Bloom Pack V2':['Barely miss shots now!'],
-  'WiFi Tweaks':['Ping dropped by a lot!'],
-  'Variety Pack':['All tweaks together, best value!'],
-  'Mouse Tweaks':['Edits feel faster now!'],
-  '0 Delay':['Feels insanely smooth!'],
-  'Taste Tester':['Aim feels more consistent!'],
-  'Keyboard Tweaks':['Key response is faster now!'],
-  'Spotify Premium':['No ads ever, love it!'],
-  'SMG Bloom Pack V2':['My sprays are lasers now!'],
-  'Shotgun Pack V2':['185s almost every shot!'],
-  'Bloom Pack V1':['Less random misses now!']
+  'Shotgun Pack V1':['My pumps deal huge damage now!','Feels like every shot is a 185!','Close fights feel so much easier!','Biggest upgrade for shotgun fights!'],
+  'Bloom Pack V2':['Barely miss AR shots anymore!','Super tight bloom on my rifles!','Hitting more headshots easily!','My aim feels laser‑sharp now!'],
+  'WiFi Tweaks':['Ping is much lower and stable!','Feels smoother when building!','No more random lag spikes!','Better servers and faster edits!'],
+  'Variety Pack':['Best mix of tweaks I tried!','Covers everything from bloom to ping!','Noticeable difference overall!','Feels like a brand new setup!'],
+  'Mouse Tweaks':['Mouse feels way snappier!','Edits and flicks feel faster!','More consistent tracking!','Love how smooth it feels now!'],
+  '0 Delay':['Edits come out instantly!','Game feels super responsive!','No delay between clicks and edits!','Huge difference in build fights!'],
+  'Taste Tester':['Aim is stickier and smoother!','Shots feel so controlled!','Fighting feels more confident!','Improved tracking right away!'],
+  'Keyboard Tweaks':['Edits feel effortless!','Keybinds respond faster!','Typing even feels better!','Way quicker double edits now!'],
+  'Spotify Premium':['Zero ads while playing!','High‑quality sound unlocked!','Can skip any song anytime!','Feels premium everywhere I go!'],
+  'SMG Bloom Pack V2':['My sprays are perfectly straight!','SMGs feel like beams!','Close range fights are so easy!','More consistent damage output!'],
+  'Shotgun Pack V2':['Big pumps every single shot!','Feels way more powerful!','Closer fights end faster!','My shotgun shots never miss!'],
+  'Bloom Pack V1':['Less random bloom now!','More accurate AR shots!','Feels smoother when spraying!','Definitely helps aim a lot!']
 };
-const suffixes=["Helped me win more fights.","KD went up!","This Shit Feels great!","Totally worth it!","Better damage!","gng i thought ts was fake!","Noticeable difference!","Improved instantly!","Now I'm hitting shots!","Game feels different!","Absolutely love this!","Feels OP!","Big difference!","Would buy again!","Super responsive!","Huge upgrade!","Can't believe how well this works!"];
-const boosters=["Honestly,","For real,","Not kidding,","In my opinion,","To be honest,","After trying it,","I gotta say,","Surprisingly,"];
-const endings=["Highly recommend.","Worth the price.","Can't go back now.","So glad I got this.","Big W!","Amazing tweak!","Game changer!","It just works!"];
+const suffixes=["Helped me win more fights.","KD went up fast!","Totally worth it!","Feels super clean!","Made a huge difference!","Super consistent hits!","Feels like cheating almost!","Improved instantly!","Now I'm hitting shots easily!","Feels way better overall!"];
 
 // Random name
 function randomName(){
   const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const secondChars='abcdefghijklmnopqrstuvwxyz';
-  if(Math.random()>0.5){
-    return chars.charAt(Math.floor(Math.random()*chars.length))+'****';
-  }else{
-    return chars.charAt(Math.floor(Math.random()*chars.length))+secondChars.charAt(Math.floor(Math.random()*secondChars.length))+'****';
-  }
+  return Math.random()>0.5 ? chars.charAt(Math.floor(Math.random()*chars.length))+'****' :
+    chars.charAt(Math.floor(Math.random()*chars.length))+secondChars.charAt(Math.floor(Math.random()*secondChars.length))+'****';
 }
 
-// Build reviews
+// Build unique reviews
 const productReviews={};
 products.forEach(product=>{
   productReviews[product]=[];
   for(let i=0;i<20;i++){
-    const base=baseTexts[product][0];
+    const base=baseTexts[product][Math.floor(Math.random()*baseTexts[product].length)];
     const suffix=suffixes[Math.floor(Math.random()*suffixes.length)];
-    const booster=boosters[Math.floor(Math.random()*boosters.length)];
-    const ending=endings[Math.floor(Math.random()*endings.length)];
-    const text=`${booster} ${base} ${suffix} ${ending}`;
+    const text=`${base} ${suffix}`;
     const name=randomName();
     const stars=Math.floor(Math.random()*2)+4;
     productReviews[product].push({name,product,stars,text});
@@ -183,7 +172,7 @@ document.getElementById('nextBtn').onclick=()=>{if(currentProductIndex<products.
 
 renderPage(currentProductIndex);
 
-// Modal handlers
+// Modal
 document.getElementById('addReviewBtn').onclick=()=>{document.getElementById('modal').style.display='flex';};
 document.getElementById('closeModalBtn').onclick=()=>{document.getElementById('modal').style.display='none';};
 </script>
