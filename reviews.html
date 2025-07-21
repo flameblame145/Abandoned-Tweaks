@@ -9,35 +9,22 @@
     margin: 0;
     font-family: Arial, sans-serif;
     color: #fff;
-    background: #000;
+    background: radial-gradient(circle, #000000, #0a0a0a);
     overflow-x: hidden;
   }
 
-  /* Animated starry background with multiple layers */
-  .stars, .stars2, .stars3 {
+  .starry-background {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-starfield/master/example/stars.png') repeat;
-    z-index: -1;
-    animation: moveStars 100s linear infinite;
+    background: url('https://i.imgur.com/6lJGQ2k.png') repeat;
+    z-index: -2;
+    animation: starScroll 60s linear infinite;
   }
 
-  .stars2 {
-    background-size: 200px;
-    opacity: 0.5;
-    animation: moveStars 200s linear infinite;
-  }
-
-  .stars3 {
-    background-size: 300px;
-    opacity: 0.3;
-    animation: moveStars 300s linear infinite;
-  }
-
-  @keyframes moveStars {
+  @keyframes starScroll {
     from { background-position: 0 0; }
-    to { background-position: -10000px 10000px; }
+    to { background-position: -1000px 1000px; }
   }
 
   .floating-panel {
@@ -114,9 +101,7 @@
 </style>
 </head>
 <body>
-<div class="stars"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
+<div class="starry-background"></div>
 
 <div class="floating-panel">
   <div id="reviews" class="reviews-grid"></div>
@@ -128,7 +113,7 @@
 
 <script>
 const reviews = [
-  // === START GENERATED REVIEWS ===
+  // Initial sample reviews
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
   {name:'Z****', product:'WiFi Tweaks', stars:5, text:'Reduced my ping and made gameplay smoother.'},
@@ -149,21 +134,22 @@ const reviews = [
   {name:'V****', product:'0 Delay', stars:4, text:'Game feels a lot smoother.'},
   {name:'G****', product:'Spotify Premium', stars:5, text:'No ads, premium works great!'},
   {name:'Q****', product:'Shotgun Pack V1', stars:5, text:'Pumps feel way harder now!'},
-  // + 127 more generated randomly:
-  ...Array.from({length:127}).map((_,i)=>({
-    name:String.fromCharCode(65+Math.floor(Math.random()*26))+'****',
-    product:[
+  // + 127 randomly generated reviews
+  ...Array.from({length:127}).map(() => ({
+    name: String.fromCharCode(65+Math.floor(Math.random()*26))+'****',
+    product: [
       'Shotgun Pack V1','Shotgun Pack V2','Bloom Pack V1','Bloom Pack V2',
       'WiFi Tweaks','Variety Pack','Taste Tester','Keyboard Tweaks',
       'Mouse Tweaks','0 Delay','Spotify Premium','SMG Bloom Pack V2'
     ][Math.floor(Math.random()*12)],
-    stars:[4,5][Math.floor(Math.random()*2)],
-    text:['Improved my aim!','Feels so smooth!','Definitely worth it!',
-    'Helped me build faster!','Got me more wins!','Insane value!',
-    'Boosted performance!','Less lag now!'][Math.floor(Math.random()*8)]
+    stars: [4,5][Math.floor(Math.random()*2)],
+    text: [
+      'Improved my aim!','Feels so smooth!','Definitely worth it!',
+      'Helped me build faster!','Got me more wins!','Insane value!',
+      'Boosted performance!','Less lag now!'
+    ][Math.floor(Math.random()*8)]
   }))
 ];
-// === END GENERATED REVIEWS ===
 
 const reviewsPerPage = 20;
 let currentPage = 0;
@@ -184,8 +170,19 @@ function renderPage(page) {
   document.getElementById('nextBtn').disabled = end >= reviews.length;
 }
 
-document.getElementById('prevBtn').onclick = ()=>{ if(currentPage>0){currentPage--; renderPage(currentPage);} };
-document.getElementById('nextBtn').onclick = ()=>{ if((currentPage+1)*reviewsPerPage<reviews.length){currentPage++; renderPage(currentPage);} };
+document.getElementById('prevBtn').onclick = () => {
+  if(currentPage > 0) {
+    currentPage--;
+    renderPage(currentPage);
+  }
+};
+
+document.getElementById('nextBtn').onclick = () => {
+  if((currentPage+1)*reviewsPerPage < reviews.length) {
+    currentPage++;
+    renderPage(currentPage);
+  }
+};
 
 renderPage(0);
 </script>
