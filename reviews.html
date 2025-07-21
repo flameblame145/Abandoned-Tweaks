@@ -1,59 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reviews Slider with Starry Background</title>
-<style>
-  body {
-    margin: 0; font-family: Arial, sans-serif; color: #fff; overflow-x: hidden; background: black;
-  }
-  .stars { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-2; overflow:hidden; pointer-events:none; }
-  .star { position:absolute; background:white; border-radius:50%; opacity:0.8; filter:drop-shadow(0 0 2px white); animation: twinkle 3s infinite ease-in-out; }
-  .star.small { width:1.5px; height:1.5px; animation-duration:3s; }
-  .star.medium { width:2.5px; height:2.5px; animation-duration:4s; }
-  .star.large { width:3.5px; height:3.5px; animation-duration:5s; }
-  @keyframes twinkle { 0%,100%{opacity:0.8;} 50%{opacity:0.2;} }
-  .floating-panel { margin:40px auto; max-width:1200px; padding:20px; background:rgba(0,0,0,0.8); border:3px solid #00f7ff; border-radius:20px; box-shadow:0 0 20px #00f7ff; animation: float 4s ease-in-out infinite; z-index:1; position:relative; }
-  @keyframes float { 0%,100%{ transform:translateY(0px);} 50%{ transform:translateY(-10px);} }
-  .reviews-grid { display:grid; grid-template-columns: repeat(4,1fr); gap:15px; }
-  .review-card { background: rgba(20,20,20,0.9); padding:10px; border-radius:10px; border:1px solid #00f7ff; box-shadow:0 0 10px #00f7ff; font-size:13px; }
-  .review-name { font-weight:bold; margin-bottom:5px; }
-  .review-product { color:#00f7ff; font-size:12px; margin-bottom:3px; }
-  .review-stars { color:gold; margin-bottom:3px; }
-  .pagination { text-align:center; margin-top:20px; }
-  .pagination button { background:#00f7ff; color:#000; border:none; padding:8px 16px; margin:0 5px; font-size:14px; border-radius:5px; cursor:pointer; box-shadow:0 0 5px #00f7ff; }
-  .pagination button:disabled { background:#333; color:#777; box-shadow:none; cursor:default; }
-  .back-button { position: fixed; bottom:20px; right:20px; padding:10px 16px; font-size:14px; border:none; border-radius:8px; cursor:pointer; background: linear-gradient(270deg, #ff0000, #ff9900, #33cc33, #3399ff, #cc33ff, #ff0000); background-size:1200% 1200%; color:white; animation: rainbow 8s ease infinite; box-shadow:0 0 10px #fff; text-decoration:none; }
-  @keyframes rainbow { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
-  .add-review-button { position: fixed; bottom:20px; left:20px; padding:10px 16px; font-size:14px; border:none; border-radius:8px; cursor:pointer; background:#00f7ff; color:black; box-shadow:0 0 10px #00f7ff; display:flex; align-items:center; gap:5px; }
-  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:2; }
-  .modal-content { background:rgba(10,10,10,0.95); border:2px solid #00f7ff; border-radius:15px; padding:20px; text-align:center; max-width:300px; box-shadow:0 0 15px #00f7ff; }
-  .modal-content button { margin-top:15px; padding:8px 16px; font-size:14px; border:none; border-radius:5px; background:#00f7ff; color:#000; cursor:pointer; box-shadow:0 0 5px #00f7ff; }
-</style>
-</head>
-<body>
-<div class="stars"></div>
-
-<div class="floating-panel">
-  <h2 id="productTitle" style="text-align:center; color:#00f7ff; margin-bottom:15px;"></h2>
-  <div id="reviews" class="reviews-grid"></div>
-  <div class="pagination">
-    <button id="prevBtn">Prev</button>
-    <button id="nextBtn">Next</button>
-  </div>
-</div>
-
-<a href="https://abandonedtweaks.xyz/index.html" class="back-button">Back</a>
-<button class="add-review-button" id="addReviewBtn">✈ Add Review</button>
-
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <p>You have to make a purchase to add a review</p>
-    <button id="closeModalBtn">Back</button>
-  </div>
-</div>
-
 <script>
 // Generate stars
 const starsContainer = document.querySelector('.stars');
@@ -66,25 +10,116 @@ for (let i=0;i<100;i++) {
   starsContainer.appendChild(star);
 }
 
+// Products and new larger base texts
 const products=[ 'Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack','Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks','Spotify Premium','SMG Bloom Pack V2','Shotgun Pack V2','Bloom Pack V1' ];
-const baseTexts={ 'Shotgun Pack V1':['Pumps feel heavier!','Close range is crazy now!','Big damage every time!'], 'Bloom Pack V2':['Almost no bloom!','Shots land so clean!','My AR feels perfect!'], 'WiFi Tweaks':['Ping stable!','Lower spikes!','Feels smoother online!'], 'Variety Pack':['All tweaks included!','Great pack!','Mix of everything!'], 'Mouse Tweaks':['Smooth aim!','Better flicks!','Fast edits!'], '0 Delay':['Insane response!','Super quick!','Feels instant!'], 'Taste Tester':['Aim boost!','Feels sticky!','Better tracking!'], 'Keyboard Tweaks':['Quick keys!','Fast edit binds!','Smooth typing!'], 'Spotify Premium':['No ads!','High quality!','Endless music!'], 'SMG Bloom Pack V2':['Sprays hit!','Beam people!','Control recoil!'], 'Shotgun Pack V2':['Big pumps!','Consistent hits!','More 185s!'], 'Bloom Pack V1':['More accurate!','Hit more shots!','Less random bloom!'] };
-const suffixes=["Helped me win more fights.","KD went up!","Feels great!","Totally worth it!","Better damage!","Feels like cheating!","Perfect tweak!","Noticeable difference!","Improved instantly!","Now I'm hitting shots!"];
-const boosters=["Honestly,","For real,","Not kidding,","In my opinion,","To be honest,","After trying it,","I gotta say,","Surprisingly,"];
-const endings=["Highly recommend.","Worth the price.","Can't go back now.","So glad I got this.","Big W!","Amazing tweak!","Game changer!","It just works!"];
+
+const baseTexts={
+  'Shotgun Pack V1':[
+    'My pumps deal huge damage now!',
+    'Feels like every shot is a 185!',
+    'Close fights feel so much easier!',
+    'Biggest upgrade for shotgun fights!'
+  ],
+  'Bloom Pack V2':[
+    'Barely miss AR shots anymore!',
+    'Super tight bloom on my rifles!',
+    'Hitting more headshots easily!',
+    'My aim feels laser‑sharp now!'
+  ],
+  'WiFi Tweaks':[
+    'Ping is much lower and stable!',
+    'Feels smoother when building!',
+    'No more random lag spikes!',
+    'Better servers and faster edits!'
+  ],
+  'Variety Pack':[
+    'Best mix of tweaks I tried!',
+    'Covers everything from bloom to ping!',
+    'Noticeable difference overall!',
+    'Feels like a brand new setup!'
+  ],
+  'Mouse Tweaks':[
+    'Mouse feels way snappier!',
+    'Edits and flicks feel faster!',
+    'More consistent tracking!',
+    'Love how smooth it feels now!'
+  ],
+  '0 Delay':[
+    'Edits come out instantly!',
+    'Game feels super responsive!',
+    'No delay between clicks and edits!',
+    'Huge difference in build fights!'
+  ],
+  'Taste Tester':[
+    'Aim is stickier and smoother!',
+    'Shots feel so controlled!',
+    'Fighting feels more confident!',
+    'Improved tracking right away!'
+  ],
+  'Keyboard Tweaks':[
+    'Edits feel effortless!',
+    'Keybinds respond faster!',
+    'Typing even feels better!',
+    'Way quicker double edits now!'
+  ],
+  'Spotify Premium':[
+    'Zero ads while playing!',
+    'High‑quality sound unlocked!',
+    'Can skip any song anytime!',
+    'Feels premium everywhere I go!'
+  ],
+  'SMG Bloom Pack V2':[
+    'My sprays are perfectly straight!',
+    'SMGs feel like beams!',
+    'Close range fights are so easy!',
+    'More consistent damage output!'
+  ],
+  'Shotgun Pack V2':[
+    'Big pumps every single shot!',
+    'Feels way more powerful!',
+    'Closer fights end faster!',
+    'My shotgun shots never miss!'
+  ],
+  'Bloom Pack V1':[
+    'Less random bloom now!',
+    'More accurate AR shots!',
+    'Feels smoother when spraying!',
+    'Definitely helps aim a lot!'
+  ]
+};
+
+const suffixes=[
+  "Helped me win more fights.",
+  "KD went up fast!",
+  "Feels super clean!",
+  "Totally worth it!",
+  "Feels like cheating almost!",
+  "Improved instantly!",
+  "Now I'm hitting shots easily!",
+  "Super consistent hits!",
+  "Made a huge difference!",
+  "Feels way better overall!"
+];
+
 const emojis=["🔥","💯","⭐","✅","🎯","⚡","🔝","🥇","🚀","😎"];
 
-function randomName(){ const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; const secondChars='abcdefghijklmnopqrstuvwxyz'; return Math.random()>0.5 ? chars.charAt(Math.floor(Math.random()*chars.length))+'****' : chars.charAt(Math.floor(Math.random()*chars.length))+secondChars.charAt(Math.floor(Math.random()*secondChars.length))+'****'; }
+// Random name
+function randomName(){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const secondChars='abcdefghijklmnopqrstuvwxyz';
+  return Math.random()>0.5 ? chars.charAt(Math.floor(Math.random()*chars.length))+'****' :
+    chars.charAt(Math.floor(Math.random()*chars.length))+secondChars.charAt(Math.floor(Math.random()*secondChars.length))+'****';
+}
 
+// Build unique reviews
 const productReviews={};
 products.forEach(product=>{
   productReviews[product]=[];
   for(let i=0;i<20;i++){
     const base=baseTexts[product][Math.floor(Math.random()*baseTexts[product].length)];
     const suffix=suffixes[Math.floor(Math.random()*suffixes.length)];
-    const booster=boosters[Math.floor(Math.random()*boosters.length)];
-    const ending=endings[Math.floor(Math.random()*endings.length)];
     const emoji=emojis[Math.floor(Math.random()*emojis.length)];
-    const text=`${booster} ${base} ${suffix} ${ending} ${emoji}`;
+    const text=`${base} ${suffix} ${emoji}`;
     const name=randomName();
     const stars=Math.floor(Math.random()*2)+4;
     productReviews[product].push({name,product,stars,text});
@@ -115,5 +150,3 @@ renderPage(currentProductIndex);
 document.getElementById('addReviewBtn').onclick=()=>{document.getElementById('modal').style.display='flex';};
 document.getElementById('closeModalBtn').onclick=()=>{document.getElementById('modal').style.display='none';};
 </script>
-</body>
-</html>
