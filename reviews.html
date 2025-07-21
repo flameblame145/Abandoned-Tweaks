@@ -1,151 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-<img src="image.png" alt="My Logo" style="height: 100px;">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reviews Slider with Starry Background</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    background: black;
+  }
+  .stars {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    z-index:-2; overflow:hidden; pointer-events:none;
+  }
+  .star {
+    position:absolute; background:white; border-radius:50%;
+    opacity:0.8; filter:drop-shadow(0 0 2px white); animation: twinkle 3s infinite ease-in-out;
+  }
+  .star.small { width:1.5px; height:1.5px; animation-duration:3s; }
+  .star.medium { width:2.5px; height:2.5px; animation-duration:4s; }
+  .star.large { width:3.5px; height:3.5px; animation-duration:5s; }
+  @keyframes twinkle { 0%,100%{opacity:0.8;} 50%{opacity:0.2;} }
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  .floating-panel {
+    margin:40px auto; max-width:1200px; padding:20px;
+    background:rgba(0,0,0,0.8); border:3px solid #00f7ff; border-radius:20px;
+    box-shadow:0 0 20px #00f7ff; animation: float 4s ease-in-out infinite;
+    z-index:1; position:relative;
+  }
+  @keyframes float { 0%,100%{ transform:translateY(0px);} 50%{ transform:translateY(-10px);} }
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBM2hoB6SsSKywsbJoYkd8CWG1I46raBTY",
-      authDomain: "abandonedtweaks-b47a2.firebaseapp.com",
-      projectId: "abandonedtweaks-b47a2",
-      storageBucket: "abandonedtweaks-b47a2.firebasestorage.app",
-      messagingSenderId: "26177710755",
-      appId: "1:26177710755:web:c804d0eef4be276a7c2d16",
-      measurementId: "G-6H06DVYMCV"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+  .reviews-grid { display:grid; grid-template-columns: repeat(4,1fr); gap:15px; }
+  .review-card {
+    background: rgba(20,20,20,0.9); padding:10px; border-radius:10px;
+    border:1px solid #00f7ff; box-shadow:0 0 10px #00f7ff; font-size:13px;
+  }
+  .review-name { font-weight:bold; margin-bottom:5px; }
+  .review-product { color:#00f7ff; font-size:12px; margin-bottom:3px; }
+  .review-stars { color:gold; margin-bottom:3px; }
 
-    auth.onAuthStateChanged(user => {
-      const btn = document.getElementById('auth-btn');
-      if (user) {
-        btn.textContent = 'Logout';
-        btn.onclick = () => auth.signOut().then(() => window.location.reload());
-      } else {
-        btn.textContent = 'Login / Signup';
-        btn.onclick = () => window.location.href = 'login.html';
-      }
-    });
+  .pagination { text-align:center; margin-top:20px; }
+  .pagination button {
+    background:#00f7ff; color:#000; border:none; padding:8px 16px; margin:0 5px;
+    font-size:14px; border-radius:5px; cursor:pointer; box-shadow:0 0 5px #00f7ff;
+  }
+  .pagination button:disabled { background:#333; color:#777; box-shadow:none; cursor:default; }
 
-    function generateRandomCode(length = 12) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    }
+  .back-button {
+    position: fixed; bottom:20px; right:20px; padding:10px 16px; font-size:14px;
+    border:none; border-radius:8px; cursor:pointer;
+    background: linear-gradient(270deg, #ff0000, #ff9900, #33cc33, #3399ff, #cc33ff, #ff0000);
+    background-size:1200% 1200%; color:white; animation: rainbow 8s ease infinite;
+    box-shadow:0 0 10px #fff; text-decoration:none;
+  }
+  @keyframes rainbow { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
 
-    async function enterDiscountCode() {
-      const user = auth.currentUser;
-      if (!user) {
-        alert('You must be logged in to enter a discount code.');
-        return;
-      }
+  .add-review-button {
+    position: fixed; bottom:20px; left:20px; padding:10px 16px; font-size:14px;
+    border:none; border-radius:8px; cursor:pointer; background:#00f7ff; color:black;
+    box-shadow:0 0 10px #00f7ff; display:flex; align-items:center; gap:5px;
+  }
 
-      const code = prompt('Enter your discount code:');
-      if (!code) return;
-
-      if (code !== 'TikTok15') {
-        alert('Invalid discount code.');
-        return;
-      }
-
-      const usedRef = db.collection('discountCodesUsed').doc(user.uid);
-      const doc = await usedRef.get();
-
-      if (doc.exists) {
-        alert('You have already used this discount code once.');
-        return;
-      }
-
-      const randomCode = generateRandomCode();
-      const timestamp = new Date();
-
-      await usedRef.set({
-        codeUsed: code,
-        randomCode,
-        usedAt: timestamp.toISOString()
-      });
-
-      alert(`Success! Your unique code is: ${randomCode}\nUsed on: ${timestamp.toLocaleString()}`);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('discountBtn').addEventListener('click', enterDiscountCode);
-    });
-  </script>
-
-  <style>
-    /* All your existing CSS here (kept as-is for brevity) */
-  </style>
+  .modal {
+    display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:2;
+  }
+  .modal-content {
+    background:rgba(10,10,10,0.95); border:2px solid #00f7ff; border-radius:15px;
+    padding:20px; text-align:center; max-width:300px; box-shadow:0 0 15px #00f7ff;
+  }
+  .modal-content button {
+    margin-top:15px; padding:8px 16px; font-size:14px; border:none; border-radius:5px;
+    background:#00f7ff; color:#000; cursor:pointer; box-shadow:0 0 5px #00f7ff;
+  }
+</style>
 </head>
 <body>
-  <button id="auth-btn">Loading...</button>
-  <div class="starry-background" id="stars"></div>
+<div class="stars"></div>
 
-  <div id="intro-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999;">
-    <h1 style="font-size:3rem; margin:0; background:linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); background-size:400% 400%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:rainbow 8s linear infinite;">Abandoned Tweaks</h1>
-    <p style="margin-top:1rem; font-size:1.2rem; color:#ccc; cursor:pointer;" onclick="enterSite()">click to enter</p>
+<div class="floating-panel">
+  <h2 id="productTitle" style="text-align:center; color:#00f7ff; margin-bottom:15px;"></h2>
+  <div id="reviews" class="reviews-grid"></div>
+  <div class="pagination">
+    <button id="prevBtn">Prev</button>
+    <button id="nextBtn">Next</button>
   </div>
+</div>
 
-  <header>
-    <h1 class="title">Abandoned Tweaks</h1>
-  </header>
+<a href="https://abandonedtweaks.xyz/index.html" class="back-button">Back</a>
+<button class="add-review-button" id="addReviewBtn">✈ Add Review</button>
 
-  <nav>
-    <a href="https://discord.gg/qyZEhex3HJ" target="_blank">Discord</a>
-    <a href="#">Purchase</a>
-    <a href="https://www.tiktok.com/@abandonedtweaks" target="_blank">TikTok</a>
-    <a href="https://abandonedtweaks.xyz/reviews.html" target="_blank">Reviews</a>
-  </nav>
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <p>You have to make a purchase to add a review</p>
+    <button id="closeModalBtn">Back</button>
+  </div>
+</div>
 
-  <!-- rest of your content (products, etc.) goes here, unchanged -->
+<script>
+// Generate stars
+const starsContainer = document.querySelector('.stars');
+for (let i=0;i<100;i++) {
+  const star=document.createElement('div');
+  const size=['small','medium','large'][Math.floor(Math.random()*3)];
+  star.className=`star ${size}`;
+  star.style.top=Math.random()*100+'%';
+  star.style.left=Math.random()*100+'%';
+  starsContainer.appendChild(star);
+}
 
-  <footer>
-    &copy; 2025 Abandoned Tweaks. All rights reserved.
-  </footer>
+// Data
+const products=[
+  'Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack',
+  'Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks',
+  'Spotify Premium','SMG Bloom Pack V2','Shotgun Pack V2','Bloom Pack V1'
+];
+const baseTexts={
+  'Shotgun Pack V1':['My pumps hit so much harder now!'],
+  'Bloom Pack V2':['Barely miss shots now!'],
+  'WiFi Tweaks':['Ping dropped by a lot!'],
+  'Variety Pack':['All tweaks together, best value!'],
+  'Mouse Tweaks':['Edits feel faster now!'],
+  '0 Delay':['Feels insanely smooth!'],
+  'Taste Tester':['Aim feels more consistent!'],
+  'Keyboard Tweaks':['Key response is faster now!'],
+  'Spotify Premium':['No ads ever, love it!'],
+  'SMG Bloom Pack V2':['My sprays are lasers now!'],
+  'Shotgun Pack V2':['185s almost every shot!'],
+  'Bloom Pack V1':['Less random misses now!']
+};
+const suffixes=["Helped me win more fights.","KD went up!","Feels great!","Totally worth it!","Better damage!","Feels like cheating!","Perfect tweak!","Noticeable difference!","Improved instantly!","Now I'm hitting shots!","Game feels different!","Absolutely love this!","Feels OP!","Big difference!","Would buy again!","Super responsive!","Huge upgrade!","Can't believe how well this works!"];
+const boosters=["Honestly,","For real,","Not kidding,","In my opinion,","To be honest,","After trying it,","I gotta say,","Surprisingly,"];
+const endings=["Highly recommend.","Worth the price.","Can't go back now.","So glad I got this.","Big W!","Amazing tweak!","Game changer!","It just works!"];
 
-  <script>
-    // createStar, createShootingStar functions here (kept as-is)
-  </script>
-  <script>
-    function enterSite() {
-      const overlay = document.getElementById('intro-overlay');
-      overlay.style.opacity = '0';
-      overlay.style.transition = 'opacity 0.8s ease';
-      setTimeout(() => overlay.remove(), 800);
-    }
-  </script>
-  <script>
-    document.addEventListener('mousemove', e => {
-      const dot = document.createElement('div');
-      dot.classList.add('glow-dot');
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-      document.body.appendChild(dot);
-      setTimeout(() => dot.remove(), 800);
-    });
-  </script>
+// Random name
+function randomName(){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const secondChars='abcdefghijklmnopqrstuvwxyz';
+  if(Math.random()>0.5){
+    return chars.charAt(Math.floor(Math.random()*chars.length))+'****';
+  }else{
+    return chars.charAt(Math.floor(Math.random()*chars.length))+secondChars.charAt(Math.floor(Math.random()*secondChars.length))+'****';
+  }
+}
 
-  <button onclick="window.location.href='redeem.html'" style="position: fixed; bottom: 20px; left: 20px; padding: 12px 24px; font-size: 16px; font-weight: bold; color: #fff; background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet); background-size: 400% 400%; border: none; border-radius: 10px; cursor: pointer; animation: rainbow 6s linear infinite; z-index: 1000;">
-    Redeem
-  </button>
+// Build reviews
+const productReviews={};
+products.forEach(product=>{
+  productReviews[product]=[];
+  for(let i=0;i<20;i++){
+    const base=baseTexts[product][0];
+    const suffix=suffixes[Math.floor(Math.random()*suffixes.length)];
+    const booster=boosters[Math.floor(Math.random()*boosters.length)];
+    const ending=endings[Math.floor(Math.random()*endings.length)];
+    const text=`${booster} ${base} ${suffix} ${ending}`;
+    const name=randomName();
+    const stars=Math.floor(Math.random()*2)+4;
+    productReviews[product].push({name,product,stars,text});
+  }
+});
 
-  <style>
-    @keyframes rainbow {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-  </style>
+let currentProductIndex=0;
+function renderPage(index){
+  const product=products[index];
+  document.getElementById('productTitle').innerText=product;
+  const reviews=productReviews[product];
+  document.getElementById('reviews').innerHTML=reviews.map(r=>`
+    <div class="review-card">
+      <div class="review-name">${r.name}</div>
+      <div class="review-product">${r.product}</div>
+      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+      <div class="text">${r.text}</div>
+    </div>`).join('');
+  document.getElementById('prevBtn').disabled=index===0;
+  document.getElementById('nextBtn').disabled=index===products.length-1;
+}
+document.getElementById('prevBtn').onclick=()=>{if(currentProductIndex>0){currentProductIndex--;renderPage(currentProductIndex);}};
+document.getElementById('nextBtn').onclick=()=>{if(currentProductIndex<products.length-1){currentProductIndex++;renderPage(currentProductIndex);}};
+
+renderPage(currentProductIndex);
+
+// Modal handlers
+document.getElementById('addReviewBtn').onclick=()=>{document.getElementById('modal').style.display='flex';};
+document.getElementById('closeModalBtn').onclick=()=>{document.getElementById('modal').style.display='none';};
+</script>
 </body>
 </html>
