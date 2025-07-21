@@ -119,6 +119,56 @@
     text-decoration: none;
   }
 
+  .add-review-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(270deg, #ff0000, #ff9900, #33cc33, #3399ff, #cc33ff, #ff0000);
+    background-size: 1200% 1200%;
+    color: white;
+    animation: rainbow 8s ease infinite;
+    box-shadow: 0 0 10px #fff;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top:0; left:0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .modal-content {
+    background: rgba(20,20,20,0.95);
+    border: 2px solid #00f7ff;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 15px #00f7ff;
+  }
+
+  .modal-content p { margin-bottom: 15px; }
+
+  .modal-content button {
+    background: #00f7ff;
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 5px #00f7ff;
+  }
+
   @keyframes rainbow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -139,9 +189,17 @@
 </div>
 
 <a href="https://abandonedtweaks.xyz/index.html" class="back-button">Back</a>
+<button class="add-review-button" id="addReviewBtn">✈️ Add Review</button>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <p>You have to make a purchase to add a review</p>
+    <button id="closeModalBtn">Back</button>
+  </div>
+</div>
 
 <script>
-// Generate 100 stars dynamically
+// Generate stars
 const starsContainer = document.querySelector('.stars');
 for (let i = 0; i < 100; i++) {
   const star = document.createElement('div');
@@ -152,12 +210,12 @@ for (let i = 0; i < 100; i++) {
   starsContainer.appendChild(star);
 }
 
+// Data
 const products = [
   'Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack',
   'Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks',
   'Spotify Premium','SMG Bloom Pack V2','Shotgun Pack V2','Bloom Pack V1'
 ];
-
 const baseTexts = {
   'Shotgun Pack V1': ['My pumps hit so much harder now!'],
   'Bloom Pack V2': ['Barely miss shots now!'],
@@ -172,28 +230,25 @@ const baseTexts = {
   'Shotgun Pack V2': ['185s almost every shot!'],
   'Bloom Pack V1': ['Less random misses now!']
 };
-
 const suffixes = [
   "Helped me win more fights.","KD went up!","Feels great!","Totally worth it!",
   "Made my gameplay smoother.","Better damage!","Feels like cheating!","Perfect tweak!",
   "Noticeable difference!","Improved instantly!"
 ];
 
-// Function to generate random looking name like X****, Br****, etc.
+// Generate random names
 function randomName() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const secondChars = 'abcdefghijklmnopqrstuvwxyz';
   if (Math.random() > 0.5) {
-    // One letter front
     return chars.charAt(Math.floor(Math.random()*chars.length)) + '****';
   } else {
-    // Two letters front
     return chars.charAt(Math.floor(Math.random()*chars.length)) +
            secondChars.charAt(Math.floor(Math.random()*secondChars.length)) + '****';
   }
 }
 
-// Build unique reviews per product
+// Build reviews
 const productReviews = {};
 products.forEach(product => {
   productReviews[product] = [];
@@ -224,11 +279,18 @@ function renderPage(index) {
   document.getElementById('prevBtn').disabled = index === 0;
   document.getElementById('nextBtn').disabled = index === products.length-1;
 }
-
 document.getElementById('prevBtn').onclick = ()=>{ if(currentProductIndex>0){currentProductIndex--; renderPage(currentProductIndex);} };
 document.getElementById('nextBtn').onclick = ()=>{ if(currentProductIndex<products.length-1){currentProductIndex++; renderPage(currentProductIndex);} };
 
 renderPage(currentProductIndex);
+
+// Add review modal logic
+document.getElementById('addReviewBtn').onclick = () => {
+  document.getElementById('modal').style.display = 'flex';
+};
+document.getElementById('closeModalBtn').onclick = () => {
+  document.getElementById('modal').style.display = 'none';
+};
 </script>
 </body>
 </html>
