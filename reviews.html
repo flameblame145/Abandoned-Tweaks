@@ -1,106 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Aimbot Pack -->
+<div class="product-card">
+  <h3>Aimbot Pack V1</h3>
+  <div class="price">$7.99</div>
+  <div class="rating">★★★★☆ (15)</div>
+  <div class="description">Helps you track players better, smoother aim assist. “Definitely made my aim feel stickier!” – FaZeClutch</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/abc123xyz" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/7.99" class="purchase-button paypal" target="_blank">PayPal</a>
+    <a href="https://cash.app/$trazeymax/7.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+  </div>
+</div>
 
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: #111;
-    overflow: hidden;
-  }
+<!-- Edit Speed Boost -->
+<div class="product-card">
+  <h3>Edit Speed Boost</h3>
+  <div class="price">$3.49</div>
+  <div class="rating">★★★★★ (22)</div>
+  <div class="description">Edits feel lightning-fast, no stutter! “Editing like a creative warrior now.” – TfueJr</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/def456uvw" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/3.49" class="purchase-button paypal" target="_blank">PayPal</a>
+    <a href="https://cash.app/$trazeymax/3.49" class="purchase-button cashapp" target="_blank">CashApp</a>
+  </div>
+</div>
 
-  .starry-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-  }
+<!-- Build Sens Booster -->
+<div class="product-card">
+  <h3>Build Sens Booster</h3>
+  <div class="price">$2.99</div>
+  <div class="rating">★★★★☆ (18)</div>
+  <div class="description">Faster build placement & smoother ramp rush. “Tunneling so quick now!” – NRGBoxFight</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/ghi789rst" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/2.99" class="purchase-button paypal" target="_blank">PayPal</a>
+    <a href="https://cash.app/$trazeymax/2.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+  </div>
+</div>
 
-  .star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 2px white);
-    animation: twinkle 3s infinite ease-in-out;
-  }
-  .star.small {
-    width: 1.5px;
-    height: 1.5px;
-    animation-duration: 3s;
-  }
-  .star.medium {
-    width: 2.5px;
-    height: 2.5px;
-    animation-duration: 4s;
-  }
-  .star.large {
-    width: 3.5px;
-    height: 3.5px;
-    animation-duration: 5s;
-  }
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 0.2; }
-  }
+<!-- FPS Pack -->
+<div class="product-card">
+  <h3>FPS Pack V2</h3>
+  <div class="price">$4.99</div>
+  <div class="rating">★★★★★ (25)</div>
+  <div class="description">Increased frames and smoother performance. “Went from 90 to stable 144 FPS!” – CrankyCranker</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/jkl012mno" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/4.99" class="purchase-button paypal" target="_blank">PayPal</a>
+    <a href="https://cash.app/$trazeymax/4.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+  </div>
+</div>
 
-  .shooting-star {
-    position: fixed;
-    width: 80px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    transform: rotate(45deg);
-    animation: shoot 2s linear forwards;
-    z-index: 1;
-    pointer-events: none;
-  }
-  @keyframes shoot {
-    0% { top: 0; left: 0; opacity: 0.8; }
-    100% { top: 100vh; left: 100vw; opacity: 0; }
-  }
-</style>
-</head>
-<body>
-
-<div class="starry-background" id="stars"></div>
-
-<script>
-  // Create static stars
-  function createStar() {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    const sizes = ['small', 'medium', 'large'];
-    star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
-    star.style.top = Math.random() * 100 + 'vh';
-    star.style.left = Math.random() * 100 + 'vw';
-    star.style.animationDelay = (Math.random() * 3) + 's';
-    star.style.animationDuration = (3 + Math.random() * 3) + 's';
-    document.getElementById('stars').appendChild(star);
-  }
-
-  for (let i = 0; i < 80; i++) createStar();
-
-  // Shooting star every 10 seconds
-  function createShootingStar() {
-    const shootingStar = document.createElement('div');
-    shootingStar.classList.add('shooting-star');
-    shootingStar.style.top = '0px';
-    shootingStar.style.left = '0px';
-    document.getElementById('stars').appendChild(shootingStar);
-    setTimeout(() => shootingStar.remove(), 2000);
-  }
-
-  setInterval(createShootingStar, 10000);
-</script>
-
-</body>
-</html>
+<!-- Turbo Reset -->
+<div class="product-card">
+  <h3>Turbo Reset Mod</h3>
+  <div class="price">$3.99</div>
+  <div class="rating">★★★★☆ (17)</div>
+  <div class="description">Reset walls instantly! “Box fights became way easier.” – BoxKing77</div>
+  <div class="product-video">
+    <iframe src="https://www.youtube.com/embed/pqr345stu" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="purchase-buttons">
+    <a href="https://paypal.me/paymepaypalplease/3.99" class="purchase-button paypal" target="_blank">PayPal</a>
+    <a href="https://cash.app/$trazeymax/3.99" class="purchase-button cashapp" target="_blank">CashApp</a>
+  </div>
+</div>
