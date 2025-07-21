@@ -31,23 +31,9 @@
     animation: twinkle 3s infinite ease-in-out;
   }
 
-  .star.small {
-    width: 1.5px;
-    height: 1.5px;
-    animation-duration: 3s;
-  }
-
-  .star.medium {
-    width: 2.5px;
-    height: 2.5px;
-    animation-duration: 4s;
-  }
-
-  .star.large {
-    width: 3.5px;
-    height: 3.5px;
-    animation-duration: 5s;
-  }
+  .star.small { width: 1.5px; height: 1.5px; animation-duration: 3s; }
+  .star.medium { width: 2.5px; height: 2.5px; animation-duration: 4s; }
+  .star.large { width: 3.5px; height: 3.5px; animation-duration: 5s; }
 
   @keyframes twinkle {
     0%, 100% { opacity: 0.8; }
@@ -88,21 +74,9 @@
     font-size: 13px;
   }
 
-  .review-name {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  .review-product {
-    color: #00f7ff;
-    font-size: 12px;
-    margin-bottom: 3px;
-  }
-
-  .review-stars {
-    color: gold;
-    margin-bottom: 3px;
-  }
+  .review-name { font-weight: bold; margin-bottom: 5px; }
+  .review-product { color: #00f7ff; font-size: 12px; margin-bottom: 3px; }
+  .review-stars { color: gold; margin-bottom: 3px; }
 
   .pagination {
     text-align: center;
@@ -150,7 +124,6 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-
 </style>
 </head>
 <body>
@@ -179,14 +152,12 @@ for (let i = 0; i < 100; i++) {
   starsContainer.appendChild(star);
 }
 
-// Products
 const products = [
   'Shotgun Pack V1','Bloom Pack V2','WiFi Tweaks','Variety Pack',
   'Mouse Tweaks','0 Delay','Taste Tester','Keyboard Tweaks',
   'Spotify Premium','SMG Bloom Pack V2','Shotgun Pack V2','Bloom Pack V1'
 ];
 
-// Base texts
 const baseTexts = {
   'Shotgun Pack V1': ['My pumps hit so much harder now!'],
   'Bloom Pack V2': ['Barely miss shots now!'],
@@ -208,6 +179,20 @@ const suffixes = [
   "Noticeable difference!","Improved instantly!"
 ];
 
+// Function to generate random looking name like X****, Br****, etc.
+function randomName() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const secondChars = 'abcdefghijklmnopqrstuvwxyz';
+  if (Math.random() > 0.5) {
+    // One letter front
+    return chars.charAt(Math.floor(Math.random()*chars.length)) + '****';
+  } else {
+    // Two letters front
+    return chars.charAt(Math.floor(Math.random()*chars.length)) +
+           secondChars.charAt(Math.floor(Math.random()*secondChars.length)) + '****';
+  }
+}
+
 // Build unique reviews per product
 const productReviews = {};
 products.forEach(product => {
@@ -216,7 +201,7 @@ products.forEach(product => {
     const base = baseTexts[product][0];
     const suffix = suffixes[i % suffixes.length];
     const text = `${base} ${suffix}`;
-    const name = String.fromCharCode(65 + (i % 26)) + '****';
+    const name = randomName();
     const stars = Math.floor(Math.random() * 2) + 4;
     productReviews[product].push({ name, product, stars, text });
   }
