@@ -13,21 +13,45 @@
     background: black;
   }
 
-  /* Simple animated starfield */
-  .starry-background {
+  .stars {
     position: fixed;
     top: 0; left: 0;
-    width: 200%;  /* larger than screen to allow scroll effect */
-    height: 200%;
-    background: url('https://i.imgur.com/6lJGQ2k.png') repeat;
-    background-size: cover;
-    animation: starScroll 60s linear infinite;
-    z-index: -1;
+    width: 100%; height: 100%;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
   }
 
-  @keyframes starScroll {
-    0% { transform: translate(0,0); }
-    100% { transform: translate(-50%, -50%); }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px white);
+    animation: twinkle 3s infinite ease-in-out;
+  }
+
+  .star.small {
+    width: 1.5px;
+    height: 1.5px;
+    animation-duration: 3s;
+  }
+
+  .star.medium {
+    width: 2.5px;
+    height: 2.5px;
+    animation-duration: 4s;
+  }
+
+  .star.large {
+    width: 3.5px;
+    height: 3.5px;
+    animation-duration: 5s;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.2; }
   }
 
   .floating-panel {
@@ -39,6 +63,8 @@
     border-radius: 20px;
     box-shadow: 0 0 20px #00f7ff;
     animation: float 4s ease-in-out infinite;
+    z-index: 1;
+    position: relative;
   }
 
   @keyframes float {
@@ -73,7 +99,7 @@
     margin-bottom: 3px;
   }
 
-  .review-stars {
+  .stars {
     color: gold;
     margin-bottom: 3px;
   }
@@ -104,7 +130,7 @@
 </style>
 </head>
 <body>
-<div class="starry-background"></div>
+<div class="stars"></div>
 
 <div class="floating-panel">
   <div id="reviews" class="reviews-grid"></div>
@@ -115,6 +141,16 @@
 </div>
 
 <script>
+// Generate 100 stars dynamically
+const starsContainer = document.querySelector('.stars');
+for (let i = 0; i < 100; i++) {
+  const star = document.createElement('div');
+  const size = ['small', 'medium', 'large'][Math.floor(Math.random() * 3)];
+  star.className = `star ${size}`;
+  star.style.top = Math.random() * 100 + '%';
+  star.style.left = Math.random() * 100 + '%';
+  starsContainer.appendChild(star);
+}
 const reviews = [
   {name:'B****', product:'Shotgun Pack V1', stars:5, text:'Helped me get higher pump damage instantly!'},
   {name:'R****', product:'Bloom Pack V2', stars:4, text:'Spray accuracy got way better than before.'},
