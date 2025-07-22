@@ -113,13 +113,14 @@ for (let i=0;i<100;i++) {
 }
 
 // Product list
-const products=[
+const products = [
   'Shotgun Pack V1','Shotgun Pack V2','Bloom Pack V2','WiFi Tweaks',
   'Variety Pack','Mouse Tweaks','0 Delay','Taste Tester',
   'Keyboard Tweaks','Spotify Premium','SMG Bloom Pack V2','Bloom Pack V1'
 ];
 
-// FULL reviews object:
+// ✅ real productReviews object here:
+const productReviews = {
 const productReviews = {
   "Shotgun Pack V1": [
     { name: "A****", stars: 5, text: "thought this was a scam, its actually works tho prec8 it gng" },
@@ -385,6 +386,31 @@ const productReviews = {
   { name: "E****", stars: 5, text: "small price big difference in fights" },
   { name: "F****", stars: 5, text: "perfect for older setups still works" }
 ],
+},
+let currentProductIndex=0;
+function renderPage(index){
+  const product=products[index];
+  document.getElementById('productTitle').innerText=product;
+  const reviews=productReviews[product] || [];
+  document.getElementById('reviews').innerHTML=reviews.map(r=>`
+    <div class="review-card">
+      <div class="review-name">${r.name}</div>
+      <div class="review-product">${product}</div>
+      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+      <div class="text">${r.text}</div>
+    </div>`).join('');
+  document.getElementById('prevBtn').disabled=index===0;
+  document.getElementById('nextBtn').disabled=index===products.length-1;
+}
+document.getElementById('prevBtn').onclick=()=>{if(currentProductIndex>0){currentProductIndex--;renderPage(currentProductIndex);}};
+document.getElementById('nextBtn').onclick=()=>{if(currentProductIndex<products.length-1){currentProductIndex++;renderPage(currentProductIndex);}};
+
+renderPage(currentProductIndex);
+
+// Modal handlers
+document.getElementById('addReviewBtn').onclick=()=>{document.getElementById('modal').style.display='flex';};
+document.getElementById('closeModalBtn').onclick=()=>{document.getElementById('modal').style.display='none';};
+</script>
 
 // Slider logic
 let currentProductIndex=0;
