@@ -3,20 +3,46 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Product Reviews Grid with Neon Panel</title>
+<title>Neon Product Reviews</title>
 <style>
   body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background: black;
-    color: #fff;
+    background: #111;
+    color: #f2f2f2;
+    margin: 0;
     overflow-x: hidden;
   }
+  .starry-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px white);
+    animation: twinkle 3s infinite ease-in-out;
+  }
+  .star.small { width: 1.5px; height: 1.5px; animation-duration: 3s; }
+  .star.medium { width: 2.5px; height: 2.5px; animation-duration: 4s; }
+  .star.large { width: 3.5px; height: 3.5px; animation-duration: 5s; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.2; }
+  }
   .container {
-    margin: 20px auto;
+    margin: 30px auto;
     max-width: 1200px;
     text-align: center;
     position: relative;
+    z-index: 10;
   }
   .floating-panel {
     display: inline-block;
@@ -24,13 +50,12 @@
     margin-bottom: 20px;
     border: 2px solid cyan;
     border-radius: 15px;
-    box-shadow:
-      0 0 5px cyan,
-      0 0 10px cyan,
-      0 0 20px cyan,
-      0 0 40px cyan;
-    font-size: 1.5em;
+    box-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 20px cyan, 0 0 40px cyan;
+    font-size: 1.8em;
     background: rgba(0, 255, 255, 0.05);
+    font-weight: bold;
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
   }
   button {
     background: cyan;
@@ -41,6 +66,13 @@
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 0 10px #0ff;
+    transition: box-shadow 0.3s;
+    z-index: 10;
+    position: relative;
+  }
+  button:hover {
+    box-shadow: 0 0 20px #0ff;
   }
   .reviews {
     display: grid;
@@ -62,6 +94,7 @@
 </style>
 </head>
 <body>
+<div class="starry-background" id="stars"></div>
 <div class="container">
   <div class="floating-panel" id="productTitle">Product Reviews</div>
   <div class="reviews" id="reviewsContainer"></div>
@@ -72,7 +105,21 @@
 </div>
 
 <script>
-// ✅ PASTE your full productReviews object here:
+// Create stars
+function createStar() {
+  const star = document.createElement('div');
+  star.classList.add('star');
+  const sizes = ['small', 'medium', 'large'];
+  star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+  star.style.top = Math.random() * 100 + 'vh';
+  star.style.left = Math.random() * 100 + 'vw';
+  document.getElementById('stars').appendChild(star);
+}
+for (let i = 0; i < 80; i++) createStar();
+</script>
+
+<script>
+// Your product reviews data
 const productReviews = {
   "Shotgun Pack V1": [
     { name: "A****", stars: 5, text: "thought this was a scam, its actually works tho prec8 it gng" },
@@ -339,7 +386,6 @@ const productReviews = {
   { name: "F****", stars: 5, text: "perfect for older setups still works" }
 ],
 };
-
 let productList = Object.keys(productReviews);
 let currentProductIndex = 0;
 
@@ -350,7 +396,6 @@ function renderReviews() {
   const container = document.getElementById('reviewsContainer');
   container.innerHTML = '';
 
-  // Show first 20 reviews per product
   const maxReviews = 20;
   reviews.slice(0, maxReviews).forEach(r => {
     const div = document.createElement('div');
@@ -361,18 +406,14 @@ function renderReviews() {
     container.appendChild(div);
   });
 }
-
 function nextProduct() {
   currentProductIndex = (currentProductIndex + 1) % productList.length;
   renderReviews();
 }
-
 function prevProduct() {
   currentProductIndex = (currentProductIndex - 1 + productList.length) % productList.length;
   renderReviews();
 }
-
-// Initial load
 renderReviews();
 </script>
 </body>
