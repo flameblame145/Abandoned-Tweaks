@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reviews Slider</title>
+<title>Product Reviews Grid</title>
 <style>
   body {
     margin: 0;
@@ -14,31 +14,31 @@
   }
   .container {
     margin: 20px auto;
-    max-width: 1000px;
+    max-width: 1200px;
     text-align: center;
   }
-  select, button {
+  button {
     background: cyan;
     color: black;
     border: none;
-    padding: 10px;
+    padding: 10px 20px;
     margin: 10px;
     border-radius: 5px;
     font-weight: bold;
+    cursor: pointer;
   }
   .reviews {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    gap: 10px;
     margin-top: 20px;
   }
   .review {
     background: rgba(0,255,255,0.1);
     border: 1px solid cyan;
     border-radius: 10px;
-    margin: 10px;
-    padding: 15px;
-    width: 200px;
+    padding: 10px;
     box-shadow: 0 0 10px cyan;
   }
   .stars {
@@ -48,16 +48,16 @@
 </head>
 <body>
 <div class="container">
-  <h2>Product Reviews</h2>
-  <select id="productSelect"></select>
+  <h2 id="productTitle">Product Reviews</h2>
   <div class="reviews" id="reviewsContainer"></div>
   <div>
-    <button onclick="prevPage()">Prev</button>
-    <button onclick="nextPage()">Next</button>
+    <button onclick="prevProduct()">Prev Product</button>
+    <button onclick="nextProduct()">Next Product</button>
   </div>
 </div>
 
 <script>
+// ✅ PASTE your full productReviews object here:
 const productReviews = {
   "Shotgun Pack V1": [
     { name: "A****", stars: 5, text: "thought this was a scam, its actually works tho prec8 it gng" },
@@ -324,31 +324,20 @@ const productReviews = {
   { name: "F****", stars: 5, text: "perfect for older setups still works" }
 ],
 };
-// ✅ END of productReviews
 
-let currentProduct = Object.keys(productReviews)[0];
-let currentPage = 0;
-
-function loadProducts() {
-  const select = document.getElementById('productSelect');
-  Object.keys(productReviews).forEach(prod => {
-    const option = document.createElement('option');
-    option.value = prod;
-    option.text = prod;
-    select.appendChild(option);
-  });
-  select.value = currentProduct;
-}
+let productList = Object.keys(productReviews);
+let currentProductIndex = 0;
 
 function renderReviews() {
-  const reviewsPerPage = 4;
-  const reviews = productReviews[currentProduct];
-  const start = currentPage * reviewsPerPage;
-  const end = start + reviewsPerPage;
-  const pageReviews = reviews.slice(start, end);
+  const product = productList[currentProductIndex];
+  document.getElementById('productTitle').textContent = product;
+  const reviews = productReviews[product];
   const container = document.getElementById('reviewsContainer');
   container.innerHTML = '';
-  pageReviews.forEach(r => {
+
+  // Show first 20 reviews per product
+  const maxReviews = 20;
+  reviews.slice(0, maxReviews).forEach(r => {
     const div = document.createElement('div');
     div.className = 'review';
     div.innerHTML = `<strong>${r.name}</strong><br>
@@ -358,24 +347,17 @@ function renderReviews() {
   });
 }
 
-function nextPage() {
-  const maxPage = Math.ceil(productReviews[currentProduct].length / 4) - 1;
-  if (currentPage < maxPage) currentPage++;
+function nextProduct() {
+  currentProductIndex = (currentProductIndex + 1) % productList.length;
   renderReviews();
 }
 
-function prevPage() {
-  if (currentPage > 0) currentPage--;
+function prevProduct() {
+  currentProductIndex = (currentProductIndex - 1 + productList.length) % productList.length;
   renderReviews();
 }
 
-document.getElementById('productSelect').addEventListener('change', e => {
-  currentProduct = e.target.value;
-  currentPage = 0;
-  renderReviews();
-});
-
-loadProducts();
+// Initial load
 renderReviews();
 </script>
 </body>
