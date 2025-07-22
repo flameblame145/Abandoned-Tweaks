@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Product Reviews Grid</title>
+<title>Product Reviews Grid with Neon Panel</title>
 <style>
   body {
     margin: 0;
@@ -16,6 +16,21 @@
     margin: 20px auto;
     max-width: 1200px;
     text-align: center;
+    position: relative;
+  }
+  .floating-panel {
+    display: inline-block;
+    padding: 15px 30px;
+    margin-bottom: 20px;
+    border: 2px solid cyan;
+    border-radius: 15px;
+    box-shadow:
+      0 0 5px cyan,
+      0 0 10px cyan,
+      0 0 20px cyan,
+      0 0 40px cyan;
+    font-size: 1.5em;
+    background: rgba(0, 255, 255, 0.05);
   }
   button {
     background: cyan;
@@ -48,7 +63,7 @@
 </head>
 <body>
 <div class="container">
-  <h2 id="productTitle">Product Reviews</h2>
+  <div class="floating-panel" id="productTitle">Product Reviews</div>
   <div class="reviews" id="reviewsContainer"></div>
   <div>
     <button onclick="prevProduct()">Prev Product</button>
