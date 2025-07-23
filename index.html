@@ -103,7 +103,24 @@
   opacity: 1;
   transition: opacity 0.8s ease;
 }
-
+/* Neon blue glow purchase button */
+.purchase-button.blue {
+  background: #00f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #00f;
+  box-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #00f;
+  transition: box-shadow 0.3s, background 0.3s;
+}
+.purchase-button.blue:hover {
+  background: #00aaff;
+  box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
+}
     header {
       background: #111;
       text-align: center;
@@ -283,16 +300,6 @@
         background-position: 0% 50%;
       }
     }
-    .purchase-button.blue {
-  background-color: #007bff; /* bright blue */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 10px;
-  font-weight: bold;
-}
     footer {
       text-align: center;
       padding: 1rem;
