@@ -256,9 +256,9 @@
     .purchase-button.cashapp:hover {
       box-shadow: 0 0 15px #00ff44;
     }
-    /* new blue purchase button style */
+/* Neon blue glow purchase button */
 .purchase-button.blue {
-  background-color: #007bff;
+  background: #00f;
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
@@ -266,11 +266,13 @@
   display: inline-block;
   margin-top: 10px;
   font-weight: bold;
-  transition: background 0.3s, box-shadow 0.3s;
+  text-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #00f;
+  box-shadow: 0 0 5px #00f, 0 0 10px #00f, 0 0 20px #00f;
+  transition: box-shadow 0.3s, background 0.3s;
 }
 .purchase-button.blue:hover {
-  background-color: #0056b3;
-  box-shadow: 0 0 10px #007bff;
+  background: #00aaff;
+  box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
 }
     @keyframes gradientAnim {
       0% {
