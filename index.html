@@ -678,6 +678,30 @@
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
+
+  .rainbow-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400% 400%;
+  border: none;
+  border-radius: 12px; /* adjust for round corners */
+  cursor: pointer;
+  animation: rainbow 6s linear infinite;
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+  transition: box-shadow 0.3s;
+}
+.rainbow-button:hover {
+  box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 }
 </style>
 </body>
