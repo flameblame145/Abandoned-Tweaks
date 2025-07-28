@@ -72,5 +72,14 @@
   <h1>Thank You For Your Purchase!</h1>
   <a class="download-btn" href="YOUR_DOWNLOAD_LINK_HERE">Download</a>
 </div>
+  <script>
+fetch("https://discord.com/api/webhooks/1399245701652676628/lnoXNrgEJdkDgMUJ7HNAKHks5L6iHqTptukohBzKw-edgdNOMxHDl6yFeHfC9zYlE0e-", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    content: "✅ Someone viewed the thank you page!"
+  })
+});
+</script>
 </body>
 </html>
