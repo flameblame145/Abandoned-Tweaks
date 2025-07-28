@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You For Your Purchase</title>
+<style>
+  /* Starry background animation */
+  body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('https://i.ibb.co/Kz6Y6Kj/stars.png') repeat;
+    animation: moveStars 100s linear infinite;
+  }
+
+  @keyframes moveStars {
+    from { background-position: 0 0; }
+    to { background-position: -10000px 5000px; }
+  }
+
+  /* Centered floating panel with neon glow */
+  .panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00f6ff;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 20px #00f6ff, 0 0 40px #00f6ff, 0 0 60px #00f6ff;
+  }
+
+  .panel h1 {
+    color: #00f6ff;
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+
+  /* Oval-shaped download button with neon glow */
+  .download-btn {
+    display: inline-block;
+    padding: 15px 50px;
+    font-size: 18px;
+    color: #00f6ff;
+    text-decoration: none;
+    border: 2px solid #00f6ff;
+    border-radius: 50px;
+    box-shadow: 0 0 10px #00f6ff, 0 0 20px #00f6ff, 0 0 30px #00f6ff;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .download-btn:hover {
+    background: #00f6ff;
+    color: black;
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="panel">
+  <h1>Thank You For Your Purchase!</h1>
+  <a class="download-btn" href="YOUR_DOWNLOAD_LINK_HERE">Download</a>
+</div>
+</body>
+</html>
