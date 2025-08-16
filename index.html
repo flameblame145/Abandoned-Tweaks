@@ -475,6 +475,23 @@
 <!-- Variety Pack JR-->
 <div class="product-card">
 <h3 class="galaxyFade-text">Variety Pack JR</h3>
+
+<style>
+@keyframes galaxyFade {
+  0%   { color: #a78bfa; }   /* light purple */
+  25%  { color: #38bdf8; }   /* cyan */
+  50%  { color: #ec4899; }   /* pink */
+  75%  { color: #22d3ee; }   /* teal */
+  100% { color: #a78bfa; }   /* back to purple */
+}
+
+.galaxyFade-text {
+  font-family: 'Orbitron', sans-serif; /* looks more spacey */
+  font-weight: 900;
+  text-transform: uppercase;
+  animation: galaxyFade 5s infinite linear;
+}
+</style>
   <div class="price">$27.99</div>
   <div class="rating">★★★★★ (21)</div>
   <div class="description">All of the packs, for cheaper and 75% of everything.</div>
